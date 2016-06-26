@@ -1,9 +1,7 @@
 package de.htwsaar.flashcards.engine;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
@@ -12,60 +10,47 @@ import de.htwsaar.flashcards.model.FlashCard;
 
 public class GameEngineImpl implements GameEngine {
 	
-	public static final int NUMBER_OF_BUCKETS = 5;
-	public static final int START_PHASE = 0;
+	private static final int START_PHASE = 0;
 	
-	private ArrayList<Queue<FlashCard>> cardbox;
+	private List<FlashCard> flashcards;
 	private FlashCardDao cardDao;
 	private FlashCard currentCard;
 	
 	public GameEngineImpl() {
 		cardDao = new FlashCardDaoImpl();
-		cardbox = new ArrayList<Queue<FlashCard>>(NUMBER_OF_BUCKETS);
-		for (int i = 0; i < NUMBER_OF_BUCKETS; i++) {
-			cardbox.add(new PriorityQueue<FlashCard>());
-		}
 		loadFlashCards();
 		currentCard = getNextCard();
 	}
 	
-
 	@Override
 	public void loadFlashCards() {
-		List<FlashCard> flashCards = cardDao.getFlashCards();
-		for (int i = 0; i < flashCards.size(); i++) {
-			FlashCard flashcard = flashCards.get(i);
-			cardbox.get(flashcard.getPhase()).add(flashcard);
-		}
+		flashcards = cardDao.getFlashCards();
+		Collections.shuffle(flashcards);
 	}
 
 	@Override
 	public FlashCard getNextCard() {
-		
-		if (currentCard == null && !cardbox.get(0).isEmpty()) {
-			return cardbox.get(0).remove();
+		if (flashcards.size() == 0)
+			return null;
+		else {
+			return flashcards.remove(0);
 		}
-		
-		int phase = currentCard.getPhase();
-		
-		if (cardbox.get(phase).isEmpty()) {
-			phase++;
-			return cardbox.get(phase).remove();
-		}
-		
-		return cardbox.get(phase).remove();
 	}
 
 	@Override
-	public void evaluateAnswer(boolean isCorrect) {
+	public boolean evaluateAnswer(boolean isCorrect) {
 		if(isCorrect) {
 			currentCard.incrementPhase();
-			cardbox.get(currentCard.getPhase()).add(currentCard);
 		}
 		else {
 			currentCard.setPhase(START_PHASE);
-			cardbox.get(START_PHASE).add(currentCard);
 		}	
+		cardDao.update(currentCard);
+		
+		if ((currentCard = getNextCard()) == null) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
