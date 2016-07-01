@@ -3,7 +3,6 @@ package de.htwsaar.flashcards.main;
 import javax.swing.SwingUtilities;
 
 import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
-import de.htwsaar.flashcards.dao.SQLiteJDBC;
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.ui.MainFrame;
 
