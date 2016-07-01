@@ -7,12 +7,12 @@ import java.sql.SQLException;
 
 public class SQLiteJDBC {
 	// System.getProperty("user.home") + "/" + "testdb.db";
-    private static final String URL = "jdbc:sqlite:flashcards.db";
+    private static final String URL = "jdbc:sqlite:flashcard.db";
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private static Connection con = null;
     
-    public static Connection getConnection() throws ClassNotFoundException {
+    public static Connection getConnection() throws ClassNotFoundException  {
         // load the sqlite-JDBC driver using the current class loader
         Class.forName("org.sqlite.JDBC");
     	

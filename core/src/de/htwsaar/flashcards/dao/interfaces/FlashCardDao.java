@@ -9,5 +9,4 @@ public interface FlashCardDao {
 	public void save(FlashCard flashcard);
 	public List<FlashCard> getFlashCards(); //TODO: Add the deck as a parameter
 	public FlashCard get(int id);
-	public void update(FlashCard flashCard);
 }

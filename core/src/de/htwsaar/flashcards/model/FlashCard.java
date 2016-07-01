@@ -10,23 +10,24 @@ public class FlashCard implements Comparable<FlashCard> {
 	private int cardId;
 	private String cardName;
 	private String cardQuestion;
-	private String cardAAnswer;
+	private String cardAnswer;
 	private int boxCounter;  // The phase in which the card is situated
 	private int stackId;
-	// private int owner;
+	//private int owner;
 	private String cardPicture;
 
-	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAAnswer, int boxCounter, int stackId,
+	
+public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId,
 			String cardPicture) {
-		super();
 		this.cardId = cardId;
 		this.cardName = cardName;
 		this.cardQuestion = cardQuestion;
-		this.cardAAnswer = cardAAnswer;
+		this.cardAnswer = cardAnswer;
 		this.boxCounter = boxCounter;
 		this.stackId = stackId;
+		//this.owner = owner;
 		this.cardPicture = cardPicture;
-	}
+	}	
 
 	public int getCardId() {
 		return cardId;
@@ -52,12 +53,12 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.cardQuestion = cardQuestion;
 	}
 
-	public String getCardAAnswer() {
-		return cardAAnswer;
+	public String getCardAnswer() {
+		return cardAnswer;
 	}
 
-	public void setCardAAnswer(String cardAAnswer) {
-		this.cardAAnswer = cardAAnswer;
+	public void setCardAnswer(String cardAAnswer) {
+		this.cardAnswer = cardAAnswer;
 	}
 
 	public int getBoxCounter() {
@@ -84,10 +85,18 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.cardPicture = cardPicture;
 	}
 
+/*	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}*/
+
 	@Override
 	public String toString() {
 		return "FlashCard [cardId=" + cardId + ", cardName=" + cardName + ", cardQuestion=" + cardQuestion
-				+ ", cardAAnswer=" + cardAAnswer + ", boxCounter=" + boxCounter + ", stackId=" + stackId
+				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stackId=" + stackId
 				+ ", cardPicture=" + cardPicture + "]";
 	}
 
