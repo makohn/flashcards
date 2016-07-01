@@ -16,7 +16,7 @@ public class GameEngineImpl implements GameEngine {
 	private FlashCardDao cardDao;
 	private FlashCard currentCard;
 	
-	public GameEngineImpl() {
+	public GameEngineImpl() throws ClassNotFoundException {
 		cardDao = new FlashCardDaoImpl();
 		loadFlashCards();
 		currentCard = getNextCard();
@@ -40,12 +40,12 @@ public class GameEngineImpl implements GameEngine {
 	@Override
 	public boolean evaluateAnswer(boolean isCorrect) {
 		if(isCorrect) {
-			currentCard.incrementPhase();
+			currentCard.incrementBoxCounter();
 		}
 		else {
-			currentCard.setPhase(START_PHASE);
+			currentCard.setBoxCounter(START_PHASE);
 		}	
-		cardDao.update(currentCard);
+		cardDao.save(currentCard);
 		
 		if ((currentCard = getNextCard()) == null) {
 			return false;

@@ -84,6 +84,10 @@ public FlashCard(int cardId, String cardName, String cardQuestion, String cardAn
 	public void setCardPicture(String cardPicture) {
 		this.cardPicture = cardPicture;
 	}
+	
+	public void incrementBoxCounter() {
+		this.boxCounter = boxCounter++;
+	}
 
 /*	public int getOwner() {
 		return owner;

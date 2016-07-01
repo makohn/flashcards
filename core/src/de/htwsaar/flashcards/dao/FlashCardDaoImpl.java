@@ -1,5 +1,5 @@
 package de.htwsaar.flashcards.dao;
-
+// Feick Martin
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,7 +69,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				//int owner = rsDatenmenge.getInt("Card_Owner");
 				String cardPicture = rsDatenmenge.getString("Card_Picture_Link");
 
-				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, null));
+				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 			//int owner = rsDatenmenge.getInt("Card_Owner");
 			String cardPicture = rsDatenmenge.getString("Card_Picture_Link");
 			
-			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, null);
+			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture);
 			
         } catch (SQLException ex) {
             System.err.println("Fehler beim laden des Datensatzes!");

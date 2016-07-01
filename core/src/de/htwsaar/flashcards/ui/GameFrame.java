@@ -43,7 +43,7 @@ public class GameFrame extends JFrame {
 	private int count = 1;
 	private boolean btnShowClicked = false;
 	
-	public GameFrame() {
+	public GameFrame() throws ClassNotFoundException {
 		
 		engine = new GameEngineImpl();
 		
@@ -72,7 +72,7 @@ public class GameFrame extends JFrame {
 		pnlInfo.add(lblCardCount);
 		
 		// Initialize the Q/A Area
-		txtCard = new JTextArea(engine.getCurrentCard().getQuestion());
+		txtCard = new JTextArea(engine.getCurrentCard().getCardQuestion());
 		txtCard.setLineWrap(true);
 		txtCard.setWrapStyleWord(true);
 		txtCard.setEditable(false);
@@ -104,7 +104,7 @@ public class GameFrame extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				if (engine.evaluateAnswer(true)) {
-					txtCard.setText(engine.getCurrentCard().getQuestion());
+					txtCard.setText(engine.getCurrentCard().getCardQuestion());
 					count++;
 					lblCardCount.setText("" + count);
 				}
@@ -120,10 +120,10 @@ public class GameFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (btnShowClicked) {
-					txtCard.setText(engine.getCurrentCard().getQuestion());
+					txtCard.setText(engine.getCurrentCard().getCardQuestion());
 					btnShowClicked = false;
 				} else {
-					txtCard.setText(engine.getCurrentCard().getAnswer());
+					txtCard.setText(engine.getCurrentCard().getCardQuestion());
 					btnShowClicked = true;
 				}
 			}
