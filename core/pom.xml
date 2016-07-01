@@ -16,4 +16,19 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.xerial</groupId>
+  		<artifactId>sqlite-jdbc</artifactId>
+  	</dependency>
+  </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>org.xerial</groupId>
+  			<artifactId>sqlite-jdbc</artifactId>
+  			<version>3.8.11.2</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
