@@ -2,70 +2,104 @@ package de.htwsaar.flashcards.model;
 
 /**
  * Basic Model Class representing a Flashcard Entity.
- * @author mkohn
+ * 
+ * @author mkohn & mfeick
  */
-public class FlashCard implements Comparable<FlashCard>{
+public class FlashCard implements Comparable<FlashCard> {
 
-	private int id;
-	private String question;
-	private String answer;
-	private int phase; //The phase in which the card is situated
-	
-	public FlashCard(int id, String question, String answer, int phase) {
-		this.id = id;
-		this.question = question;
-		this.answer = answer;
-		this.phase = phase;
-	}
+	private int cardId;
+	private String cardName;
+	private String cardQuestion;
+	private String cardAAnswer;
+	private int boxCounter;  // The phase in which the card is situated
+	private int stackId;
+	// private int owner;
+	private String cardPicture;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getQuestion() {
-		return question;
+	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAAnswer, int boxCounter, int stackId,
+			String cardPicture) {
+		super();
+		this.cardId = cardId;
+		this.cardName = cardName;
+		this.cardQuestion = cardQuestion;
+		this.cardAAnswer = cardAAnswer;
+		this.boxCounter = boxCounter;
+		this.stackId = stackId;
+		this.cardPicture = cardPicture;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public int getCardId() {
+		return cardId;
 	}
 
-	public String getAnswer() {
-		return answer;
+	public void setCardId(int cardId) {
+		this.cardId = cardId;
 	}
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public String getCardName() {
+		return cardName;
 	}
 
-	public int getPhase() {
-		return phase;
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
 	}
 
-	public void setPhase(int phase) {
-		this.phase = phase;
+	public String getCardQuestion() {
+		return cardQuestion;
 	}
-	
-	public void incrementPhase() {
-		this.phase++;
+
+	public void setCardQuestion(String cardQuestion) {
+		this.cardQuestion = cardQuestion;
 	}
-	
+
+	public String getCardAAnswer() {
+		return cardAAnswer;
+	}
+
+	public void setCardAAnswer(String cardAAnswer) {
+		this.cardAAnswer = cardAAnswer;
+	}
+
+	public int getBoxCounter() {
+		return boxCounter;
+	}
+
+	public void setBoxCounter(int boxCounter) {
+		this.boxCounter = boxCounter;
+	}
+
+	public int getStackId() {
+		return stackId;
+	}
+
+	public void setStackId(int stackId) {
+		this.stackId = stackId;
+	}
+
+	public String getCardPicture() {
+		return cardPicture;
+	}
+
+	public void setCardPicture(String cardPicture) {
+		this.cardPicture = cardPicture;
+	}
+
 	@Override
 	public String toString() {
-		return "FlashCard [id=" + id + ", question=" + question + ", answer=" + answer + ", phase=" + phase + "]";
+		return "FlashCard [cardId=" + cardId + ", cardName=" + cardName + ", cardQuestion=" + cardQuestion
+				+ ", cardAAnswer=" + cardAAnswer + ", boxCounter=" + boxCounter + ", stackId=" + stackId
+				+ ", cardPicture=" + cardPicture + "]";
 	}
 
 	@Override
 	public int compareTo(FlashCard o) {
-		if (this.getPhase() <= o.getPhase())
+		if (this.getBoxCounter() <= o.getBoxCounter())
 			return -1;
-		else if (this.getPhase() > o.getPhase())
+		else if (this.getBoxCounter() > o.getBoxCounter())
 			return 1;
-			
+
 		return 0;
 	}
+
+
 }
