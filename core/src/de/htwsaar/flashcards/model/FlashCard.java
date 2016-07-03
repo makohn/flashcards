@@ -16,17 +16,23 @@ public class FlashCard implements Comparable<FlashCard> {
 	//private int owner;
 	private String cardPicture;
 
-	
-public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId,
+public FlashCard(String cardName, String cardQuestion, String cardAnswer, int stackId,
 			String cardPicture) {
-		this.cardId = cardId;
+	
 		this.cardName = cardName;
 		this.cardQuestion = cardQuestion;
 		this.cardAnswer = cardAnswer;
-		this.boxCounter = boxCounter;
 		this.stackId = stackId;
 		//this.owner = owner;
 		this.cardPicture = cardPicture;
+	}
+
+public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId,
+			String cardPicture) {
+	
+		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture);	
+		this.cardId = cardId;
+		this.boxCounter = boxCounter;
 	}	
 
 	public int getCardId() {
@@ -86,7 +92,7 @@ public FlashCard(int cardId, String cardName, String cardQuestion, String cardAn
 	}
 	
 	public void incrementBoxCounter() {
-		this.boxCounter = boxCounter++;
+		setBoxCounter(getBoxCounter()+1);
 	}
 
 /*	public int getOwner() {
