@@ -100,20 +100,8 @@ public class GameFrame extends JFrame {
 		pnlEval.add(btnInCorrect);
 		pnlEval.add(btnShowAnswer);
 		
-		btnCorrect.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				if (engine.evaluateAnswer(true)) {
-					txtCard.setText(engine.getCurrentCard().getCardQuestion());
-					count++;
-					lblCardCount.setText("" + count);
-				}
-				else {
-					JOptionPane.showMessageDialog(self, "Herzlichen Glückwunsch, du hast es für heute geschafft!");
-					self.dispatchEvent(new WindowEvent(self, WindowEvent.WINDOW_CLOSING));
-				}	
-			}
-		});
+		btnCorrect.addActionListener(new AnswerListener());
+		btnInCorrect.addActionListener(new AnswerListener());
 		
 		btnShowAnswer.addActionListener(new ActionListener() {
 			
@@ -123,10 +111,33 @@ public class GameFrame extends JFrame {
 					txtCard.setText(engine.getCurrentCard().getCardQuestion());
 					btnShowClicked = false;
 				} else {
-					txtCard.setText(engine.getCurrentCard().getCardQuestion());
+					txtCard.setText(engine.getCurrentCard().getCardAnswer());
 					btnShowClicked = true;
 				}
 			}
 		});
 	}	
+	
+	class AnswerListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			boolean isCorrect;
+			JButton origin = (JButton) e.getSource();
+			if (origin.equals(btnCorrect)) isCorrect = true;
+			else if (origin.equals(btnInCorrect)) isCorrect = false;
+			else return;  //TODO EXCEPTION ETC.
+			
+			if (engine.evaluateAnswer(isCorrect)) {
+				txtCard.setText(engine.getCurrentCard().getCardQuestion());
+				count++;
+				lblCardCount.setText("" + count);
+			}
+			else {
+				JOptionPane.showMessageDialog(self, "Herzlichen Glückwunsch, du hast es für heute geschafft!");
+				self.dispatchEvent(new WindowEvent(self, WindowEvent.WINDOW_CLOSING));
+			}		
+		}
+		
+	}
 }
