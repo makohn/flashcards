@@ -38,6 +38,18 @@ public class MainFrame extends JFrame{
 		});
 		
 		btnCreateCards = new JButton("Karten erstellen");
+		btnCreateCards.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				self.setVisible(false);
+				try {
+					new CreateCardFrame();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		add(btnNewGame);
 		add(btnCreateCards);
