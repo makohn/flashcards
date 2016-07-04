@@ -31,9 +31,9 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	@Override
 	public void delete(FlashCard flashcard) {
 		int cardId = flashcard.getCardId();
-	        String sql = "DELETE FROM Cards WHERE Card_Id = " + cardId;
+			sqlBefehl = "DELETE FROM Cards WHERE Card_Id = " + cardId;
 	        try {
-	            dbBefehl.executeUpdate(sql);
+	            dbBefehl.executeUpdate(sqlBefehl);
 	        } catch (SQLException ex) {
 	            System.err.println("Fehler beim loeschen des Datensatzes!");
 	        }	    
@@ -41,12 +41,12 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public void save(FlashCard flashcard) {
-        String sql = String.format("INSERT INTO Cards "
+		sqlBefehl = String.format("INSERT INTO Cards "
         + "(Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link) " +
         "VALUES (\"%s\", \"%s\", \"%s\" , %d, \"%s\")", flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(),  flashcard.getStackId(), flashcard.getCardPicture());
-        System.out.println(sql);
+        System.out.println(sqlBefehl);
         try {
-            dbBefehl.executeUpdate(sql);
+            dbBefehl.executeUpdate(sqlBefehl);
         } catch (SQLException ex) {
             Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,10 +54,10 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public void update(FlashCard flashcard) {
-		String sql = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")", flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(), flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
-        System.out.println(sql);
+		sqlBefehl = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")", flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(), flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
+        System.out.println(sqlBefehl);
         try {
-            dbBefehl.executeUpdate(sql);
+            dbBefehl.executeUpdate(sqlBefehl);
         } catch (SQLException ex) {
             Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,7 +119,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public FlashCard get(int id) {
-        String sqlBefehl = "select FROM Cards WHERE Card_Id = " + id;
+        sqlBefehl = "select * FROM Cards WHERE Card_Id = " + id;
         
         FlashCard flashcard = null;
         try {
