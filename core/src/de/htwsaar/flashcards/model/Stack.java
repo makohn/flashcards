@@ -23,7 +23,7 @@ public class Stack {
 		this.creationDate = creationDate;
 		this.lastEditDate = lastEditDate;
 		this.lastAccessDate = lastAccessDate;
-		NextAccessDate = nextAccessDate;
+		this.NextAccessDate = nextAccessDate;
 	}
 
 	public int getStackId() {
