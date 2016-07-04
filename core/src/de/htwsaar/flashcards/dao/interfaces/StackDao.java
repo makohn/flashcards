@@ -12,5 +12,4 @@ public interface StackDao {
 	public List<Stack> getStacks();
 	public Stack get(int StackId);
 	
-
 }
