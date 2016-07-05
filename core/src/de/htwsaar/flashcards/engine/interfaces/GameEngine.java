@@ -1,7 +1,12 @@
 package de.htwsaar.flashcards.engine.interfaces;
 
 import de.htwsaar.flashcards.model.FlashCard;
-
+/**
+ * Das Interface GameEngine kapselt die Funktionalität einer
+ * Spielsteuerungs-Klasse.
+ * @author mkohn
+ *
+ */
 public interface GameEngine {
 	public void loadFlashCards();
 	public FlashCard getNextCard();

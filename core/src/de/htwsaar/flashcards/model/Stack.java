@@ -3,6 +3,11 @@ package de.htwsaar.flashcards.model;
 //Feick Martin
 import java.sql.Date;
 
+/**
+ * Daten-Container Klasse (Model) fuer die Karten-Stapel Entitaet.
+ * 
+ * @author mkohn & mfeick
+ */
 public class Stack {
 
 	private int stackId;

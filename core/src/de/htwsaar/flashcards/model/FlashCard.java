@@ -1,7 +1,7 @@
 package de.htwsaar.flashcards.model;
 
 /**
- * Basic Model Class representing a Flashcard Entity.
+ * Daten-Container Klasse (Model) fuer die Karteikarten Entitaet.
  * 
  * @author mkohn & mfeick
  */
@@ -110,6 +110,10 @@ public FlashCard(int cardId, String cardName, String cardQuestion, String cardAn
 				+ ", cardPicture=" + cardPicture + "]";
 	}
 
+	/**
+	 * Dient dem Vergleichen von Karteikarten anhand deren
+	 * aktuellem Box-Count.
+	 */
 	@Override
 	public int compareTo(FlashCard o) {
 		if (this.getBoxCounter() <= o.getBoxCounter())
