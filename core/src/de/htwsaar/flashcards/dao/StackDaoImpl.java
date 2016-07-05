@@ -14,15 +14,15 @@ import de.htwsaar.flashcards.model.Stack;
 
 public class StackDaoImpl implements StackDao {
 
-	private String sqlBefehl = new String("");
+	private String sqlCommand = new String("");
 	private Connection con;
-	private Statement dbBefehl;
-	private ResultSet rsDatenmenge;
+	private Statement dbCommand;
+	private ResultSet results;
 
 	public StackDaoImpl() throws ClassNotFoundException {
 		try {
 			con = SQLiteJDBC.getConnection();
-			dbBefehl = con.createStatement();
+			dbCommand = con.createStatement();
 		} catch (SQLException ex) {
 			System.err.println("Fehler beim erstellen des Statements");
 		}
@@ -31,9 +31,9 @@ public class StackDaoImpl implements StackDao {
 	@Override
 	public void deleteStack(Stack stack) {
 		int stackId = stack.getStackId();
-		sqlBefehl = "DELETE FROM Cards WHERE Card_Id = " + stackId;
+		sqlCommand = "DELETE FROM Cards WHERE Card_Id = " + stackId;
         try {
-            dbBefehl.executeUpdate(sqlBefehl);
+            dbCommand.executeUpdate(sqlCommand);
         } catch (SQLException ex) {
             System.err.println("Fehler beim loeschen des Datensatzes!");
         }	
@@ -55,21 +55,21 @@ public class StackDaoImpl implements StackDao {
 	@Override
 	public List<Stack> getStacks() {
 		
-       sqlBefehl = "select * FROM Stacks";
+       sqlCommand = "select * FROM Stacks";
        
        List<Stack> stacks = new ArrayList<Stack>();
         
         try {
-        	rsDatenmenge = dbBefehl.executeQuery(sqlBefehl); 
+        	results = dbCommand.executeQuery(sqlCommand); 
         	
-			int stackId = rsDatenmenge.getInt("Stack_Id");
-			String stackName = rsDatenmenge.getString("Stack_Name");
-			int stackTyp = rsDatenmenge.getInt("Stack_Typ");
-			String stackSubject = rsDatenmenge.getString("Stack_Subject");
-			Date stackCreationDate = rsDatenmenge.getDate("Stack_CreationDate");
-			Date stackLastEditDate = rsDatenmenge.getDate("Stack_LastEditDate");
-			Date stackLastAccessDate = rsDatenmenge.getDate("Stack_LastAccessDate");
-			Date stackNextAccessDate = rsDatenmenge.getDate("Stack_NextAccessDate");
+			int stackId = results.getInt("Stack_Id");
+			String stackName = results.getString("Stack_Name");
+			int stackTyp = results.getInt("Stack_Typ");
+			String stackSubject = results.getString("Stack_Subject");
+			Date stackCreationDate = results.getDate("Stack_CreationDate");
+			Date stackLastEditDate = results.getDate("Stack_LastEditDate");
+			Date stackLastAccessDate = results.getDate("Stack_LastAccessDate");
+			Date stackNextAccessDate = results.getDate("Stack_NextAccessDate");
 			
 			stacks.add(new Stack(stackId, stackName, stackTyp, stackSubject, stackCreationDate, stackLastEditDate, stackLastAccessDate, stackNextAccessDate));
 			
@@ -82,20 +82,20 @@ public class StackDaoImpl implements StackDao {
 
 	@Override
 	public Stack getStack(int StackId) {
-        sqlBefehl = "select * FROM Stacks WHERE Stack_Id = " + StackId;
+        sqlCommand = "select * FROM Stacks WHERE Stack_Id = " + StackId;
         
        Stack stacks = null;
         try {
-        	rsDatenmenge = dbBefehl.executeQuery(sqlBefehl); 
+        	results = dbCommand.executeQuery(sqlCommand); 
         	
-			int stackId = rsDatenmenge.getInt("Stack_Id");
-			String stackName = rsDatenmenge.getString("Stack_Name");
-			int stackTyp = rsDatenmenge.getInt("Stack_Typ");
-			String stackSubject = rsDatenmenge.getString("Stack_Subject");
-			Date stackCreationDate = rsDatenmenge.getDate("Stack_CreationDate");
-			Date stackLastEditDate = rsDatenmenge.getDate("Stack_LastEditDate");
-			Date stackLastAccessDate = rsDatenmenge.getDate("Stack_LastAccessDate");
-			Date stackNextAccessDate = rsDatenmenge.getDate("Stack_NextAccessDate");
+			int stackId = results.getInt("Stack_Id");
+			String stackName = results.getString("Stack_Name");
+			int stackTyp = results.getInt("Stack_Typ");
+			String stackSubject = results.getString("Stack_Subject");
+			Date stackCreationDate = results.getDate("Stack_CreationDate");
+			Date stackLastEditDate = results.getDate("Stack_LastEditDate");
+			Date stackLastAccessDate = results.getDate("Stack_LastAccessDate");
+			Date stackNextAccessDate = results.getDate("Stack_NextAccessDate");
 			
 			stacks = new Stack(stackId, stackName, stackTyp, stackSubject, stackCreationDate, stackLastEditDate, stackLastAccessDate, stackNextAccessDate);
 			

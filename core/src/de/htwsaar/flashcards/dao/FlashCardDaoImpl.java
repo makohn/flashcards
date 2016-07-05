@@ -14,15 +14,15 @@ import de.htwsaar.flashcards.model.FlashCard;
 
 public class FlashCardDaoImpl implements FlashCardDao {
 
-	private String sqlBefehl = new String("");
+	private String sqlCommand = new String("");
 	private Connection con;
-	private Statement dbBefehl;
-	private ResultSet rsDatenmenge;
+	private Statement dbCommand;
+	private ResultSet results;
 	
     public FlashCardDaoImpl () throws ClassNotFoundException {
         try {
          con = SQLiteJDBC.getConnection();
-            dbBefehl = con.createStatement();
+            dbCommand = con.createStatement();
         } catch (SQLException ex) {
             System.err.println("Fehler beim erstellen des Statements");
         }
@@ -31,9 +31,9 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	@Override
 	public void deleteCard(FlashCard flashcard) {
 		int cardId = flashcard.getCardId();
-			sqlBefehl = "DELETE FROM Cards WHERE Card_Id = " + cardId;
+			sqlCommand = "DELETE FROM Cards WHERE Card_Id = " + cardId;
 	        try {
-	            dbBefehl.executeUpdate(sqlBefehl);
+	            dbCommand.executeUpdate(sqlCommand);
 	        } catch (SQLException ex) {
 	            System.err.println("Fehler beim loeschen des Datensatzes!");
 	        }	    
@@ -41,12 +41,12 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public void saveCard(FlashCard flashcard) {
-		sqlBefehl = String.format("INSERT INTO Cards "
+		sqlCommand = String.format("INSERT INTO Cards "
         + "(Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link) " +
         "VALUES (\"%s\", \"%s\", \"%s\" , %d, \"%s\")", flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(),  flashcard.getStackId(), flashcard.getCardPicture());
-        System.out.println(sqlBefehl);
+        System.out.println(sqlCommand);
         try {
-            dbBefehl.executeUpdate(sqlBefehl);
+            dbCommand.executeUpdate(sqlCommand);
         } catch (SQLException ex) {
             Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,10 +54,10 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public void updateCard(FlashCard flashcard) {
-		sqlBefehl = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")", flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(), flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
-        System.out.println(sqlBefehl);
+		sqlCommand = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")", flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(), flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
+        System.out.println(sqlCommand);
         try {
-            dbBefehl.executeUpdate(sqlBefehl);
+            dbCommand.executeUpdate(sqlCommand);
         } catch (SQLException ex) {
             Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,18 +69,18 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		List<FlashCard> liste = new ArrayList<FlashCard>();
 
 		try {
-			sqlBefehl = "SELECT * FROM Cards;";
-			rsDatenmenge = dbBefehl.executeQuery(sqlBefehl);
-			while (rsDatenmenge.next()) {
+			sqlCommand = "SELECT * FROM Cards;";
+			results = dbCommand.executeQuery(sqlCommand);
+			while (results.next()) {
 
-				int cardId = rsDatenmenge.getInt("Card_Id");
-				String cardName = rsDatenmenge.getString("Card_Name");
-				String cardQuestion = rsDatenmenge.getString("Card_Question");
-				String cardAAnswer = rsDatenmenge.getString("Card_Answer");
-				int boxCounter = rsDatenmenge.getInt("Card_Box_Counter");
-				int stackId = rsDatenmenge.getInt("Card_Stack_ID");
-				//int owner = rsDatenmenge.getInt("Card_Owner");
-				String cardPicture = rsDatenmenge.getString("Card_Picture_Link");
+				int cardId = results.getInt("Card_Id");
+				String cardName = results.getString("Card_Name");
+				String cardQuestion = results.getString("Card_Question");
+				String cardAAnswer = results.getString("Card_Answer");
+				int boxCounter = results.getInt("Card_Box_Counter");
+				int stackId = results.getInt("Card_Stack_ID");
+				//int owner = results.getInt("Card_Owner");
+				String cardPicture = results.getString("Card_Picture_Link");
 
 				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture));
 			}
@@ -96,18 +96,18 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		List<FlashCard> liste = new ArrayList<FlashCard>();
 
 		try {
-			sqlBefehl = "SELECT * FROM Cards WHERE boxCount = " + box + ";";
-			rsDatenmenge = dbBefehl.executeQuery(sqlBefehl);
-			while (rsDatenmenge.next()) {
+			sqlCommand = "SELECT * FROM Cards WHERE Card_Box_Counter = " + box + ";";
+			results = dbCommand.executeQuery(sqlCommand);
+			while (results.next()) {
 
-				int cardId = rsDatenmenge.getInt("Card_Id");
-				String cardName = rsDatenmenge.getString("Card_Name");
-				String cardQuestion = rsDatenmenge.getString("Card_Question");
-				String cardAAnswer = rsDatenmenge.getString("Card_Answer");
-				int boxCounter = rsDatenmenge.getInt("Card_Box_Counter");
-				int stackId = rsDatenmenge.getInt("Card_Stack_ID");
-				//int owner = rsDatenmenge.getInt("Card_Owner");
-				String cardPicture = rsDatenmenge.getString("Card_Picture_Link");
+				int cardId = results.getInt("Card_Id");
+				String cardName = results.getString("Card_Name");
+				String cardQuestion = results.getString("Card_Question");
+				String cardAAnswer = results.getString("Card_Answer");
+				int boxCounter = results.getInt("Card_Box_Counter");
+				int stackId = results.getInt("Card_Stack_ID");
+				//int owner = results.getInt("Card_Owner");
+				String cardPicture = results.getString("Card_Picture_Link");
 
 				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture));
 			}
@@ -119,20 +119,20 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public FlashCard getCard(int id) {
-        sqlBefehl = "select * FROM Cards WHERE Card_Id = " + id;
+        sqlCommand = "select * FROM Cards WHERE Card_Id = " + id;
         
         FlashCard flashcard = null;
         try {
-        	rsDatenmenge = dbBefehl.executeQuery(sqlBefehl); 
+        	results = dbCommand.executeQuery(sqlCommand); 
         	
-			int cardId = rsDatenmenge.getInt("Card_Id");
-			String cardName = rsDatenmenge.getString("Card_Name");
-			String cardQuestion = rsDatenmenge.getString("Card_Question");
-			String cardAAnswer = rsDatenmenge.getString("Card_Answer");
-			int boxCounter = rsDatenmenge.getInt("Card_Box_Counter");
-			int stackId = rsDatenmenge.getInt("Card_Stack_ID");
-			//int owner = rsDatenmenge.getInt("Card_Owner");
-			String cardPicture = rsDatenmenge.getString("Card_Picture_Link");
+			int cardId = results.getInt("Card_Id");
+			String cardName = results.getString("Card_Name");
+			String cardQuestion = results.getString("Card_Question");
+			String cardAAnswer = results.getString("Card_Answer");
+			int boxCounter = results.getInt("Card_Box_Counter");
+			int stackId = results.getInt("Card_Stack_ID");
+			//int owner = results.getInt("Card_Owner");
+			String cardPicture = results.getString("Card_Picture_Link");
 			
 			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture);
 			
