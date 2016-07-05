@@ -70,7 +70,7 @@ public class GameEngineImpl implements GameEngine {
 			currentCard.setBoxCounter(START_PHASE);
 		}	
 		//System.out.println(currentCard.getBoxCounter());
-		cardDao.update(currentCard);
+		cardDao.updateCard(currentCard);
 		
 		if ((currentCard = getNextCard()) == null) {
 			return false;

@@ -29,7 +29,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
     }
 
 	@Override
-	public void delete(FlashCard flashcard) {
+	public void deleteCard(FlashCard flashcard) {
 		int cardId = flashcard.getCardId();
 			sqlBefehl = "DELETE FROM Cards WHERE Card_Id = " + cardId;
 	        try {
@@ -40,7 +40,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	@Override
-	public void save(FlashCard flashcard) {
+	public void saveCard(FlashCard flashcard) {
 		sqlBefehl = String.format("INSERT INTO Cards "
         + "(Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link) " +
         "VALUES (\"%s\", \"%s\", \"%s\" , %d, \"%s\")", flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(),  flashcard.getStackId(), flashcard.getCardPicture());
@@ -53,7 +53,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
     }
 
 	@Override
-	public void update(FlashCard flashcard) {
+	public void updateCard(FlashCard flashcard) {
 		sqlBefehl = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")", flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(), flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
         System.out.println(sqlBefehl);
         try {
@@ -118,7 +118,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	@Override
-	public FlashCard get(int id) {
+	public FlashCard getCard(int id) {
         sqlBefehl = "select * FROM Cards WHERE Card_Id = " + id;
         
         FlashCard flashcard = null;

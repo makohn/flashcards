@@ -29,7 +29,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	@Override
-	public void delete(Stack stack) {
+	public void deleteStack(Stack stack) {
 		int stackId = stack.getStackId();
 		sqlBefehl = "DELETE FROM Cards WHERE Card_Id = " + stackId;
         try {
@@ -41,13 +41,13 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	@Override
-	public void save(Stack stack) {
+	public void saveStack(Stack stack) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void update(Stack stack) {
+	public void updateStack(Stack stack) {
 		// TODO Auto-generated method stub
 
 	}
@@ -81,7 +81,7 @@ public class StackDaoImpl implements StackDao {
 
 
 	@Override
-	public Stack get(int StackId) {
+	public Stack getStack(int StackId) {
         sqlBefehl = "select * FROM Stacks WHERE Stack_Id = " + StackId;
         
        Stack stacks = null;

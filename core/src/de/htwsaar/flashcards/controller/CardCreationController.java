@@ -15,6 +15,6 @@ public class CardCreationController {
 	
 	public void saveCard(String name, String question, String answer) {
 		FlashCard flashcard = new FlashCard(name, question, answer, 1, null);
-		flashCardDao.save(flashcard);
+		flashCardDao.saveCard(flashcard);
 	}
 }

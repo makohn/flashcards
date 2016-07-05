@@ -6,10 +6,10 @@ import de.htwsaar.flashcards.model.Stack;
 
 public interface StackDao {
 	
-	public void delete(Stack stack);
-	public void save(Stack stack);
-	public void update(Stack stack);
+	public void deleteStack(Stack stack);
+	public void saveStack(Stack stack);
+	public void updateStack(Stack stack);
 	public List<Stack> getStacks();
-	public Stack get(int StackId);
+	public Stack getStack(int StackId);
 	
 }
