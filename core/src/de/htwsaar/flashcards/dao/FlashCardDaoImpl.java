@@ -77,7 +77,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				int cardId = results.getInt("Card_Id");
 				String cardName = results.getString("Card_Name");
 				String cardQuestion = results.getString("Card_Question");
-				String cardAAnswer = results.getString("Card_Answer");
+				String cardAnswer = results.getString("Card_Answer");
 				int boxCounter = results.getInt("Card_Box_Counter");
 				int stackId = results.getInt("Card_Stack_ID");
 				//int owner = results.getInt("Card_Owner");
@@ -85,7 +85,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 				String cardPicture = results.getString("Card_Picture_Link");
 
-				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
+				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,7 +106,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				int cardId = results.getInt("Card_Id");
 				String cardName = results.getString("Card_Name");
 				String cardQuestion = results.getString("Card_Question");
-				String cardAAnswer = results.getString("Card_Answer");
+				String cardAnswer = results.getString("Card_Answer");
 				int boxCounter = results.getInt("Card_Box_Counter");
 				int stackId = results.getInt("Card_Stack_ID");
 				//int owner = results.getInt("Card_Owner");
@@ -114,7 +114,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 				String cardPicture = results.getString("Card_Picture_Link");
 
-				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
+				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,7 +133,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 			int cardId = results.getInt("Card_Id");
 			String cardName = results.getString("Card_Name");
 			String cardQuestion = results.getString("Card_Question");
-			String cardAAnswer = results.getString("Card_Answer");
+			String cardAnswer = results.getString("Card_Answer");
 			int boxCounter = results.getInt("Card_Box_Counter");
 			int stackId = results.getInt("Card_Stack_ID");
 			//int owner = results.getInt("Card_Owner");
@@ -141,7 +141,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 			Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 			String cardPicture = results.getString("Card_Picture_Link");
 			
-			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture);
+			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture);
 			
         } catch (SQLException ex) {
             System.err.println("Fehler beim laden des Datensatzes!");

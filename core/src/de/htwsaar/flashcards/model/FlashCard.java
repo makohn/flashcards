@@ -16,27 +16,27 @@ public class FlashCard implements Comparable<FlashCard> {
 	private int boxCounter; // The phase in which the card is situated
 	private int stackId;
 	// private int owner;
-	private Date lastAccessDate;
-	private Date NextAccessDate;
+	private Date cardLastAccessDate;
+	private Date cardNextAccessDate;
 	private String cardPicture;
 
-	public FlashCard(String cardName, String cardQuestion, String cardAnswer, int stackId, String cardPicture, Date lastAccessDate
-	 , Date NextAccessDate) {
+	public FlashCard(String cardName, String cardQuestion, String cardAnswer, int stackId, String cardPicture, Date cardLastAccessDate
+	 , Date cardNextAccessDate) {
 
 		this.cardName = cardName;
 		this.cardQuestion = cardQuestion;
 		this.cardAnswer = cardAnswer;
 		this.stackId = stackId;
 		// this.owner = owner;
-		this.lastAccessDate = lastAccessDate;
-		this.NextAccessDate = NextAccessDate;
+		this.cardLastAccessDate = cardLastAccessDate;
+		this.cardNextAccessDate = cardNextAccessDate;
 		this.cardPicture = cardPicture;
 	}
 
-	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId, Date lastAccessDate ,
-			  Date NextAccessDate ,	String cardPicture)
+	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId, Date cardLastAccessDate ,
+			  Date cardNextAccessDate ,	String cardPicture)
 	{
-		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture, NextAccessDate , lastAccessDate);
+		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture, cardNextAccessDate , cardLastAccessDate);
 		this.cardId = cardId;
 		this.boxCounter = boxCounter;
 	}
@@ -46,6 +46,10 @@ public class FlashCard implements Comparable<FlashCard> {
 	 * 
 	 * public void setOwner(int owner) { this.owner = owner; }
 	 */
+	
+	public void incrementBoxCounter() {
+		this.boxCounter++;
+	}
 
 	public int getCardId() {
 		return cardId;
@@ -95,20 +99,20 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.stackId = stackId;
 	}
 
-	public Date getLastAccessDate() {
-		return lastAccessDate;
+	public Date getcardLastAccessDate() {
+		return cardLastAccessDate;
 	}
 
-	public void setLastAccessDate(Date lastAccessDate) {
-		this.lastAccessDate = lastAccessDate;
+	public void setcardLastAccessDate(Date cardLastAccessDate) {
+		this.cardLastAccessDate = cardLastAccessDate;
 	}
 
-	public Date getNextAccessDate() {
-		return NextAccessDate;
+	public Date getcardNextAccessDate() {
+		return cardNextAccessDate;
 	}
 
-	public void setNextAccessDate(Date nextAccessDate) {
-		NextAccessDate = nextAccessDate;
+	public void setcardNextAccessDate(Date cardNextAccessDate) {
+		cardNextAccessDate = cardNextAccessDate;
 	}
 
 	public String getCardPicture() {
@@ -125,7 +129,7 @@ public class FlashCard implements Comparable<FlashCard> {
 	public String toString() {
 		return "FlashCard [cardId=" + cardId + ", cardName=" + cardName + ", cardQuestion=" + cardQuestion
 				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stackId=" + stackId
-				+ ", lastAccessDate=" + lastAccessDate + ", NextAccessDate=" + NextAccessDate + ", cardPicture="
+				+ ", cardLastAccessDate=" + cardLastAccessDate + ", cardNextAccessDate=" + cardNextAccessDate + ", cardPicture="
 				+ cardPicture + "]";
 	}
 
