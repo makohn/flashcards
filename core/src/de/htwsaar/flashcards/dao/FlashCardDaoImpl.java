@@ -1,6 +1,7 @@
 package de.htwsaar.flashcards.dao;
 // Feick Martin
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,9 +81,11 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				int boxCounter = results.getInt("Card_Box_Counter");
 				int stackId = results.getInt("Card_Stack_ID");
 				//int owner = results.getInt("Card_Owner");
+				Date cardLastAccessDate = results.getDate("Stack_LastAccessDate");
+				Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 				String cardPicture = results.getString("Card_Picture_Link");
 
-				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture));
+				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,9 +110,11 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				int boxCounter = results.getInt("Card_Box_Counter");
 				int stackId = results.getInt("Card_Stack_ID");
 				//int owner = results.getInt("Card_Owner");
+				Date cardLastAccessDate = results.getDate("Stack_LastAccessDate");
+				Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 				String cardPicture = results.getString("Card_Picture_Link");
 
-				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture));
+				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,9 +137,11 @@ public class FlashCardDaoImpl implements FlashCardDao {
 			int boxCounter = results.getInt("Card_Box_Counter");
 			int stackId = results.getInt("Card_Stack_ID");
 			//int owner = results.getInt("Card_Owner");
+			Date cardLastAccessDate = results.getDate("Stack_LastAccessDate");
+			Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 			String cardPicture = results.getString("Card_Picture_Link");
 			
-			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardPicture);
+			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture);
 			
         } catch (SQLException ex) {
             System.err.println("Fehler beim laden des Datensatzes!");

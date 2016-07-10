@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class SQLiteJDBC {
 	// System.getProperty("user.home") + "/" + "testdb.db";
-    private static final String URL = "jdbc:sqlite:flashcard.db";
+    private static final String URL = "jdbc:sqlite:flashcardohneUser.db";
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private static Connection con = null;
