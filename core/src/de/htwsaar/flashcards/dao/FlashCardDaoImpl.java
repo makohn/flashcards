@@ -1,4 +1,5 @@
 package de.htwsaar.flashcards.dao;
+
 // Feick Martin
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,51 +20,55 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	private Connection con;
 	private Statement dbCommand;
 	private ResultSet results;
-	
-    public FlashCardDaoImpl () throws ClassNotFoundException {
-        try {
-         con = SQLiteJDBC.getConnection();
-            dbCommand = con.createStatement();
-        } catch (SQLException ex) {
-            System.err.println("Fehler beim erstellen des Statements");
-        }
-    }
+
+	public FlashCardDaoImpl() throws ClassNotFoundException {
+		try {
+			con = SQLiteJDBC.getConnection();
+			dbCommand = con.createStatement();
+		} catch (SQLException ex) {
+			System.err.println("Fehler beim erstellen des Statements");
+		}
+	}
 
 	@Override
 	public void deleteCard(FlashCard flashcard) {
 		int cardId = flashcard.getCardId();
-			sqlCommand = "DELETE FROM Cards WHERE Card_Id = " + cardId;
-	        try {
-	            dbCommand.executeUpdate(sqlCommand);
-	        } catch (SQLException ex) {
-	            System.err.println("Fehler beim loeschen des Datensatzes!");
-	        }	    
+		sqlCommand = "DELETE FROM Cards WHERE Card_Id = " + cardId;
+		try {
+			dbCommand.executeUpdate(sqlCommand);
+		} catch (SQLException ex) {
+			System.err.println("Fehler beim loeschen des Datensatzes!");
+		}
 	}
 
 	@Override
 	public void saveCard(FlashCard flashcard) {
-		sqlCommand = String.format("INSERT INTO Cards "
-        + "(Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link) " +
-        "VALUES (\"%s\", \"%s\", \"%s\" , %d, \"%s\")", flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(),  flashcard.getStackId(), flashcard.getCardPicture());
-        System.out.println(sqlCommand);
-        try {
-            dbCommand.executeUpdate(sqlCommand);
-        } catch (SQLException ex) {
-            Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+		sqlCommand = String.format(
+				"INSERT INTO Cards " + "(Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link) "
+						+ "VALUES (\"%s\", \"%s\", \"%s\" , %d, \"%s\")",
+				flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(), flashcard.getStackId(),
+				flashcard.getCardPicture());
+		System.out.println(sqlCommand);
+		try {
+			dbCommand.executeUpdate(sqlCommand);
+		} catch (SQLException ex) {
+			Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
 	@Override
 	public void updateCard(FlashCard flashcard) {
-		sqlCommand = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")", flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(), flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
-        System.out.println(sqlCommand);
-        try {
-            dbCommand.executeUpdate(sqlCommand);
-        } catch (SQLException ex) {
-            Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-	}	
-	
+		sqlCommand = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")",
+				flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(),
+				flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
+		System.out.println(sqlCommand);
+		try {
+			dbCommand.executeUpdate(sqlCommand);
+		} catch (SQLException ex) {
+			Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
 	@Override
 	public List<FlashCard> getFlashCards() {
 
@@ -80,19 +85,20 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				String cardAnswer = results.getString("Card_Answer");
 				int boxCounter = results.getInt("Card_Box_Counter");
 				int stackId = results.getInt("Card_Stack_ID");
-				//int owner = results.getInt("Card_Owner");
+				// int owner = results.getInt("Card_Owner");
 				Date cardLastAccessDate = results.getDate("Stack_LastAccessDate");
 				Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 				String cardPicture = results.getString("Card_Picture_Link");
 
-				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
+				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAnswer, boxCounter, stackId,
+						cardLastAccessDate, cardNextAccessDate, cardPicture));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
 	}
-	
+
 	@Override
 	public List<FlashCard> getFlashCards(int box) {
 
@@ -109,12 +115,13 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				String cardAnswer = results.getString("Card_Answer");
 				int boxCounter = results.getInt("Card_Box_Counter");
 				int stackId = results.getInt("Card_Stack_ID");
-				//int owner = results.getInt("Card_Owner");
+				// int owner = results.getInt("Card_Owner");
 				Date cardLastAccessDate = results.getDate("Stack_LastAccessDate");
 				Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 				String cardPicture = results.getString("Card_Picture_Link");
 
-				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture));
+				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAnswer, boxCounter, stackId,
+						cardLastAccessDate, cardNextAccessDate, cardPicture));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,30 +131,30 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public FlashCard getCard(int id) {
-        sqlCommand = "select * FROM Cards WHERE Card_Id = " + id;
-        
-        FlashCard flashcard = null;
-        try {
-        	results = dbCommand.executeQuery(sqlCommand); 
-        	
+		sqlCommand = "select * FROM Cards WHERE Card_Id = " + id;
+
+		FlashCard flashcard = null;
+		try {
+			results = dbCommand.executeQuery(sqlCommand);
+
 			int cardId = results.getInt("Card_Id");
 			String cardName = results.getString("Card_Name");
 			String cardQuestion = results.getString("Card_Question");
 			String cardAnswer = results.getString("Card_Answer");
 			int boxCounter = results.getInt("Card_Box_Counter");
 			int stackId = results.getInt("Card_Stack_ID");
-			//int owner = results.getInt("Card_Owner");
+			// int owner = results.getInt("Card_Owner");
 			Date cardLastAccessDate = results.getDate("Stack_LastAccessDate");
 			Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
 			String cardPicture = results.getString("Card_Picture_Link");
-			
-			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAnswer ,boxCounter ,stackId, cardLastAccessDate, cardNextAccessDate, cardPicture);
-			
-        } catch (SQLException ex) {
-            System.err.println("Fehler beim laden des Datensatzes!");
-        }	
+
+			flashcard = new FlashCard(cardId, cardName, cardQuestion, cardAnswer, boxCounter, stackId,
+					cardLastAccessDate, cardNextAccessDate, cardPicture);
+
+		} catch (SQLException ex) {
+			System.err.println("Fehler beim laden des Datensatzes!");
+		}
 		return flashcard;
 	}
 
-	
 }
