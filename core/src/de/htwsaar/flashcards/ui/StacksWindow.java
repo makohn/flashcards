@@ -23,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import de.htwsaar.flashcards.ui.*;
+
 // Damit Objekte der Klasse StackWindow
 // zum ActionListener werden kann, muss das Interface
 // ActionListener implementiert werden
@@ -131,6 +133,12 @@ public class StacksWindow extends JFrame //implements ActionListener
 		
 		bntStudyStack.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				try {
+					new StudyWindow();
+				} catch (ClassNotFoundException e1) {
+				
+					e1.printStackTrace();
+				}
 			}
 		});
 		
