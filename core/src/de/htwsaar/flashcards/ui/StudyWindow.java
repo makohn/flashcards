@@ -124,9 +124,9 @@ public class StudyWindow extends JFrame {
 			
 			
 			//Init Image
-			if(engine.getCurrentCard().getCardPicture().trim().isEmpty() == false)
+			if(engine.getCurrentCard().getCardPicture() != null)
 			{
-				image = new ImageIcon(engine.getCurrentCard().getCardPicture());
+				image = new ImageIcon(engine.getCurrentCard().getCardPicture().trim());
 				lblImage = new JLabel(image);
 				lblImage.setVisible(true);
 			}
@@ -239,7 +239,7 @@ public class StudyWindow extends JFrame {
 		txtCard.setText(engine.getNextCard().getCardQuestion());
 		txtAnswer.setText(engine.getCurrentCard().getCardAnswer());
 		
-		if(engine.getCurrentCard().getCardPicture().trim().isEmpty() == true)
+		if(engine.getCurrentCard().getCardPicture() == null)
 		{
 			lblImage.setVisible(false);
 		}
@@ -250,9 +250,6 @@ public class StudyWindow extends JFrame {
 			lblImage.setVisible(true);
 			
 		}
-		
-		
-	
 	}
 	
 
