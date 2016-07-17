@@ -124,7 +124,7 @@ public class StudyWindow extends JFrame {
 			
 			
 			//Init Image
-			if(engine.getCurrentCard().getCardPicture().trim().isEmpty() == false)
+			if(engine.getCurrentCard().getCardPicture() == null)
 			{
 				image = new ImageIcon(engine.getCurrentCard().getCardPicture());
 				lblImage = new JLabel(image);
@@ -253,9 +253,6 @@ public class StudyWindow extends JFrame {
 			lblImage.setVisible(true);
 			
 		}
-		
-		
-	
 	}
 	
 
