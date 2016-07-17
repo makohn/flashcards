@@ -188,10 +188,7 @@ public class StudyWindow extends JFrame {
 			cos.insets = new Insets(50,50,0,0);
 			pnlEval.add(btnInCorrect, cos);
 		
-			
-			
-			
-			
+				
 		}	
 	
 	//Initiert die ganzen Listener

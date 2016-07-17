@@ -86,8 +86,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				int boxCounter = results.getInt("Card_Box_Counter");
 				int stackId = results.getInt("Card_Stack_ID");
 				// int owner = results.getInt("Card_Owner");
-				Date cardLastAccessDate = results.getDate("Stack_LastAccessDate");
-				Date cardNextAccessDate = results.getDate("Stack_NextAccessDate");
+				Date cardLastAccessDate = results.getDate("Card_LastAccessDate");
+				Date cardNextAccessDate = results.getDate("Card_NextAccessDate");
 				String cardPicture = results.getString("Card_Picture_Link");
 
 				liste.add(new FlashCard(cardId, cardName, cardQuestion, cardAnswer, boxCounter, stackId,
