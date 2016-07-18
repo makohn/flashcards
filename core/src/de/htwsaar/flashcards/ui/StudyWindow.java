@@ -165,8 +165,8 @@ public class StudyWindow extends JFrame {
 			pnlEval = new JPanel(new GridBagLayout());
 			GridBagConstraints cos = new GridBagConstraints();
 			
-			ImageIcon icn_correct = new ImageIcon("res/true.png");
-			ImageIcon icn_false = new ImageIcon("res/false.png");			
+			ImageIcon icn_correct = new ImageIcon("res/images/true.png");
+			ImageIcon icn_false = new ImageIcon("res/images/false.png");			
 			
 			//btn Correct
 			btnCorrect = new JButton(icn_correct);

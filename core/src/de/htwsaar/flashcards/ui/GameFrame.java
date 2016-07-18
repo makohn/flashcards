@@ -84,9 +84,9 @@ public class GameFrame extends JFrame {
 		
 		// Initialize the evaluation panel
 		pnlEval = new JPanel();
-		ImageIcon icn_correct = new ImageIcon("res/true.png");
-		ImageIcon icn_false = new ImageIcon("res/false.png");
-		ImageIcon icn_rev = new ImageIcon("res/reverse.png");
+		ImageIcon icn_correct = new ImageIcon("res/images/true.png");
+		ImageIcon icn_false = new ImageIcon("res/images/false.png");
+		ImageIcon icn_rev = new ImageIcon("res/images/reverse.png");
 		btnCorrect = new JButton(icn_correct);
 		btnInCorrect = new JButton(icn_false);
 		btnShowAnswer = new JButton(icn_rev);
