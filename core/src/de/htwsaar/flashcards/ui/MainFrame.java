@@ -43,7 +43,7 @@ public class MainFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				self.setVisible(false);
 				try {
-					new CreateCardFrame();
+					new EditStackWindow("Test");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
