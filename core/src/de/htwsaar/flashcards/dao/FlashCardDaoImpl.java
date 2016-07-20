@@ -11,6 +11,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import de.htwsaar.flashcards.dao.flashcard.pre.DeleteFlashCardDaoPreStatement;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
 
@@ -21,24 +29,29 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	private Statement dbCommand;
 	private ResultSet results;
 
-	public FlashCardDaoImpl() throws ClassNotFoundException {
-		try {
-			con = SQLiteJDBC.getConnection();
-			dbCommand = con.createStatement();
-		} catch (SQLException ex) {
-			System.err.println("Fehler beim erstellen des Statements");
-		}
+//	public FlashCardDaoImpl() throws ClassNotFoundException {
+//		try {
+//			con = SQLiteJDBC.getConnection();
+//			dbCommand = con.createStatement();
+//		} catch (SQLException ex) {
+//			System.err.println("Fehler beim erstellen des Statements");
+//		}
+//	}
+	
+ 	private JdbcTemplate jdbc; 
+ 
+ 	@Autowired 
+ 	public FlashCardDaoImpl(DataSource jdbc) { 
+ 		this.jdbc = new JdbcTemplate(jdbc); 
+ 	} 
+
+	public FlashCardDaoImpl() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void deleteCard(FlashCard flashcard) {
-		int cardId = flashcard.getCardId();
-		sqlCommand = "DELETE FROM Cards WHERE Card_Id = " + cardId;
-		try {
-			dbCommand.executeUpdate(sqlCommand);
-		} catch (SQLException ex) {
-			System.err.println("Fehler beim loeschen des Datensatzes!");
-		}
+	public void deleteCard(int flashcard) {
+		jdbc.update(new DeleteFlashCardDaoPreStatement(flashcard));
 	}
 
 	@Override

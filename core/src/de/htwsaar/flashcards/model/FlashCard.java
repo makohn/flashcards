@@ -47,6 +47,10 @@ public class FlashCard implements Comparable<FlashCard> {
 	 * public void setOwner(int owner) { this.owner = owner; }
 	 */
 	
+	public FlashCard() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void incrementBoxCounter() {
 		this.boxCounter++;
 	}

@@ -28,7 +28,4 @@ public class SQLiteJDBC {
         }
         return null;
     }
-	
-	
-
 }
