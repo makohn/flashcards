@@ -2,7 +2,6 @@ package de.htwsaar.flashcards.ui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -40,7 +39,7 @@ public class StudyWindow {
     private static final Border INNER_CARD_BORDER = BorderFactory.createLineBorder(Color.GRAY);
     private static final Border OUTER_CARD_BORDER = BorderFactory.createEmptyBorder(10, 10, 10, 10);
     
-    private GameEngine engine = new GameEngineImpl();
+    private GameEngine engine;
     
     private JTextArea txtCard;
     private JTextArea txtAnswer;
@@ -58,9 +57,14 @@ public class StudyWindow {
     private JPanel pnlImage;
     private JPanel pnlAnswer;
     private JPanel pnlEval;
-    private JFrame studyWindow = new JFrame();
+    private JFrame studyWindow;
 
     public StudyWindow() throws ClassNotFoundException {
+    	engine = new GameEngineImpl();
+    	studyWindow = new JFrame();
+    	
+    	studyWindow.setResizable(false);
+    	
         this.initInfoArea();
         this.initQuestionArea();
         this.initImageArea();
@@ -77,16 +81,16 @@ public class StudyWindow {
         this.pnlInfo.setBorder(OUTER_CARD_BORDER);
         this.progressbar = new JProgressBar(0, this.engine.getNrCards());
         this.progresscircle = new JProgressCircle(20);
-        this.progresscircle.setPreferredSize(new Dimension(100, 100));
+        this.progresscircle.setPreferredSize(new Dimension(50, 50));
         this.lblCardCounter = new JLabel("Q1");
         this.lblCardCounter.setFont(new Font("SansSerif", 1, 20));
         this.lblStackname = new JLabel("Test");
         this.lblStackname.setFont(FONT_COUNTER);
         this.pnlInfo.add(this.lblCardCounter);
-        layout.setHgap(120);
+        layout.setHgap(110);
         this.pnlInfo.add(this.progressbar);
-        layout.setHgap(120);
-        this.pnlInfo.add((Component)this.progresscircle);
+        layout.setHgap(110);
+        this.pnlInfo.add(progresscircle);
     }
 
     private void initQuestionArea() {
@@ -99,7 +103,7 @@ public class StudyWindow {
         this.txtCard.setEditable(false);
         this.txtCard.setBorder(INNER_CARD_BORDER);
         this.txtCard.setFont(FONT_CARD);
-        this.txtCard.setText(this.engine.getCurrentCard().getCardQuestion());
+        this.txtCard.setText(""/*this.engine.getCurrentCard().getCardQuestion()*/);
         this.pnlFlashcard.add(this.txtCard);
     }
 
@@ -119,7 +123,7 @@ public class StudyWindow {
         this.txtAnswer.setEditable(false);
         this.txtAnswer.setFont(FONT_CARD);
         this.txtAnswer.setBorder(INNER_CARD_BORDER);
-        this.txtAnswer.setText(this.engine.getCurrentCard().getCardAnswer());
+        this.txtAnswer.setText(""/*this.engine.getCurrentCard().getCardAnswer()*/);
         this.txtAnswer.setVisible(false);
         this.pnlAnswer.add(this.txtAnswer);
     }
@@ -143,16 +147,16 @@ public class StudyWindow {
         this.btnCorrect.setEnabled(false);
         cos.gridx = 0;
         cos.gridy = 2;
-        cos.insets = new Insets(0, 0, 0, 50);
-        this.pnlEval.add((Component)this.btnCorrect, cos);
+        cos.insets = new Insets(0, 0, 0, 100);
+        this.pnlEval.add(btnCorrect, cos);
         this.btnInCorrect = new JButton(ICN_INCORRECT);
         this.btnInCorrect.setContentAreaFilled(false);
         this.btnInCorrect.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.btnInCorrect.setEnabled(false);
         cos.gridx = 2;
         cos.gridy = 2;
-        cos.insets = new Insets(0, 50, 0, 0);
-        this.pnlEval.add((Component)this.btnInCorrect, cos);
+        cos.insets = new Insets(0, 100, 0, 0);
+        this.pnlEval.add(btnInCorrect, cos);
     }
 
     private void initFrame() {
@@ -166,13 +170,13 @@ public class StudyWindow {
         mainPanel.add(this.pnlEval);
         this.studyWindow.add(mainPanel);
         this.studyWindow.setTitle("Study");
-        this.studyWindow.setSize(580, 720);
+        this.studyWindow.setSize(650, 780);
         this.studyWindow.setDefaultCloseOperation(3);
         this.studyWindow.setVisible(true);
     }
 
     private void loadImage() {
-        this.imagePath = this.engine.getCurrentCard().getCardPicture();
+        this.imagePath =  null /*this.engine.getCurrentCard().getCardPicture()*/;
         ImageIcon icon = this.imagePath != null ? new ImageIcon(this.imagePath) : ICN_QUEST_IMG;
         this.lblQuestionImage.setIcon(SwingUtils.scale((ImageIcon)icon, (int)200, (int)200));
     }
