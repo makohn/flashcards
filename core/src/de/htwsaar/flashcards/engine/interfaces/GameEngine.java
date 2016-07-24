@@ -12,4 +12,5 @@ public interface GameEngine {
 	public FlashCard getNextCard();
 	public boolean evaluateAnswer(boolean isCorrect);
 	public FlashCard getCurrentCard();
+	public int getNrCards();
 }

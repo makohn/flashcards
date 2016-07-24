@@ -42,6 +42,11 @@ public class GameEngineImpl implements GameEngine {
 		currentCard = getNextCard();
 	}
 	
+	public GameEngineImpl(int mode) throws ClassNotFoundException {
+		this();
+		this.mode = mode;
+	}
+	
 	/**
 	 * Lädt Karten in einer uebergebenen 
 	 * Reihenfolge aus der Datenbank.
@@ -107,5 +112,10 @@ public class GameEngineImpl implements GameEngine {
 	@Override
 	public FlashCard getCurrentCard() {
 		return currentCard;
+	}
+	
+	@Override
+	public int getNrCards() {
+		return flashcards.size();
 	}
 }
