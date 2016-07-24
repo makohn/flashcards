@@ -1,13 +1,16 @@
 package de.htwsaar.flashcards.ui;
 
-import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.awt.*;
-
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,246 +19,205 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import de.htwsaar.flashcards.engine.GameEngineImpl;
 import de.htwsaar.flashcards.engine.interfaces.GameEngine;
+import de.htwsaar.flashcards.ui.component.GradientPanel;
+import de.htwsaar.flashcards.ui.component.JProgressCircle;
+import de.htwsaar.flashcards.util.SwingUtils;
 
+public class StudyWindow {
+	
+    private static final Font FONT_CARD = new Font("SansSerif", 0, 20);
+    private static final Font FONT_COUNTER = new Font("SansSerif", 2, 20);
+    private static final ImageIcon ICN_CORRECT = new ImageIcon("res/images/true.png");
+    private static final ImageIcon ICN_INCORRECT = new ImageIcon("res/images/false.png");
+    private static final ImageIcon ICN_QUEST_IMG = new ImageIcon("res/images/questionmarks.png");
+    private static final Border INNER_CARD_BORDER = BorderFactory.createLineBorder(Color.GRAY);
+    private static final Border OUTER_CARD_BORDER = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+    
+    private GameEngine engine = new GameEngineImpl();
+    
+    private JTextArea txtCard;
+    private JTextArea txtAnswer;
+    private JLabel lblStackname;
+    private JLabel lblCardCounter;
+    private JProgressBar progressbar;
+    private JProgressCircle progresscircle;
+    private JButton btnCorrect;
+    private JButton btnInCorrect;
+    private JButton btnShowAnswer;
+    private JLabel lblQuestionImage;
+    private String imagePath;
+    private JPanel pnlInfo;
+    private JPanel pnlFlashcard;
+    private JPanel pnlImage;
+    private JPanel pnlAnswer;
+    private JPanel pnlEval;
+    private JFrame studyWindow = new JFrame();
 
+    public StudyWindow() throws ClassNotFoundException {
+        this.initInfoArea();
+        this.initQuestionArea();
+        this.initImageArea();
+        this.initAnswerArea();
+        this.initEvaluationArea();
+        this.initFrame();
+        this.initListener();
+    }
 
-/*
- * Ui für die Abfrage der Flashcards
- * @author=Marco Becker
- */
-public class StudyWindow extends JFrame {
-	
-	private static final long serialVersionUID = 1L;
-	private static final Font FONT_CARD = new Font("SansSerif", Font.PLAIN, 20);
-	private static final Font FONT_COUNTER = new Font("SansSerif", Font.ITALIC, 20);
-	
-	private GameEngine engine;
-	
-	private JTextArea txtCard;
-	private JTextArea txtAnswer;
-	private JPanel pnlInfo;
-	private JLabel lblStackname;
-	private JLabel lblCardCount;
-	private JPanel pnlEval;
-	private JPanel pnlFlashcard;
-	private JPanel pnlAnswer;
-	
-	private JButton btnCorrect;
-	private JButton btnInCorrect;
-	private JButton btnShowAnswer;
-	private JLabel lblImage;
-	private ImageIcon image;
-	
-	
-	
-	//attribute
-	
+    private void initInfoArea() {
+    	FlowLayout layout = new FlowLayout();
+        this.pnlInfo = new JPanel(layout);
+        this.pnlInfo.setOpaque(false);
+        this.pnlInfo.setBorder(OUTER_CARD_BORDER);
+        this.progressbar = new JProgressBar(0, this.engine.getNrCards());
+        this.progresscircle = new JProgressCircle(20);
+        this.progresscircle.setPreferredSize(new Dimension(100, 100));
+        this.lblCardCounter = new JLabel("Q1");
+        this.lblCardCounter.setFont(new Font("SansSerif", 1, 20));
+        this.lblStackname = new JLabel("Test");
+        this.lblStackname.setFont(FONT_COUNTER);
+        this.pnlInfo.add(this.lblCardCounter);
+        layout.setHgap(120);
+        this.pnlInfo.add(this.progressbar);
+        layout.setHgap(120);
+        this.pnlInfo.add((Component)this.progresscircle);
+    }
 
-	/*
-	 * Konstruktor für Study UI, initialisierung der einzelnen Komponenten
-	 */
-	public StudyWindow() throws ClassNotFoundException
-	{		
-		engine = new GameEngineImpl();
-		
-		setTitle("Study");
-		setSize(500,500);
-		setLayout(new BorderLayout());
-		
-		//Init der Components und Listeners
-		initComponents();
-		initListener();
-		
-		add(pnlInfo, BorderLayout.NORTH);		
-		add(pnlFlashcard, BorderLayout.CENTER);		
-		add(pnlEval, BorderLayout.SOUTH);
-		
-		
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
-		
-	}
-	
-	
-	private void initComponents()
-	{
-			//Initialize the Info Area
-			pnlInfo = new JPanel(new GridBagLayout());
-			GridBagConstraints c = new GridBagConstraints();
-			
-			lblStackname = new JLabel();
-			lblStackname.setFont(FONT_COUNTER);
-			lblStackname.setForeground(Color.BLACK);
-			c.gridx = 0;
-			c.insets = new Insets(0,0,0,100);
-			pnlInfo.add(lblStackname, c);
-			
-			lblCardCount = new JLabel("1/100");
-			lblCardCount.setFont(FONT_COUNTER);
-			lblCardCount.setForeground(Color.BLUE);
-			c.gridx = 2;
-			c.insets = new Insets(0,50,0,0);
-			pnlInfo.add(lblCardCount, c);
-			
-			//JPanel für Q/A Area
-			pnlFlashcard = new JPanel();
-			pnlFlashcard.setLayout(new BoxLayout(pnlFlashcard, BoxLayout.Y_AXIS));
-			
-			// Initialize the Q/A Area
-			txtCard = new JTextArea();
-			txtCard.setLineWrap(true);
-			txtCard.setWrapStyleWord(true);
-			txtCard.setEditable(false);
-			txtCard.setFont(FONT_CARD);
-			txtCard.setBackground(Color.WHITE);
-			Border innerBorder = BorderFactory.createLineBorder(Color.GRAY);
-			Border outerBorder = BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 10);
-			txtCard.setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-			
-			txtCard.setText(engine.getCurrentCard().getCardQuestion());			
-			pnlFlashcard.add(txtCard);
-			
-			
-			//Init Image
-			if(engine.getCurrentCard().getCardPicture() != null)
-			{
-				image = new ImageIcon(engine.getCurrentCard().getCardPicture().trim());
-				lblImage = new JLabel(image);
-				lblImage.setVisible(true);
-			}
-			else
-			{
-				lblImage = new JLabel();
-				lblImage.setVisible(false);
-			}
-			lblImage.setHorizontalAlignment(JLabel.CENTER);
-			pnlFlashcard.add(lblImage);
-			
-			
-			// Initialze the answer panel und Button für antwort anzeigen, sowie Antwort Feld
-			pnlAnswer = new JPanel(new BorderLayout());
-			btnShowAnswer = new JButton("ShowAnswer");
-			btnShowAnswer.setBorder(BorderFactory.createEmptyBorder(5,5,50,5));
-			btnShowAnswer.setContentAreaFilled(true);
-			pnlAnswer.add(btnShowAnswer, BorderLayout.SOUTH);
-			
-			//Answer Component
-			txtAnswer = new JTextArea();
-			txtAnswer.setLineWrap(true);
-			txtAnswer.setWrapStyleWord(true);
-			txtAnswer.setEditable(false);
-			txtAnswer.setFont(FONT_CARD);
-			txtAnswer.setBackground(Color.WHITE);			
-			txtAnswer.setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-			//txtAnswer.setText(engine.getCurrentCard().getCardAnswer());
-			txtAnswer.setText("test");
-			txtAnswer.setVisible(false);
-			pnlAnswer.add(txtAnswer, BorderLayout.CENTER);
-			
-			pnlFlashcard.add(pnlAnswer);
-			
-			// Initialize the evaluation panel
-			pnlEval = new JPanel(new GridBagLayout());
-			GridBagConstraints cos = new GridBagConstraints();
-			
-			ImageIcon icn_correct = new ImageIcon("res/images/true.png");
-			ImageIcon icn_false = new ImageIcon("res/images/false.png");			
-			
-			//btn Correct
-			btnCorrect = new JButton(icn_correct);
-			btnCorrect.setContentAreaFilled(false);
-			btnCorrect.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-			btnCorrect.setEnabled(false);
-			cos.gridx = 0;
-			cos.gridy = 2;
-			cos.insets = new Insets(50,0,0,50);			
-			pnlEval.add(btnCorrect, cos);
-			
-			//Init btn InCorrect mit Position
-			btnInCorrect = new JButton(icn_false);
-			btnInCorrect.setContentAreaFilled(false);
-			btnInCorrect.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-			btnInCorrect.setEnabled(false);
-			cos.gridx = 2;
-			cos.gridy = 2;
-			cos.insets = new Insets(50,50,0,0);
-			pnlEval.add(btnInCorrect, cos);
-		
-				
-		}	
-	
-	//Initiert die ganzen Listener
-	private void initListener()
-	{
-		//Initiert den Listener für den Button btnShowAnswer
-		btnShowAnswer.addActionListener(new ActionListener() {			
+    private void initQuestionArea() {
+        this.pnlFlashcard = new JPanel(new CardLayout());
+        this.pnlFlashcard.setOpaque(false);
+        this.pnlFlashcard.setBorder(OUTER_CARD_BORDER);
+        this.txtCard = new JTextArea();
+        this.txtCard.setLineWrap(true);
+        this.txtCard.setWrapStyleWord(true);
+        this.txtCard.setEditable(false);
+        this.txtCard.setBorder(INNER_CARD_BORDER);
+        this.txtCard.setFont(FONT_CARD);
+        this.txtCard.setText(this.engine.getCurrentCard().getCardQuestion());
+        this.pnlFlashcard.add(this.txtCard);
+    }
 
-			@Override
+    private void initAnswerArea() {
+        this.pnlAnswer = new JPanel(new CardLayout());
+        this.pnlAnswer.setOpaque(false);
+        this.pnlAnswer.setBorder(OUTER_CARD_BORDER);
+        this.btnShowAnswer = new JButton("Antwort");
+        this.btnShowAnswer.setBorder(BorderFactory.createLineBorder(new Color(0, 163, 204)));
+        this.btnShowAnswer.setBackground(new Color(0, 163, 204));
+        this.btnShowAnswer.setForeground(Color.WHITE);
+        this.btnShowAnswer.setOpaque(true);
+        this.pnlAnswer.add(this.btnShowAnswer);
+        this.txtAnswer = new JTextArea();
+        this.txtAnswer.setLineWrap(true);
+        this.txtAnswer.setWrapStyleWord(true);
+        this.txtAnswer.setEditable(false);
+        this.txtAnswer.setFont(FONT_CARD);
+        this.txtAnswer.setBorder(INNER_CARD_BORDER);
+        this.txtAnswer.setText(this.engine.getCurrentCard().getCardAnswer());
+        this.txtAnswer.setVisible(false);
+        this.pnlAnswer.add(this.txtAnswer);
+    }
+
+    private void initImageArea() {
+        this.pnlImage = new JPanel();
+        this.pnlImage.setOpaque(false);
+        this.lblQuestionImage = new JLabel();
+        this.imagePath = "";
+        this.loadImage();
+        this.pnlImage.add(this.lblQuestionImage);
+    }
+
+    private void initEvaluationArea() {
+        this.pnlEval = new JPanel(new GridBagLayout());
+        this.pnlEval.setOpaque(false);
+        GridBagConstraints cos = new GridBagConstraints();
+        this.btnCorrect = new JButton(ICN_CORRECT);
+        this.btnCorrect.setContentAreaFilled(false);
+        this.btnCorrect.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.btnCorrect.setEnabled(false);
+        cos.gridx = 0;
+        cos.gridy = 2;
+        cos.insets = new Insets(0, 0, 0, 50);
+        this.pnlEval.add((Component)this.btnCorrect, cos);
+        this.btnInCorrect = new JButton(ICN_INCORRECT);
+        this.btnInCorrect.setContentAreaFilled(false);
+        this.btnInCorrect.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.btnInCorrect.setEnabled(false);
+        cos.gridx = 2;
+        cos.gridy = 2;
+        cos.insets = new Insets(0, 50, 0, 0);
+        this.pnlEval.add((Component)this.btnInCorrect, cos);
+    }
+
+    private void initFrame() {
+        UIManager.put("ToolTip.background", Color.white);
+        GradientPanel mainPanel = new GradientPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.add(pnlInfo);
+        mainPanel.add(pnlFlashcard);
+        mainPanel.add(pnlImage);
+        mainPanel.add(pnlAnswer);
+        mainPanel.add(this.pnlEval);
+        this.studyWindow.add(mainPanel);
+        this.studyWindow.setTitle("Study");
+        this.studyWindow.setSize(580, 720);
+        this.studyWindow.setDefaultCloseOperation(3);
+        this.studyWindow.setVisible(true);
+    }
+
+    private void loadImage() {
+        this.imagePath = this.engine.getCurrentCard().getCardPicture();
+        ImageIcon icon = this.imagePath != null ? new ImageIcon(this.imagePath) : ICN_QUEST_IMG;
+        this.lblQuestionImage.setIcon(SwingUtils.scale((ImageIcon)icon, (int)200, (int)200));
+    }
+
+    private void initListener() {
+        this.btnShowAnswer.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				
-				btnCorrect.setEnabled(true);
-				btnInCorrect.setEnabled(true);
 				btnShowAnswer.setVisible(false);
 				txtAnswer.setVisible(true);
+				btnCorrect.setVisible(true);
+				btnInCorrect.setVisible(true);
 			}
 		});
-		
-		btnCorrect.addActionListener(new ActionListener() {
+        
+        this.btnCorrect.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				//engine.evaluateAnswer(true);
-				btnCorrectInCorrect_Click(e);
+			public void actionPerformed(ActionEvent e) {
+				engine.evaluateAnswer(true);
+				btnCorrectInCorrect_Click();
 			}
 		});
-		
-		btnInCorrect.addActionListener(new ActionListener() {
+        
+        this.btnInCorrect.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				engine.evaluateAnswer(false);
-				btnCorrectInCorrect_Click(e);
+				btnCorrectInCorrect_Click();
 			}
 		});
-	}
-	
-	//Methode für die Buttons Correct und InCorrect
-	private void btnCorrectInCorrect_Click(Object e)
-	{
-		
-		btnCorrect.setEnabled(false);
-		btnInCorrect.setEnabled(false);
-		txtAnswer.setVisible(false);
-		btnShowAnswer.setVisible(true);
-		txtCard.setText(engine.getNextCard().getCardQuestion());
-		txtAnswer.setText(engine.getCurrentCard().getCardAnswer());
-		
-		if(engine.getCurrentCard().getCardPicture() == null)
-		{
-			lblImage.setVisible(false);
-		}
-		else
-		{
-			ImageIcon newImage = new ImageIcon(engine.getCurrentCard().getCardPicture());
-			lblImage.setIcon(newImage);
-			lblImage.setVisible(true);
-			
-		}
-	}
-	
+    }
 
-	public static void main(String[] args) throws ClassNotFoundException
-	{
-		new StudyWindow();
-	}
+    private void btnCorrectInCorrect_Click() {
+        int currentCard = this.progressbar.getValue() + 1;
+        this.btnCorrect.setEnabled(false);
+        this.btnInCorrect.setEnabled(false);
+        this.txtAnswer.setVisible(false);
+        this.btnShowAnswer.setVisible(true);
+        this.txtCard.setText(this.engine.getCurrentCard().getCardQuestion());
+        this.txtAnswer.setText(this.engine.getCurrentCard().getCardAnswer());
+        this.loadImage();
+        this.progressbar.setValue(currentCard);
+        this.lblCardCounter.setText("Q" + (currentCard + 1));
+        this.progresscircle.restart();
+    }
 }
-
