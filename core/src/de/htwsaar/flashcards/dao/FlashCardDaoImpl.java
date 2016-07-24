@@ -15,8 +15,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import de.htwsaar.flashcards.dao.flashcard.pre.DeleteFlashCardDaoPreStatement;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
@@ -71,9 +69,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 	@Override
 	public void updateCard(FlashCard flashcard) {
-		sqlCommand = String.format("INSERT or replace INTO Cards VALUES (%d, \"%s\", \"%s\", \"%s\" , %d, %d, \"%s\")",
-				flashcard.getCardId(), flashcard.getCardName(), flashcard.getCardQuestion(), flashcard.getCardAnswer(),
-				flashcard.getBoxCounter(), flashcard.getStackId(), flashcard.getCardPicture());
+		sqlCommand = String.format("UPDATE Cards SET Card_Box_Counter = %d WHERE Card_Id = %d",
+				flashcard.getBoxCounter(), flashcard.getCardId());
 		System.out.println(sqlCommand);
 		try {
 			dbCommand.executeUpdate(sqlCommand);
