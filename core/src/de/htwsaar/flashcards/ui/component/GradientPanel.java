@@ -1,4 +1,4 @@
-package de.htwsaar.flashcards.ui;
+package de.htwsaar.flashcards.ui.component;
 
 import java.awt.Color;
 import java.awt.GradientPaint;

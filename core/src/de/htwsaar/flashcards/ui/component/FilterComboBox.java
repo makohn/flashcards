@@ -1,4 +1,4 @@
-package de.htwsaar.flashcards.ui;
+package de.htwsaar.flashcards.ui.component;
 
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
