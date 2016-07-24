@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
+import de.htwsaar.flashcards.ui.component.GradientPanel;
+
 public class EditStackWindow {
 
 	private static final String FRAME_TITLE = "Stack bearbeiten";

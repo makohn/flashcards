@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import de.htwsaar.flashcards.ui.component.FilterComboBox;
+import de.htwsaar.flashcards.ui.component.GradientPanel;
+
 public class SelectStackFrame {
 	
 	private static final ImageIcon ICN_EDIT = new ImageIcon("res/images/edit.png");

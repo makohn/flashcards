@@ -29,7 +29,7 @@ public class MainFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				self.setVisible(false);
 				try {
-					new GameFrame();
+					new StudyWindow();
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
