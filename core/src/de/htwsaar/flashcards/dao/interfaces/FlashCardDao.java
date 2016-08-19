@@ -4,6 +4,13 @@ import java.util.List;
 
 import de.htwsaar.flashcards.model.FlashCard;
 
+/**
+ * Interface der FlashCardDaoImpl-Klasse
+ * 
+ * @author Feick Martin
+ * 
+ */
+
 public interface FlashCardDao {
 	
 	public void deleteCard(FlashCard flashcard);
