@@ -17,9 +17,17 @@ import org.springframework.stereotype.Component;
 import de.htwsaar.flashcards.dao.interfaces.StackDao;
 import de.htwsaar.flashcards.model.Stack;
 
+/**
+ * Die StackDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe Hierfür
+ * wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
+ * 
+ * @author Feick Martin
+ * 
+ */
+
 @Component("StackDaoImpl")
 public class StackDaoImpl implements StackDao {
-	
+
 	private NamedParameterJdbcTemplate jdbc;
 
 	@Autowired
@@ -27,8 +35,15 @@ public class StackDaoImpl implements StackDao {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
 
-	public StackDaoImpl() {}
-	
+	public StackDaoImpl() {
+	}
+
+	/**
+	 * Klasse zum loeschen eines Stacks
+	 * 
+	 * @param stack
+	 *            - object
+	 */
 	@Override
 	public void deleteStack(Stack stack) {
 		int stackId = stack.getStackId();
@@ -39,33 +54,53 @@ public class StackDaoImpl implements StackDao {
 
 		jdbc.update(delete, paramSource);
 	}
-	
+
+	/**
+	 * Klasse zum speichern eines neuen Stacks
+	 * 
+	 * @param stack
+	 *            - object
+	 */
 	@Override
 	public void saveStack(Stack stack) {
-		
+
 		String query = "INSERT INTO Stacks (Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
 				+ "VALUES (:Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
-				
-		MapSqlParameterSource paramSource = getStackParameterSource(stack,0);
-	
+
+		MapSqlParameterSource paramSource = getStackParameterSource(stack, 0);
+
 		jdbc.update(query, paramSource);
 	}
 
+	/**
+	 * Klasse zum "aktualisieren" eines Stacks
+	 * 
+	 * @param stack
+	 *            - object
+	 */
 	@Override
 	public void updateStack(Stack stack) {
-		
+
 		String query = "INSERT or replace INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
 				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
-				
-		MapSqlParameterSource paramSource = getStackParameterSource(stack,1);
-	
+
+		MapSqlParameterSource paramSource = getStackParameterSource(stack, 1);
+
 		jdbc.update(query, paramSource);
 	}
-	
+
+	/**
+	 * Hilfklasse zum speichern eines neuen Stacks
+	 * 
+	 * @param stack
+	 *            - object
+	 * @param check
+	 *            - integer zum zuordnen der aufrufenden Funktion
+	 */
 	private MapSqlParameterSource getStackParameterSource(Stack stack, int check) {
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		
+
 		paramSource.addValue("Card_Name", stack.getStackName());
 		paramSource.addValue("Card_Question", stack.getTyp());
 		paramSource.addValue("Card_Answer", stack.getSubject());
@@ -73,13 +108,18 @@ public class StackDaoImpl implements StackDao {
 		paramSource.addValue("Card_Stack_ID", stack.getLastEditDate());
 		paramSource.addValue("Stack_LastAccessDate", stack.getLastAccessDate());
 		paramSource.addValue("Stack_NextAccessDate", stack.getNextAccessDate());
-		
-		if(check == 1)
-		paramSource.addValue("Card_Id", stack.getStackId());
+
+		if (check == 1)
+			paramSource.addValue("Card_Id", stack.getStackId());
 
 		return paramSource;
 	}
-	
+
+	/**
+	 * Klasse die alle Stacks ausgibt
+	 * 
+	 * @return Liste mit allen Stacks die zur Zeit in der DB vorhanden sind
+	 */
 	@Override
 	public List<Stack> getStacks() {
 
@@ -87,10 +127,16 @@ public class StackDaoImpl implements StackDao {
 
 		return jdbc.query(query, new StackRowMapper());
 	}
-	
+
+	/**
+	 * Klasse die den Stack zu einer bestimmten ID ausgibt
+	 * 
+	 * @param stackId
+	 * @return stack - object welches gesucht wurde
+	 */
 	@Override
 	public Stack getStack(int stackId) {
-		
+
 		String query = "SELECT * FROM Stacks WHERE Stack_Id = :Stack_Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
@@ -98,13 +144,18 @@ public class StackDaoImpl implements StackDao {
 
 		try {
 			return (Stack) jdbc.queryForObject(query, paramSource, new StackRowMapper());
-		} 
-		catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Diese Klasse erstellt Stack-Objekte aus einem Resultset welches das
+	 * Ergebnis einer Datenbankanfrage war
+	 * 
+	 * @return stack - object
+	 */
 	private class StackRowMapper implements RowMapper<Stack> {
 
 		@Override

@@ -17,7 +17,8 @@ import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
 
 /**
- *
+ * Die FlashCardDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe
+ * Hierfür wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
  * 
  * @author Feick Martin
  * 
@@ -33,8 +34,15 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
 
-	public FlashCardDaoImpl() {}
+	public FlashCardDaoImpl() {
+	}
 
+	/**
+	 * Klasse zum loeschen einer Karte
+	 * 
+	 * @param flashcard
+	 *            - object
+	 */
 	@Override
 	public void deleteCard(FlashCard flashcard) {
 		int cardId = flashcard.getCardId();
@@ -46,16 +54,30 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		jdbc.update(delete, paramSource);
 	}
 
+	/**
+	 * Klasse zum speichern einer Karte
+	 * 
+	 * @param flashcard
+	 *            - object
+	 */
 	@Override
 	public void saveCard(FlashCard flashcard) {
 		String insert = "INSERT INTO Cards (Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link)"
-						+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Id, :Card_Picture_Link)";
-												
-			MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
-				
-			jdbc.update(insert, paramSource);
+				+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Id, :Card_Picture_Link)";
+
+		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
+
+		jdbc.update(insert, paramSource);
 	}
 
+	/**
+	 * Hilfsklasse zum speichern einer Karte
+	 * 
+	 * @param flashcard
+	 *            - object
+	 * @param check
+	 *            - integer zum zuordnen der aufrufenden Funktion
+	 */
 	private MapSqlParameterSource getFlashCardParameterSource(FlashCard flashcard) {
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
@@ -73,20 +95,31 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		return paramSource;
 	}
 
+	/**
+	 * Klasse zum "aktualisieren" einer Karte
+	 * 
+	 * @param flashcard
+	 *            - object
+	 */
 	@Override
 	public void updateCard(FlashCard flashcard) {
-		
+
 		int box = flashcard.getBoxCounter();
 		int id = flashcard.getCardId();
 		String query = "UPDATE Cards SET Card_Box_Counter = :Card_Box_Counter WHERE Card_Id = :Card_Id";
-				
+
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("Card_Box_Counter", box);
 		paramSource.addValue("Card_Id", id);
-		
+
 		jdbc.update(query, paramSource);
 	}
 
+	/**
+	 * Klasse die alle Karten ausgibt
+	 * 
+	 * @return Liste mit allen Karten die zur Zeit in der DB vorhanden sind
+	 */
 	@Override
 	public List<FlashCard> getFlashCards() {
 
@@ -95,21 +128,34 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		return jdbc.query(query, new FlashCardRowMapper());
 	}
 
+	/**
+	 * Klasse die den Karten aus einer bestimmen box zurück gibt
+	 * 
+	 * @param box
+	 *            - angabe der Box in der sich die Karte befindet
+	 * @return flashcard - object
+	 */
 	@Override
 	public List<FlashCard> getFlashCards(int box) {
-		
+
 		String query = "SELECT * FROM Cards WHERE Card_Box_Counter = :Card_Box_Counter";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("Card_Box_Counter", box);
 
-		return jdbc.query(query, paramSource, new FlashCardRowMapper()); 
-	
+		return jdbc.query(query, paramSource, new FlashCardRowMapper());
+
 	}
 
+	/**
+	 * Klasse die den Karte zu einer bestimmten ID zurück gibt
+	 * 
+	 * @param cardId
+	 * @return flashcard - object
+	 */
 	@Override
 	public FlashCard getCard(int cardId) {
-		
+
 		String query = "SELECT * FROM Cards WHERE Card_Id = :Card_Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
@@ -117,16 +163,17 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 		try {
 			return (FlashCard) jdbc.queryForObject(query, paramSource, new FlashCardRowMapper());
-		} 
-		catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	/**
-	 * This class serves as a utility to create Author Objects out of a
-	 * ResultSet that is received from a database query.
+	 * Diese Klasse erstellt Card-Objekte aus einem Resultset welches das
+	 * Ergebnis einer Datenbankanfrage war
+	 * 
+	 * @return flashcard - object
 	 */
 	private class FlashCardRowMapper implements RowMapper<FlashCard> {
 

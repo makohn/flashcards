@@ -6,7 +6,7 @@ import java.sql.Date;
 /**
  * Daten-Container Klasse (Model) fuer die Karten-Stapel Entitaet.
  * 
- * @author mkohn & mfeick
+ * @author mkohn & Feick Martin
  */
 public class Stack {
 

@@ -5,7 +5,7 @@ import java.sql.Date;
 /**
  * Daten-Container Klasse (Model) fuer die Karteikarten Entitaet.
  * 
- * @author mkohn & mfeick
+ * @author mkohn & Feick Martin
  */
 public class FlashCard implements Comparable<FlashCard> {
 

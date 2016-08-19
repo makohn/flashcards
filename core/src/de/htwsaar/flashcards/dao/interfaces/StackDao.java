@@ -4,6 +4,13 @@ import java.util.List;
 
 import de.htwsaar.flashcards.model.Stack;
 
+/**
+ * Interface der StackDaoImpl-Klasse
+ * 
+ * @author Feick Martin
+ * 
+ */
+
 public interface StackDao {
 	
 	public void deleteStack(Stack stack);

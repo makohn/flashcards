@@ -3,6 +3,14 @@ package de.htwsaar.flashcards.dao;
 import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+/**
+ * Klasse zum herstellen der Verbindung zur Datenbank durch Unterstützung des
+ * Springframeworks
+ * 
+ * @author Feick Martin
+ * 
+ */
+
 public class SQLiteJDBC {
 	// System.getProperty("user.home") + "/" + "testdb.db";
 	private static final String DRIVER = "org.sqlite.JDBC";

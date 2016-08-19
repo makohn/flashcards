@@ -8,8 +8,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
 import de.htwsaar.flashcards.ui.MainFrame;
 
- /* Dient dem Starten des Programms.
- * @author mkohn
+ /** 
+ * Dient dem Starten des Programms.
+ * @author mkohn, Feick Martin
  *
  */
 public class Main {
