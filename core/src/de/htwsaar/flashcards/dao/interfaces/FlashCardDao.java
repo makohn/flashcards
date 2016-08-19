@@ -6,7 +6,7 @@ import de.htwsaar.flashcards.model.FlashCard;
 
 public interface FlashCardDao {
 	
-	public void deleteCard(int flashcard);
+	public void deleteCard(FlashCard flashcard);
 	public void saveCard(FlashCard flashcard);
 	public void updateCard(FlashCard flashcard);
 	public List<FlashCard> getFlashCards(); //TODO: Add the deck as a parameter

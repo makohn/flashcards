@@ -103,20 +103,20 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.stackId = stackId;
 	}
 
-	public Date getcardLastAccessDate() {
+	public Date getCardLastAccessDate() {
 		return cardLastAccessDate;
 	}
 
-	public void setcardLastAccessDate(Date cardLastAccessDate) {
+	public void setCardLastAccessDate(Date cardLastAccessDate) {
 		this.cardLastAccessDate = cardLastAccessDate;
 	}
 
-	public Date getcardNextAccessDate() {
+	public Date getCardNextAccessDate() {
 		return cardNextAccessDate;
 	}
 
-	public void setcardNextAccessDate(Date cardNextAccessDate) {
-		cardNextAccessDate = cardNextAccessDate;
+	public void setCardNextAccessDate(Date cardNextAccessDate) {
+		this.cardNextAccessDate = cardNextAccessDate;
 	}
 
 	public String getCardPicture() {
