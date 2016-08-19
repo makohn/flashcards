@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
+import de.htwsaar.flashcards.dao.SQLiteJDBC;
 import de.htwsaar.flashcards.ui.MainFrame;
 
  /** 
@@ -29,12 +30,10 @@ public class Main {
 			}
 		});
 		
-		
-//	    FlashCardDaoImpl dao = new FlashCardDaoImpl(dataSource);
-//	    dao.deleteCard(1);
+
+    FlashCardDaoImpl dao = new FlashCardDaoImpl(SQLiteJDBC.getConnection());
+    System.out.println(dao.getCard(3));
 //		
 		
 	}
-	
-
 }
