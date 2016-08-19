@@ -21,7 +21,7 @@ public class SQLiteJDBC {
 
 			return dataSource;
 		} catch (Exception e) {
-			System.out.println("Es konnte keine Verbindung zur Datenbank hergestellt werden");
+			System.err.println("Es konnte keine Verbindung zur Datenbank hergestellt werden");
 			e.printStackTrace();
 		}
 		return null;

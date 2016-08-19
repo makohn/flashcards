@@ -30,6 +30,8 @@ public class Stack {
 		this.lastAccessDate = lastAccessDate;
 		this.NextAccessDate = nextAccessDate;
 	}
+	
+	public Stack() {}
 
 	public int getStackId() {
 		return stackId;

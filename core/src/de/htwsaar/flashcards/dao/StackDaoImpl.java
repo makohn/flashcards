@@ -1,132 +1,130 @@
 package de.htwsaar.flashcards.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import de.htwsaar.flashcards.dao.interfaces.StackDao;
 import de.htwsaar.flashcards.model.Stack;
 
+@Component("StackDaoImpl")
 public class StackDaoImpl implements StackDao {
+	
+	private NamedParameterJdbcTemplate jdbc;
 
-	private String sqlCommand = new String("");
-	private Connection con;
-	private Statement dbCommand;
-	private ResultSet results;
-
-	public StackDaoImpl() throws ClassNotFoundException {
-		try {
-			con = SQLiteJDBC.getConnection();
-			dbCommand = con.createStatement();
-		} catch (SQLException ex) {
-			System.err.println("Fehler beim erstellen des Statements");
-		}
+	@Autowired
+	public StackDaoImpl(DataSource jdbc) {
+		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
 
+	public StackDaoImpl() {}
+	
 	@Override
 	public void deleteStack(Stack stack) {
 		int stackId = stack.getStackId();
-		sqlCommand = "DELETE FROM Cards WHERE Card_Id = " + stackId;
-		try {
-			dbCommand.executeUpdate(sqlCommand);
-		} catch (SQLException ex) {
-			System.err.println("Fehler beim loeschen des Datensatzes!");
-		}
+		String delete = "Delete FROM Stacks WHERE Stack_Id = :Stack_Id";
 
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Stack_Id", stackId);
+
+		jdbc.update(delete, paramSource);
 	}
-
+	
 	@Override
 	public void saveStack(Stack stack) {
-		sqlCommand = String.format(
-				"INSERT INTO Stacks "
-						+ "(Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
-						+ "VALUES (%d, \"%s\", %d, \"%s\", %tD, %tD, %tD, %tD)",
-				stack.getStackName(), stack.getTyp(), stack.getSubject(), stack.getCreationDate(),
-				stack.getLastEditDate(), stack.getLastAccessDate(), stack.getNextAccessDate());
-		System.out.println(sqlCommand);
-		try {
-			dbCommand.executeUpdate(sqlCommand);
-		} catch (SQLException ex) {
-			Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
+		
+		String query = "INSERT INTO Stacks (Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
+				+ "VALUES (:Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
+				
+		MapSqlParameterSource paramSource = getStackParameterSource(stack,0);
+	
+		jdbc.update(query, paramSource);
 	}
 
 	@Override
 	public void updateStack(Stack stack) {
-		sqlCommand = String.format(
-				"INSERT or replace INTO Stacks "
-						+ "(Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
-						+ "VALUES (%d, \"%s\", %d, \"%s\", %tD, %tD, %tD, %tD)",
-				stack.getStackId(), stack.getStackName(), stack.getTyp(), stack.getSubject(), stack.getCreationDate(),
-				stack.getLastEditDate(), stack.getLastAccessDate(), stack.getNextAccessDate());
-		System.out.println(sqlCommand);
-		try {
-			dbCommand.executeUpdate(sqlCommand);
-		} catch (SQLException ex) {
-			Logger.getLogger(FlashCardDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
+		
+		String query = "INSERT or replace INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
+				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
+				
+		MapSqlParameterSource paramSource = getStackParameterSource(stack,1);
+	
+		jdbc.update(query, paramSource);
 	}
+	
+	private MapSqlParameterSource getStackParameterSource(Stack stack, int check) {
 
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		
+		paramSource.addValue("Card_Name", stack.getStackName());
+		paramSource.addValue("Card_Question", stack.getTyp());
+		paramSource.addValue("Card_Answer", stack.getSubject());
+		paramSource.addValue("Card_Box_Counter", stack.getCreationDate());
+		paramSource.addValue("Card_Stack_ID", stack.getLastEditDate());
+		paramSource.addValue("Stack_LastAccessDate", stack.getLastAccessDate());
+		paramSource.addValue("Stack_NextAccessDate", stack.getNextAccessDate());
+		
+		if(check == 1)
+		paramSource.addValue("Card_Id", stack.getStackId());
+
+		return paramSource;
+	}
+	
 	@Override
 	public List<Stack> getStacks() {
 
-		sqlCommand = "select * FROM Stacks";
+		String query = "SELECT * FROM Stacks;";
 
-		List<Stack> stacks = new ArrayList<Stack>();
-
-		try {
-			results = dbCommand.executeQuery(sqlCommand);
-
-			int stackId = results.getInt("Stack_Id");
-			String stackName = results.getString("Stack_Name");
-			int stackTyp = results.getInt("Stack_Typ");
-			String stackSubject = results.getString("Stack_Subject");
-			Date stackCreationDate = results.getDate("Stack_CreationDate");
-			Date stackLastEditDate = results.getDate("Stack_LastEditDate");
-			Date stackLastAccessDate = results.getDate("Stack_LastAccessDate");
-			Date stackNextAccessDate = results.getDate("Stack_NextAccessDate");
-
-			stacks.add(new Stack(stackId, stackName, stackTyp, stackSubject, stackCreationDate, stackLastEditDate,
-					stackLastAccessDate, stackNextAccessDate));
-
-		} catch (SQLException ex) {
-			System.err.println("Fehler beim laden des Datensatzes!");
-		}
-		return stacks;
+		return jdbc.query(query, new StackRowMapper());
 	}
-
+	
 	@Override
-	public Stack getStack(int StackId) {
-		sqlCommand = "select * FROM Stacks WHERE Stack_Id = " + StackId;
+	public Stack getStack(int stackId) {
+		
+		String query = "SELECT * FROM Stacks WHERE Stack_Id = :Stack_Id";
 
-		Stack stacks = null;
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Stack_Id", stackId);
+
 		try {
-			results = dbCommand.executeQuery(sqlCommand);
-
-			int stackId = results.getInt("Stack_Id");
-			String stackName = results.getString("Stack_Name");
-			int stackTyp = results.getInt("Stack_Typ");
-			String stackSubject = results.getString("Stack_Subject");
-			Date stackCreationDate = results.getDate("Stack_CreationDate");
-			Date stackLastEditDate = results.getDate("Stack_LastEditDate");
-			Date stackLastAccessDate = results.getDate("Stack_LastAccessDate");
-			Date stackNextAccessDate = results.getDate("Stack_NextAccessDate");
-
-			stacks = new Stack(stackId, stackName, stackTyp, stackSubject, stackCreationDate, stackLastEditDate,
-					stackLastAccessDate, stackNextAccessDate);
-
-		} catch (SQLException ex) {
-			System.err.println("Fehler beim laden des Datensatzes!");
+			return (Stack) jdbc.queryForObject(query, paramSource, new StackRowMapper());
+		} 
+		catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
 		}
-		return stacks;
+		return null;
 	}
+	
+	private class StackRowMapper implements RowMapper<Stack> {
 
+		@Override
+		public Stack mapRow(ResultSet results, int rowNum) throws SQLException {
+
+			Stack stack = new Stack();
+
+			try {
+				stack.setStackId(results.getInt("Card_Id"));
+				stack.setStackName(results.getString("Stack_Name"));
+				stack.setTyp(results.getInt("Stack_Typ"));
+				stack.setSubject(results.getString("Stack_Subject"));
+				stack.setCreationDate(results.getDate("Stack_CreationDate"));
+				stack.setLastEditDate(results.getDate("Stack_LastEditDate"));
+				stack.setLastAccessDate(results.getDate("Stack_LastAccessDate"));
+				stack.setNextAccessDate(results.getDate("Stack_NextAccessDate"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return stack;
+		}
+	}
 }

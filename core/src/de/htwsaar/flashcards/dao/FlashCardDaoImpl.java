@@ -1,32 +1,23 @@
 package de.htwsaar.flashcards.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
 
 /**
- * The FlashCardDao Class encapsulates the database access
- * It provides methods for loading and storing flashcard objects.
+ *
  * 
  * @author Feick Martin
  * 
@@ -35,11 +26,11 @@ import de.htwsaar.flashcards.model.FlashCard;
 @Component("FlashCardDaoImpl")
 public class FlashCardDaoImpl implements FlashCardDao {
 
-	private JdbcTemplate jdbc;
+	private NamedParameterJdbcTemplate jdbc;
 
 	@Autowired
 	public FlashCardDaoImpl(DataSource jdbc) {
-		this.jdbc = new JdbcTemplate(jdbc);
+		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
 
 	public FlashCardDaoImpl() {}
@@ -125,7 +116,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		paramSource.addValue("Card_Id", cardId);
 
 		try {
-			return (FlashCard) jdbc.queryForMap(query, paramSource, new FlashCardRowMapper());
+			return (FlashCard) jdbc.queryForObject(query, paramSource, new FlashCardRowMapper());
 		} 
 		catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();

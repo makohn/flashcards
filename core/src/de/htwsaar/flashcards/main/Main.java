@@ -29,12 +29,6 @@ public class Main {
 		});
 		
 		
-//	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//	    dataSource.setDriverClassName("org.sqlite.JDBC");
-//	    dataSource.setUrl("jdbc:sqlite:flashcardohneUser.db");
-//	    dataSource.setUsername("root");
-//	    dataSource.setPassword("");
-//
 //	    FlashCardDaoImpl dao = new FlashCardDaoImpl(dataSource);
 //	    dao.deleteCard(1);
 //		
