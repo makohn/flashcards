@@ -4,7 +4,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
- * Klasse zum herstellen der Verbindung zur Datenbank durch Unterstützung des
+ * Klasse zum herstellen der Verbindung zur Datenbank durch Unterstï¿½tzung des
  * Springframeworks
  * 
  * @author Feick Martin
@@ -18,7 +18,7 @@ public class SQLiteJDBC {
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
 
-	public static DataSource getConnection() throws ClassNotFoundException {
+	public static DataSource getConnection() {
 
 		try {
 			DriverManagerDataSource dataSource = new DriverManagerDataSource();

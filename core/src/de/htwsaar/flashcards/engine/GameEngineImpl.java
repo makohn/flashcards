@@ -36,13 +36,13 @@ public class GameEngineImpl implements GameEngine {
 	
 	private int mode = 5;
 	
-	public GameEngineImpl() throws ClassNotFoundException {
+	public GameEngineImpl() {
 		cardDao = new FlashCardDaoImpl();
 		loadFlashCards();
 		currentCard = getNextCard();
 	}
 	
-	public GameEngineImpl(int mode) throws ClassNotFoundException {
+	public GameEngineImpl(int mode) {
 		this();
 		this.mode = mode;
 	}

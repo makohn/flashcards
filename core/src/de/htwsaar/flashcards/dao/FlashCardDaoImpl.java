@@ -18,7 +18,7 @@ import de.htwsaar.flashcards.model.FlashCard;
 
 /**
  * Die FlashCardDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe
- * Hierfür wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
+ * Hierfï¿½r wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
  * 
  * @author Feick Martin
  * 
@@ -35,6 +35,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	public FlashCardDaoImpl() {
+		this.jdbc = new NamedParameterJdbcTemplate(SQLiteJDBC.getConnection());
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	/**
-	 * Klasse die den Karten aus einer bestimmen box zurück gibt
+	 * Klasse die den Karten aus einer bestimmen box zurï¿½ck gibt
 	 * 
 	 * @param box
 	 *            - angabe der Box in der sich die Karte befindet
@@ -148,7 +149,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	/**
-	 * Klasse die den Karte zu einer bestimmten ID zurück gibt
+	 * Klasse die den Karte zu einer bestimmten ID zurï¿½ck gibt
 	 * 
 	 * @param cardId
 	 * @return flashcard - object

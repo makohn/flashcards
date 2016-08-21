@@ -3,11 +3,9 @@ package de.htwsaar.flashcards.main;
 
 import javax.swing.SwingUtilities;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
 import de.htwsaar.flashcards.dao.SQLiteJDBC;
-import de.htwsaar.flashcards.ui.MainFrame;
+import de.htwsaar.flashcards.ui.StudyFrame;
 
  /** 
  * Dient dem Starten des Programms.
@@ -16,7 +14,6 @@ import de.htwsaar.flashcards.ui.MainFrame;
  */
 public class Main {
 
-	private static ClassPathXmlApplicationContext cpac;
 	
 	public static void main(String[] args) throws ClassNotFoundException {
 		// Um konkurenten Zugriff auf die als thread-unsicheren geltenden 
@@ -26,7 +23,7 @@ public class Main {
 			
 			@Override
 			public void run() {
-				new MainFrame();
+				new StudyFrame();
 			}
 		});
 		
