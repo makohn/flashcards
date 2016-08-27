@@ -1,6 +1,7 @@
 package de.htwsaar.flashcards.dao;
 
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
@@ -17,21 +18,34 @@ public class SQLiteJDBC {
 	private static final String URL = "jdbc:sqlite:flashcardohneUser.db";
 	private static final String USER = "root";
 	private static final String PASSWORD = "";
-
-	public static DataSource getConnection() {
-
+	
+	// Singleton
+	private static DriverManagerDataSource dataSource;
+	
+	/**
+	 * Initialisiert eine JDBC Connection
+	 */
+	private static void initDataSource() {
 		try {
-			DriverManagerDataSource dataSource = new DriverManagerDataSource();
+			dataSource = new DriverManagerDataSource();
 			dataSource.setDriverClassName(DRIVER);
 			dataSource.setUrl(URL);
 			dataSource.setUsername(USER);
 			dataSource.setPassword(PASSWORD);
-
-			return dataSource;
 		} catch (Exception e) {
 			System.err.println("Es konnte keine Verbindung zur Datenbank hergestellt werden");
 			e.printStackTrace();
 		}
-		return null;
+	}
+	
+	/**
+	 * Zugriffsmethode
+	 * @return
+	 */
+	public static synchronized DataSource getConnection() {
+		if (dataSource == null)
+			initDataSource();
+
+		return dataSource;
 	}
 }
