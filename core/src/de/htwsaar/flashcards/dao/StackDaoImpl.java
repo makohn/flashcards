@@ -18,7 +18,7 @@ import de.htwsaar.flashcards.dao.interfaces.StackDao;
 import de.htwsaar.flashcards.model.Stack;
 
 /**
- * Die StackDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe Hierfür
+ * Die StackDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe Hierfï¿½r
  * wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
  * 
  * @author Feick Martin
@@ -36,6 +36,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	public StackDaoImpl() {
+		this(SQLiteJDBC.getConnection());
 	}
 
 	/**
@@ -46,11 +47,11 @@ public class StackDaoImpl implements StackDao {
 	 */
 	@Override
 	public void deleteStack(Stack stack) {
-		int stackId = stack.getStackId();
-		String delete = "Delete FROM Stacks WHERE Stack_Id = :Stack_Id";
+		String stackName = stack.getStackName();
+		String delete = "Delete FROM Stacks WHERE Stack_Name = :Stack_Name";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Stack_Id", stackId);
+		paramSource.addValue("Stack_Name", stackName);
 
 		jdbc.update(delete, paramSource);
 	}
@@ -81,7 +82,7 @@ public class StackDaoImpl implements StackDao {
 	@Override
 	public void updateStack(Stack stack) {
 
-		String query = "INSERT or replace INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
+		String query = "INSERT or replace INTO Stacks (Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
 				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
 
 		MapSqlParameterSource paramSource = getStackParameterSource(stack, 1);
@@ -101,16 +102,16 @@ public class StackDaoImpl implements StackDao {
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 
-		paramSource.addValue("Card_Name", stack.getStackName());
-		paramSource.addValue("Card_Question", stack.getTyp());
-		paramSource.addValue("Card_Answer", stack.getSubject());
-		paramSource.addValue("Card_Box_Counter", stack.getCreationDate());
-		paramSource.addValue("Card_Stack_ID", stack.getLastEditDate());
+		//paramSource.addValue("Stack_Name", stack.getStackName());
+		paramSource.addValue("Stack_Typ", stack.getTyp());
+		paramSource.addValue("Stack_Subject", stack.getSubject());
+		paramSource.addValue("Stack_CreationDate", stack.getCreationDate());
+		paramSource.addValue("Stack_LastEditDate", stack.getLastEditDate());
 		paramSource.addValue("Stack_LastAccessDate", stack.getLastAccessDate());
 		paramSource.addValue("Stack_NextAccessDate", stack.getNextAccessDate());
 
 		if (check == 1)
-			paramSource.addValue("Card_Id", stack.getStackId());
+			paramSource.addValue("Stack_Name", stack.getStackName());
 
 		return paramSource;
 	}
@@ -135,12 +136,12 @@ public class StackDaoImpl implements StackDao {
 	 * @return stack - object welches gesucht wurde
 	 */
 	@Override
-	public Stack getStack(int stackId) {
+	public Stack getStack(String stackName) {
 
-		String query = "SELECT * FROM Stacks WHERE Stack_Id = :Stack_Id";
+		String query = "SELECT * FROM Stacks WHERE Stack_Name = :Stack_Name";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Stack_Id", stackId);
+		paramSource.addValue("Stack_Name", stackName);
 
 		try {
 			return (Stack) jdbc.queryForObject(query, paramSource, new StackRowMapper());
@@ -164,7 +165,6 @@ public class StackDaoImpl implements StackDao {
 			Stack stack = new Stack();
 
 			try {
-				stack.setStackId(results.getInt("Card_Id"));
 				stack.setStackName(results.getString("Stack_Name"));
 				stack.setTyp(results.getInt("Stack_Typ"));
 				stack.setSubject(results.getString("Stack_Subject"));

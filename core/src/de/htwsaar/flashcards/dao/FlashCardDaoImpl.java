@@ -63,8 +63,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	 */
 	@Override
 	public void saveCard(FlashCard flashcard) {
-		String insert = "INSERT INTO Cards (Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link)"
-				+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Id, :Card_Picture_Link)";
+		String insert = "INSERT INTO Cards (Card_Name, Card_Question, Card_Answer, Card_Stack_Name_Id, Card_Picture_Link)"
+				+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Name, :Card_Picture_Link)";
 
 		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
 
@@ -88,7 +88,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		paramSource.addValue("Card_Question", flashcard.getCardQuestion());
 		paramSource.addValue("Card_Answer", flashcard.getCardAnswer());
 		paramSource.addValue("Card_Box_Counter", flashcard.getBoxCounter());
-		paramSource.addValue("Card_Stack_ID", flashcard.getStackId());
+		paramSource.addValue("Card_Stack_Name", flashcard.getStack());
 		paramSource.addValue("Stack_LastAccessDate", flashcard.getCardLastAccessDate());
 		paramSource.addValue("Stack_NextAccessDate", flashcard.getCardNextAccessDate());
 		paramSource.addValue("Card_Picture_Link", flashcard.getCardPicture());
@@ -128,6 +128,16 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 		return jdbc.query(query, new FlashCardRowMapper());
 	}
+	
+	@Override
+	public List<FlashCard> getFlashCards(String stack) {
+		String query = "SELECT * FROM Cards WHERE Card_Stack_Name = :Card_Stack_Name;";
+
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Card_Stack_Name", stack);
+		
+		return jdbc.query(query, paramSource, new FlashCardRowMapper());
+	}
 
 	/**
 	 * Klasse die den Karten aus einer bestimmen box zur�ck gibt
@@ -137,11 +147,12 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	 * @return flashcard - object
 	 */
 	@Override
-	public List<FlashCard> getFlashCards(int box) {
+	public List<FlashCard> getFlashCards(String stack, int box) {
 
-		String query = "SELECT * FROM Cards WHERE Card_Box_Counter = :Card_Box_Counter";
+		String query = "SELECT * FROM Cards WHERE Card_Stack_Name = :Card_Stack_Name AND Card_Box_Counter = :Card_Box_Counter";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Card_Stack_Name", stack);
 		paramSource.addValue("Card_Box_Counter", box);
 
 		return jdbc.query(query, paramSource, new FlashCardRowMapper());
@@ -189,7 +200,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				flashcard.setCardQuestion(results.getString("Card_Question"));
 				flashcard.setCardAnswer(results.getString("Card_Answer"));
 				flashcard.setBoxCounter(results.getInt("Card_Box_Counter"));
-				flashcard.setStackId(results.getInt("Card_Stack_ID"));
+				flashcard.setStack(results.getString("Card_Stack_Name"));
 				flashcard.setCardLastAccessDate(results.getDate("Card_LastAccessDate"));
 				flashcard.setCardNextAccessDate(results.getDate("Card_NextAccessDate"));
 				flashcard.setCardPicture(results.getString("Card_Picture_Link"));
