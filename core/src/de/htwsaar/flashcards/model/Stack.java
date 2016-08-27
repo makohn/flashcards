@@ -10,7 +10,6 @@ import java.sql.Date;
  */
 public class Stack {
 
-	private int stackId;
 	private String stackName;
 	private int typ;
 	private String subject;
@@ -19,9 +18,8 @@ public class Stack {
 	private Date lastAccessDate;
 	private Date NextAccessDate;
 
-	public Stack(int stackId, String stackName, int typ, String subject, Date creationDate, Date lastEditDate,
+	public Stack(String stackName, int typ, String subject, Date creationDate, Date lastEditDate,
 			Date lastAccessDate, Date nextAccessDate) {
-		this.stackId = stackId;
 		this.stackName = stackName;
 		this.typ = typ;
 		this.subject = subject;
@@ -32,14 +30,6 @@ public class Stack {
 	}
 	
 	public Stack() {}
-
-	public int getStackId() {
-		return stackId;
-	}
-
-	public void setStackId(int stackId) {
-		this.stackId = stackId;
-	}
 
 	public String getStackName() {
 		return stackName;
@@ -99,7 +89,7 @@ public class Stack {
 
 	@Override
 	public String toString() {
-		return "Stack [stackId=" + stackId + ", stackName=" + stackName + ", typ=" + typ + ", subject=" + subject
+		return "Stack [stackName=" + stackName + ", typ=" + typ + ", subject=" + subject
 				+ ", creationDate=" + creationDate + ", lastEditDate=" + lastEditDate + ", lastAccessDate="
 				+ lastAccessDate + ", NextAccessDate=" + NextAccessDate + "]";
 	}

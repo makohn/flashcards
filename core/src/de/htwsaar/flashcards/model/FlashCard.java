@@ -14,29 +14,28 @@ public class FlashCard implements Comparable<FlashCard> {
 	private String cardQuestion;
 	private String cardAnswer;
 	private int boxCounter; // The phase in which the card is situated
-	private int stackId;
-	// private int owner;
+	private String stack;
 	private Date cardLastAccessDate;
 	private Date cardNextAccessDate;
 	private String cardPicture;
 
-	public FlashCard(String cardName, String cardQuestion, String cardAnswer, int stackId, String cardPicture, Date cardLastAccessDate
+	public FlashCard(String cardName, String cardQuestion, String cardAnswer, String stack, String cardPicture, Date cardLastAccessDate
 	 , Date cardNextAccessDate) {
 
 		this.cardName = cardName;
 		this.cardQuestion = cardQuestion;
 		this.cardAnswer = cardAnswer;
-		this.stackId = stackId;
+		this.stack = stack;
 		// this.owner = owner;
 		this.cardLastAccessDate = cardLastAccessDate;
 		this.cardNextAccessDate = cardNextAccessDate;
 		this.cardPicture = cardPicture;
 	}
 
-	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId, Date cardLastAccessDate ,
+	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, String stack, Date cardLastAccessDate ,
 			  Date cardNextAccessDate ,	String cardPicture)
 	{
-		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture, cardNextAccessDate , cardLastAccessDate);
+		this(cardName, cardQuestion, cardAnswer, stack, cardPicture, cardNextAccessDate , cardLastAccessDate);
 		this.cardId = cardId;
 		this.boxCounter = boxCounter;
 	}
@@ -95,12 +94,12 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.boxCounter = boxCounter;
 	}
 
-	public int getStackId() {
-		return stackId;
+	public String getStack() {
+		return stack;
 	}
 
-	public void setStackId(int stackId) {
-		this.stackId = stackId;
+	public void setStack(String stack) {
+		this.stack = stack;
 	}
 
 	public Date getCardLastAccessDate() {
@@ -132,7 +131,7 @@ public class FlashCard implements Comparable<FlashCard> {
 	@Override
 	public String toString() {
 		return "FlashCard [cardId=" + cardId + ", cardName=" + cardName + ", cardQuestion=" + cardQuestion
-				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stackId=" + stackId
+				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stack=" + stack
 				+ ", cardLastAccessDate=" + cardLastAccessDate + ", cardNextAccessDate=" + cardNextAccessDate + ", cardPicture="
 				+ cardPicture + "]";
 	}
