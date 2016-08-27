@@ -1,11 +1,14 @@
 package de.htwsaar.flashcards.main;
 
 
-import javax.swing.SwingUtilities;
+import java.awt.Font;
 
-import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
-import de.htwsaar.flashcards.dao.SQLiteJDBC;
-import de.htwsaar.flashcards.ui.StudyFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
+import de.htwsaar.flashcards.ui.FrmSelectStack;
 
  /** 
  * Dient dem Starten des Programms.
@@ -23,14 +26,16 @@ public class Main {
 			
 			@Override
 			public void run() {
-				new StudyFrame();
+				try {
+					UIManager.setLookAndFeel(new NimbusLookAndFeel());
+				} catch (UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					System.out.println(":(");
+				}	
+				UIManager.getLookAndFeelDefaults()
+		        .put("defaultFont", new Font("Tahoma", Font.PLAIN, 14));
+				new FrmSelectStack();
 			}
-		});
-		
-
-    FlashCardDaoImpl dao = new FlashCardDaoImpl(SQLiteJDBC.getConnection());
-    System.out.println(dao.getCard(3));
-//		
-		
+		});		
 	}
 }
