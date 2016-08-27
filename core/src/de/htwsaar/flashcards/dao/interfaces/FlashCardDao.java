@@ -17,7 +17,7 @@ public interface FlashCardDao {
 	public void saveCard(FlashCard flashcard);
 	public void updateCard(FlashCard flashcard);
 	public List<FlashCard> getFlashCards(); //TODO: Add the deck as a parameter
-	public List<FlashCard> getFlashCards(String stack);
-	public List<FlashCard> getFlashCards(String stack, int box);
+	public List<FlashCard> getFlashCards(int stackId);
+	public List<FlashCard> getFlashCards(int stackId, int box);
 	public FlashCard getCard(int id);
 }

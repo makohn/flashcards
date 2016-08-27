@@ -48,14 +48,14 @@ public class DlgGameOptions extends JDialog {
 	private JButton btnCancel;
 	
 	private FlashCardService cardService;
-	private String stack;
+	private int stackId;
 	
 	private JDialog self;
 
-	public DlgGameOptions(Frame owner, boolean modal, String stack) {
+	public DlgGameOptions(Frame owner, boolean modal, int stackId) {
 		
 		super(owner, modal);
-		this.stack = stack;
+		this.stackId = stackId;
 		this.cardService = new FlashCardService();
 		self = this;
 		
@@ -175,7 +175,7 @@ public class DlgGameOptions extends JDialog {
 	private class OkButtonClickedListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			cardService.getFlashCards(stack);
+			cardService.getFlashCards(stackId);
 			GameEngine engine = new GameEngineImpl(cardService.getFlashCards());
 			new FrmStudy(engine);
 			self.dispose();

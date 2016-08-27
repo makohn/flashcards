@@ -23,25 +23,25 @@ public class FlashCardService {
 		this.cardDao = new FlashCardDaoImpl();
 	}
 	
-	public List<FlashCard> getFlashCards(String stack) {
-		return getFlashCards(stack, FlashCardService.SORTED_OPTION);
+	public List<FlashCard> getFlashCards(int stackId) {
+		return getFlashCards(stackId, FlashCardService.SORTED_OPTION);
 	}
 	
-	public List<FlashCard> getFlashCards(String stack, int box) {
+	public List<FlashCard> getFlashCards(int stackId, int box) {
 		switch(box) {
 		case BOX1_OPTION:
 		case BOX2_OPTION:
 		case BOX3_OPTION:
 		case BOX4_OPTION:
-			flashcards = cardDao.getFlashCards(stack, box);
+			flashcards = cardDao.getFlashCards(stackId, box);
 			break;
 		case SHUFFLED_OPTION:
-			flashcards = cardDao.getFlashCards(stack);
+			flashcards = cardDao.getFlashCards(stackId);
 			Collections.shuffle(flashcards);
 			break;
 		case SORTED_OPTION:
 		default:
-			flashcards = cardDao.getFlashCards(stack);
+			flashcards = cardDao.getFlashCards(stackId);
 			Collections.sort(flashcards);
 		}	
 		return flashcards;

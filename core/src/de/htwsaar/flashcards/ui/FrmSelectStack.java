@@ -75,7 +75,7 @@ public class FrmSelectStack {
 	
 	private void initPreviewArea() {
 		tblStacksPreview = new JTable();
-		List<FlashCard> flashcards = cardService.getFlashCards((String)cmbStackSelector.getSelectedItem());
+		List<FlashCard> flashcards = cardService.getFlashCards(cmbStackSelector.getSelectedIndex()+1);
 		tableModel = new FlashCardsTableModel(flashcards);
 		tblStacksPreview.setModel(tableModel);
 		tblStacksPreview.setRowHeight(20);
@@ -146,7 +146,7 @@ public class FrmSelectStack {
 	private void initListeners() {
 		btnStudy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DlgGameOptions(selectStackFrame, true, (String) cmbStackSelector.getSelectedItem());
+				new DlgGameOptions(selectStackFrame, true, cmbStackSelector.getSelectedIndex()+1);
 			}
 		});
 		
@@ -161,7 +161,7 @@ public class FrmSelectStack {
 	private class UpdateTableActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			tableModel.setFlashCards(cardService.getFlashCards((String)cmbStackSelector.getSelectedItem()));
+			tableModel.setFlashCards(cardService.getFlashCards(cmbStackSelector.getSelectedIndex()+1));
 			tblStacksPreview.repaint();
 		}
 		

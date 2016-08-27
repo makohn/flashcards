@@ -14,28 +14,28 @@ public class FlashCard implements Comparable<FlashCard> {
 	private String cardQuestion;
 	private String cardAnswer;
 	private int boxCounter; // The phase in which the card is situated
-	private String stack;
+	private int stackId;
 	private Date cardLastAccessDate;
 	private Date cardNextAccessDate;
 	private String cardPicture;
 
-	public FlashCard(String cardName, String cardQuestion, String cardAnswer, String stack, String cardPicture, Date cardLastAccessDate
+	public FlashCard(String cardName, String cardQuestion, String cardAnswer, int stackId, String cardPicture, Date cardLastAccessDate
 	 , Date cardNextAccessDate) {
 
 		this.cardName = cardName;
 		this.cardQuestion = cardQuestion;
 		this.cardAnswer = cardAnswer;
-		this.stack = stack;
+		this.stackId = stackId;
 		// this.owner = owner;
 		this.cardLastAccessDate = cardLastAccessDate;
 		this.cardNextAccessDate = cardNextAccessDate;
 		this.cardPicture = cardPicture;
 	}
 
-	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, String stack, Date cardLastAccessDate ,
+	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId, Date cardLastAccessDate ,
 			  Date cardNextAccessDate ,	String cardPicture)
 	{
-		this(cardName, cardQuestion, cardAnswer, stack, cardPicture, cardNextAccessDate , cardLastAccessDate);
+		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture, cardNextAccessDate , cardLastAccessDate);
 		this.cardId = cardId;
 		this.boxCounter = boxCounter;
 	}
@@ -94,12 +94,12 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.boxCounter = boxCounter;
 	}
 
-	public String getStack() {
-		return stack;
+	public int getStack() {
+		return stackId;
 	}
 
-	public void setStack(String stack) {
-		this.stack = stack;
+	public void setStack(int stackId) {
+		this.stackId = stackId;
 	}
 
 	public Date getCardLastAccessDate() {
@@ -131,7 +131,7 @@ public class FlashCard implements Comparable<FlashCard> {
 	@Override
 	public String toString() {
 		return "FlashCard [cardId=" + cardId + ", cardName=" + cardName + ", cardQuestion=" + cardQuestion
-				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stack=" + stack
+				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stack=" + stackId
 				+ ", cardLastAccessDate=" + cardLastAccessDate + ", cardNextAccessDate=" + cardNextAccessDate + ", cardPicture="
 				+ cardPicture + "]";
 	}

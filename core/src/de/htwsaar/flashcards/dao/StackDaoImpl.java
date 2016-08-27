@@ -47,11 +47,11 @@ public class StackDaoImpl implements StackDao {
 	 */
 	@Override
 	public void deleteStack(Stack stack) {
-		String stackName = stack.getStackName();
-		String delete = "Delete FROM Stacks WHERE Stack_Name = :Stack_Name";
+		int stackId = stack.getStackId();
+		String delete = "Delete FROM Stacks WHERE Stack_Id = :Stack_Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Stack_Name", stackName);
+		paramSource.addValue("Stack_Id", stackId);
 
 		jdbc.update(delete, paramSource);
 	}
@@ -82,7 +82,7 @@ public class StackDaoImpl implements StackDao {
 	@Override
 	public void updateStack(Stack stack) {
 
-		String query = "INSERT or replace INTO Stacks (Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
+		String query = "INSERT or replace INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
 				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
 
 		MapSqlParameterSource paramSource = getStackParameterSource(stack, 1);
@@ -102,7 +102,7 @@ public class StackDaoImpl implements StackDao {
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 
-		//paramSource.addValue("Stack_Name", stack.getStackName());
+		paramSource.addValue("Stack_Name", stack.getStackName());
 		paramSource.addValue("Stack_Typ", stack.getTyp());
 		paramSource.addValue("Stack_Subject", stack.getSubject());
 		paramSource.addValue("Stack_CreationDate", stack.getCreationDate());
@@ -111,7 +111,7 @@ public class StackDaoImpl implements StackDao {
 		paramSource.addValue("Stack_NextAccessDate", stack.getNextAccessDate());
 
 		if (check == 1)
-			paramSource.addValue("Stack_Name", stack.getStackName());
+			paramSource.addValue("Stack_Id", stack.getStackId());
 
 		return paramSource;
 	}
@@ -136,12 +136,12 @@ public class StackDaoImpl implements StackDao {
 	 * @return stack - object welches gesucht wurde
 	 */
 	@Override
-	public Stack getStack(String stackName) {
+	public Stack getStack(int stackId) {
 
-		String query = "SELECT * FROM Stacks WHERE Stack_Name = :Stack_Name";
+		String query = "SELECT * FROM Stacks WHERE Stack_Id = :Stack_Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Stack_Name", stackName);
+		paramSource.addValue("Stack_Id", stackId);
 
 		try {
 			return (Stack) jdbc.queryForObject(query, paramSource, new StackRowMapper());
@@ -165,6 +165,7 @@ public class StackDaoImpl implements StackDao {
 			Stack stack = new Stack();
 
 			try {
+				stack.setStackId(results.getInt("Stack_Id"));
 				stack.setStackName(results.getString("Stack_Name"));
 				stack.setTyp(results.getInt("Stack_Typ"));
 				stack.setSubject(results.getString("Stack_Subject"));
