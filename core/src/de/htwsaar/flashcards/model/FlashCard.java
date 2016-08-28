@@ -29,7 +29,6 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.cardQuestion = cardQuestion;
 		this.cardAnswer = cardAnswer;
 		this.stackId = stackId;
-		// this.owner = owner;
 		this.cardLastAccessDate = cardLastAccessDate;
 		this.cardNextAccessDate = cardNextAccessDate;
 		this.cardPicture = cardPicture;
@@ -38,21 +37,15 @@ public class FlashCard implements Comparable<FlashCard> {
 	}
 
 	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId, Date cardLastAccessDate ,
-			  Date cardNextAccessDate ,	String cardPicture, int cardAsked, int cardAnswerCorrect)
-	{
+			  Date cardNextAccessDate ,	String cardPicture, int cardAsked, int cardAnswerCorrect) {
+		
 		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture, cardNextAccessDate , cardLastAccessDate, cardAsked, cardAnswerCorrect);
 		this.cardId = cardId;
 		this.boxCounter = boxCounter;
 	}
-
-	/*
-	 * public int getOwner() { return owner; }
-	 * 
-	 * public void setOwner(int owner) { this.owner = owner; }
-	 */
 	
 	public FlashCard() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void incrementBoxCounter() {

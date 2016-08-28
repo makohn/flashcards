@@ -32,13 +32,15 @@ public class FlashCardService {
 	public List<FlashCard> getFlashCards(int stackId, int box) {
 		switch(box) {
 		case BOX1_OPTION:
-			
+			flashcards = cardDao.getFlashCards(stackId, box);
+			break;
 		case BOX2_OPTION:
-			
+			flashcards = cardDao.getFlashCards(stackId, box);
+			break;
 		case BOX3_OPTION:
-
+			flashcards = cardDao.getFlashCards(stackId, box);
+			break;
 		case BOX4_OPTION: 
-			//Karten aus bestimmter Box laden
 			flashcards = cardDao.getFlashCards(stackId, box);
 			break;
 		case SHUFFLED_OPTION:

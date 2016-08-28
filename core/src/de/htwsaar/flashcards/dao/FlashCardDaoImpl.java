@@ -151,10 +151,10 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	@Override
 	public List<FlashCard> getFlashCards(int stackId, int box) {
 
-		String query = "SELECT * FROM Cards WHERE Card_Stack_Name = :Card_Stack_Name AND Card_Box_Counter = :Card_Box_Counter";
+		String query = "SELECT * FROM Cards WHERE Card_Id = :Card_Id AND Card_Box_Counter = :Card_Box_Counter";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Card_Stack_Id", stackId);
+		paramSource.addValue("Card_Id", stackId);
 		paramSource.addValue("Card_Box_Counter", box);
 
 		return jdbc.query(query, paramSource, new FlashCardRowMapper());
