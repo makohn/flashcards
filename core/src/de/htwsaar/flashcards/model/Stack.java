@@ -16,19 +16,14 @@ public class Stack {
 	private String subject;
 	private Date creationDate;
 	private Date lastEditDate;
-	private Date lastAccessDate;
-	private Date NextAccessDate;
 
-	public Stack(int stackId, String stackName, int typ, String subject, Date creationDate, Date lastEditDate,
-			Date lastAccessDate, Date nextAccessDate) {
+	public Stack(int stackId, String stackName, int typ, String subject, Date creationDate, Date lastEditDate) {
 		this.stackId = stackId;
 		this.stackName = stackName;
 		this.typ = typ;
 		this.subject = subject;
 		this.creationDate = creationDate;
 		this.lastEditDate = lastEditDate;
-		this.lastAccessDate = lastAccessDate;
-		this.NextAccessDate = nextAccessDate;
 	}
 	
 	public Stack() {}
@@ -81,27 +76,9 @@ public class Stack {
 		this.lastEditDate = lastEditDate;
 	}
 
-	public Date getLastAccessDate() {
-		return lastAccessDate;
-	}
-
-	public void setLastAccessDate(Date lastAccessDate) {
-		this.lastAccessDate = lastAccessDate;
-	}
-
-	public Date getNextAccessDate() {
-		return NextAccessDate;
-	}
-
-	public void setNextAccessDate(Date nextAccessDate) {
-		NextAccessDate = nextAccessDate;
-	}
-
 	@Override
 	public String toString() {
-		return "Stack [stackName=" + stackName + ", typ=" + typ + ", subject=" + subject
-				+ ", creationDate=" + creationDate + ", lastEditDate=" + lastEditDate + ", lastAccessDate="
-				+ lastAccessDate + ", NextAccessDate=" + NextAccessDate + "]";
+		return "Stack [stackId=" + stackId + ", stackName=" + stackName + ", typ=" + typ + ", subject=" + subject
+				+ ", creationDate=" + creationDate + ", lastEditDate=" + lastEditDate + "]";
 	}
-
 }

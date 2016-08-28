@@ -19,9 +19,11 @@ public class FlashCard implements Comparable<FlashCard> {
 	private Date cardLastAccessDate;
 	private Date cardNextAccessDate;
 	private String cardPicture;
+	private int cardAsked;
+	private int cardAnswerCorrect;
 
 	public FlashCard(String cardName, String cardQuestion, String cardAnswer, int stackId, String cardPicture, Date cardLastAccessDate
-	 , Date cardNextAccessDate) {
+	 , Date cardNextAccessDate, int cardAsked, int cardAnswerCorrect) {
 
 		this.cardName = cardName;
 		this.cardQuestion = cardQuestion;
@@ -31,12 +33,14 @@ public class FlashCard implements Comparable<FlashCard> {
 		this.cardLastAccessDate = cardLastAccessDate;
 		this.cardNextAccessDate = cardNextAccessDate;
 		this.cardPicture = cardPicture;
+		this.cardAsked = cardAsked;
+		this.cardAnswerCorrect = cardAnswerCorrect;
 	}
 
 	public FlashCard(int cardId, String cardName, String cardQuestion, String cardAnswer, int boxCounter, int stackId, Date cardLastAccessDate ,
-			  Date cardNextAccessDate ,	String cardPicture)
+			  Date cardNextAccessDate ,	String cardPicture, int cardAsked, int cardAnswerCorrect)
 	{
-		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture, cardNextAccessDate , cardLastAccessDate);
+		this(cardName, cardQuestion, cardAnswer, stackId, cardPicture, cardNextAccessDate , cardLastAccessDate, cardAsked, cardAnswerCorrect);
 		this.cardId = cardId;
 		this.boxCounter = boxCounter;
 	}
@@ -126,15 +130,39 @@ public class FlashCard implements Comparable<FlashCard> {
 	public void setCardPicture(String cardPicture) {
 		this.cardPicture = cardPicture;
 	}
+	
+	public int getStackId() {
+		return stackId;
+	}
+
+	public void setStackId(int stackId) {
+		this.stackId = stackId;
+	}
+
+	public int getCardAsked() {
+		return cardAsked;
+	}
+
+	public void setCardAsked(int cardAsked) {
+		this.cardAsked = cardAsked;
+	}
+
+	public int getCardAnswerCorrect() {
+		return cardAnswerCorrect;
+	}
+
+	public void setCardAnswerCorrect(int cardAnswerCorrect) {
+		this.cardAnswerCorrect = cardAnswerCorrect;
+	}
 
 	@Override
 	public String toString() {
 		return "FlashCard [cardId=" + cardId + ", cardName=" + cardName + ", cardQuestion=" + cardQuestion
-				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stack=" + stackId
-				+ ", cardLastAccessDate=" + cardLastAccessDate + ", cardNextAccessDate=" + cardNextAccessDate + ", cardPicture="
-				+ cardPicture + "]";
+				+ ", cardAnswer=" + cardAnswer + ", boxCounter=" + boxCounter + ", stackId=" + stackId
+				+ ", cardLastAccessDate=" + cardLastAccessDate + ", cardNextAccessDate=" + cardNextAccessDate
+				+ ", cardPicture=" + cardPicture + ", cardAsked=" + cardAsked + ", cardAnswerCorrect="
+				+ cardAnswerCorrect + "]";
 	}
-
 	/**
 	 * Dient dem Vergleichen von Karteikarten anhand deren aktuellem Box-Count.
 	 */
@@ -147,5 +175,4 @@ public class FlashCard implements Comparable<FlashCard> {
 
 		return 0;
 	}
-
 }

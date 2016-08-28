@@ -63,8 +63,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	 */
 	@Override
 	public void saveCard(FlashCard flashcard) {
-		String insert = "INSERT INTO Cards (Card_Name, Card_Question, Card_Answer, Card_Stack_Name_Id, Card_Picture_Link)"
-				+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Id, :Card_Picture_Link)";
+		String insert = "INSERT INTO Cards (Card_Name, Card_Question, Card_Answer, Card_Stack_Name_Id, Card_Picture_Link, Card_Asked, Card_AnswerCorrect)"
+				+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Id, :Card_Picture_Link, :Card_Asked, :Card_AnswerCorrect)";
 
 		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
 
@@ -92,6 +92,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		paramSource.addValue("Stack_LastAccessDate", flashcard.getCardLastAccessDate());
 		paramSource.addValue("Stack_NextAccessDate", flashcard.getCardNextAccessDate());
 		paramSource.addValue("Card_Picture_Link", flashcard.getCardPicture());
+		paramSource.addValue("Card_Asked", flashcard.getCardAsked());
+		paramSource.addValue("Card_AnswerCorrect", flashcard.getCardAnswerCorrect());
 
 		return paramSource;
 	}
@@ -204,6 +206,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				flashcard.setCardLastAccessDate(results.getDate("Card_LastAccessDate"));
 				flashcard.setCardNextAccessDate(results.getDate("Card_NextAccessDate"));
 				flashcard.setCardPicture(results.getString("Card_Picture_Link"));
+				flashcard.setCardAsked(results.getInt("Card_Asked"));
+				flashcard.setCardAnswerCorrect(results.getInt("Card_AnswerCorrect"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

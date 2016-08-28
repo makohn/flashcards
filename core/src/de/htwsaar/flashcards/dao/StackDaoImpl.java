@@ -65,8 +65,8 @@ public class StackDaoImpl implements StackDao {
 	@Override
 	public void saveStack(Stack stack) {
 
-		String query = "INSERT INTO Stacks (Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
-				+ "VALUES (:Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
+		String query = "INSERT INTO Stacks (Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate) "
+				+ "VALUES (:Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate)";
 
 		MapSqlParameterSource paramSource = getStackParameterSource(stack, 0);
 
@@ -82,8 +82,8 @@ public class StackDaoImpl implements StackDao {
 	@Override
 	public void updateStack(Stack stack) {
 
-		String query = "INSERT or replace INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate, Stack_LastAccessDate, Stack_NextAccessDate) "
-				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate, :Stack_LastAccessDate, :Stack_NextAccessDate)";
+		String query = "INSERT or replace INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate) "
+				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate)";
 
 		MapSqlParameterSource paramSource = getStackParameterSource(stack, 1);
 
@@ -107,8 +107,6 @@ public class StackDaoImpl implements StackDao {
 		paramSource.addValue("Stack_Subject", stack.getSubject());
 		paramSource.addValue("Stack_CreationDate", stack.getCreationDate());
 		paramSource.addValue("Stack_LastEditDate", stack.getLastEditDate());
-		paramSource.addValue("Stack_LastAccessDate", stack.getLastAccessDate());
-		paramSource.addValue("Stack_NextAccessDate", stack.getNextAccessDate());
 
 		if (check == 1)
 			paramSource.addValue("Stack_Id", stack.getStackId());
@@ -171,8 +169,6 @@ public class StackDaoImpl implements StackDao {
 				stack.setSubject(results.getString("Stack_Subject"));
 				stack.setCreationDate(results.getDate("Stack_CreationDate"));
 				stack.setLastEditDate(results.getDate("Stack_LastEditDate"));
-				stack.setLastAccessDate(results.getDate("Stack_LastAccessDate"));
-				stack.setNextAccessDate(results.getDate("Stack_NextAccessDate"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
