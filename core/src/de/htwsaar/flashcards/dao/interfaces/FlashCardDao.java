@@ -10,7 +10,6 @@ import de.htwsaar.flashcards.model.FlashCard;
  * @author Feick Martin
  * 
  */
-
 public interface FlashCardDao {
 	
 	public void deleteCard(FlashCard flashcard);

@@ -7,6 +7,7 @@ import java.sql.Date;
  * 
  * @author mkohn & Feick Martin
  */
+
 public class FlashCard implements Comparable<FlashCard> {
 
 	private int cardId;
@@ -125,8 +126,6 @@ public class FlashCard implements Comparable<FlashCard> {
 	public void setCardPicture(String cardPicture) {
 		this.cardPicture = cardPicture;
 	}
-
-
 
 	@Override
 	public String toString() {
