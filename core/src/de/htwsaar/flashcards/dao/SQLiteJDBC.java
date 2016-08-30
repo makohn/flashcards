@@ -1,8 +1,12 @@
 package de.htwsaar.flashcards.dao;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.sqlite.SQLiteConfig;
+import org.sqlite.SQLiteConfig.Pragma;
 
 /**
  * Klasse zum herstellen der Verbindung zur Datenbank durch Unterst�tzung des
@@ -27,11 +31,15 @@ public class SQLiteJDBC {
 	 */
 	private static void initDataSource() {
 		try {
+			SQLiteConfig sqLiteConfig = new SQLiteConfig();
+			Properties properties = sqLiteConfig.toProperties();
+			properties.setProperty(Pragma.DATE_STRING_FORMAT.pragmaName, "yyyy-MM-dd HH:mm:ss");
 			dataSource = new DriverManagerDataSource();
 			dataSource.setDriverClassName(DRIVER);
 			dataSource.setUrl(URL);
 			dataSource.setUsername(USER);
 			dataSource.setPassword(PASSWORD);
+			dataSource.setConnectionProperties(properties);
 		} catch (Exception e) {
 			System.err.println("Es konnte keine Verbindung zur Datenbank hergestellt werden");
 			e.printStackTrace();
