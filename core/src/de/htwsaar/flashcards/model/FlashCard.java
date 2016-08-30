@@ -24,7 +24,6 @@ public class FlashCard implements Comparable<FlashCard> {
 
 	public FlashCard(String cardName, String cardQuestion, String cardAnswer, int stackId, String cardPicture, Date cardLastAccessDate
 	 , Date cardNextAccessDate, int cardAsked, int cardAnswerCorrect) {
-
 		this.cardName = cardName;
 		this.cardQuestion = cardQuestion;
 		this.cardAnswer = cardAnswer;

@@ -26,7 +26,7 @@ public class FlashCardService {
 	}
 	
 	public List<FlashCard> getFlashCards(int stackId) {
-		return getFlashCards(stackId, FlashCardService.SORTED_OPTION);
+		return getFlashCards(stackId, FlashCardService.SORTED_OPTION_COMPLETE);
 	}
 	
 	public List<FlashCard> getFlashCards(int stackId, int box) {
@@ -44,7 +44,7 @@ public class FlashCardService {
 			flashcards = cardDao.getFlashCards(stackId, box);
 			break;
 		case SHUFFLED_OPTION:
-			//Zufällig Karten aus Stack laden (aus verschiedene Boxen)
+			//Zufaellig Karten aus Stack laden (aus verschiedene Boxen)
 			flashcards = cardDao.getFlashCards(stackId);
 			Collections.shuffle(flashcards);
 			break;

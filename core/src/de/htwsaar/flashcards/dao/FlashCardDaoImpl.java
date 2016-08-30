@@ -2,7 +2,6 @@ package de.htwsaar.flashcards.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -90,8 +89,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		paramSource.addValue("Card_Answer", flashcard.getCardAnswer());
 		paramSource.addValue("Card_Box_Counter", flashcard.getBoxCounter());
 		paramSource.addValue("Card_Stack_Id", flashcard.getStack());
-		paramSource.addValue("Stack_LastAccessDate", flashcard.getCardLastAccessDate());
-		paramSource.addValue("Stack_NextAccessDate", flashcard.getCardNextAccessDate());
+		paramSource.addValue("Card_LastAccessDate", flashcard.getCardLastAccessDate());
+		paramSource.addValue("Card_NextAccessDate", flashcard.getCardNextAccessDate());
 		paramSource.addValue("Card_Picture_Link", flashcard.getCardPicture());
 		paramSource.addValue("Card_Asked", flashcard.getCardAsked());
 		paramSource.addValue("Card_AnswerCorrect", flashcard.getCardAnswerCorrect());
@@ -152,10 +151,10 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	@Override
 	public List<FlashCard> getFlashCards(int stackId, int box) {
 
-		String query = "SELECT * FROM Cards WHERE Card_Id = :Card_Id AND Card_Box_Counter = :Card_Box_Counter";
+		String query = "SELECT * FROM Cards WHERE Card_Stack_Id = :Card_Stack_Id AND Card_Box_Counter = :Card_Box_Counter";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Card_Id", stackId);
+		paramSource.addValue("Card_Stack_Id", stackId);
 		paramSource.addValue("Card_Box_Counter", box);
 
 		return jdbc.query(query, paramSource, new FlashCardRowMapper());
