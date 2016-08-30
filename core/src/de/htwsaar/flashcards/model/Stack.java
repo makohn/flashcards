@@ -1,8 +1,6 @@
 package de.htwsaar.flashcards.model;
 
-//Feick Martin
-import java.sql.Date;
-
+import java.util.Date;
 /**
  * Daten-Container Klasse (Model) fuer die Karten-Stapel Entitaet.
  * 

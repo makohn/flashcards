@@ -167,8 +167,8 @@ public class StackDaoImpl implements StackDao {
 				stack.setStackName(results.getString("Stack_Name"));
 				stack.setTyp(results.getInt("Stack_Typ"));
 				stack.setSubject(results.getString("Stack_Subject"));
-				stack.setCreationDate(results.getDate("Stack_CreationDate"));
-				stack.setLastEditDate(results.getDate("Stack_LastEditDate"));
+				stack.setCreationDate(results.getTimestamp("Stack_CreationDate"));
+				stack.setLastEditDate(results.getTimestamp("Stack_LastEditDate"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

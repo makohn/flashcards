@@ -205,7 +205,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				flashcard.setBoxCounter(results.getInt("Card_Box_Counter"));
 				flashcard.setStack(results.getInt("Card_Stack_Id"));
 				flashcard.setCardLastAccessDate(results.getTimestamp("Card_LastAccessDate"));
-				flashcard.setCardNextAccessDate(results.getDate("Card_NextAccessDate"));
+				flashcard.setCardNextAccessDate(results.getTimestamp("Card_NextAccessDate"));
 				flashcard.setCardPicture(results.getString("Card_Picture_Link"));
 				flashcard.setCardAsked(results.getInt("Card_Asked"));
 				flashcard.setCardAnswerCorrect(results.getInt("Card_AnswerCorrect"));

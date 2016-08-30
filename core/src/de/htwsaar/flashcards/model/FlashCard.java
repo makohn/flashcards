@@ -1,6 +1,6 @@
 package de.htwsaar.flashcards.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Daten-Container Klasse (Model) fuer die Karteikarten Entitaet.
