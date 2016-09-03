@@ -5,13 +5,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageProducer;
+import java.awt.image.RGBImageFilter;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
@@ -50,15 +54,31 @@ public class ButtonFactory {
 		JButton btn = new JButton(image);
 	    btn.setContentAreaFilled(false);
 	    btn.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    btn.setPressedIcon(new ImageIcon(generatePressedDarkImage(image.getImage())));
 	    return btn;
 	}
 	
-	public static JCheckBox createStyledCheckBox(Color color) {
-		JCheckBox checkbox = new JCheckBox();
-		checkbox.setUI(new StyledCheckBoxUI());
-		checkbox.setBackground(color);
-		checkbox.setMinimumSize(new Dimension(20,20));
-		return checkbox;
+	private static Image generatePressedDarkImage(final Image image) {
+		final ImageProducer prod = new FilteredImageSource(image.getSource(), new RGBImageFilter() {
+			
+			@Override
+			public int filterRGB(int x, int y, int rgb) {
+				final int red = (rgb >> 16) & 0xff;
+	            final int green = (rgb >> 8) & 0xff;
+	            final int blue = rgb & 0xff;
+	            final int gray = (int)((0.30 * red + 0.59 * green + 0.11 * blue) / 4);
+
+	            return (rgb & 0xff000000) | (grayTransform(red, gray) << 16) | (grayTransform(green, gray) << 8) | (grayTransform(blue, gray) << 0);
+			}
+			
+			 private int grayTransform(final int color, final int gray) {
+		            int result = color - gray;
+		            if (result < 0) result = 0;
+		            if (result > 255) result = 255;
+		            return result;
+		    }
+		});
+		return Toolkit.getDefaultToolkit().createImage(prod);
 	}
 	
 	static class StyledButtonUI extends BasicButtonUI {
@@ -94,31 +114,5 @@ public class ButtonFactory {
 	    }
 	}
 	
-	static class StyledCheckBoxUI extends BasicButtonUI {
-
-	    @Override
-	    public void installUI (JComponent c) {
-	        super.installUI(c);
-	        AbstractButton button = (AbstractButton) c;
-	        button.setOpaque(false);
-	        button.setBorder(new EmptyBorder(5, 15, 5, 15));
-	    }
-
-	    @Override
-	    public void paint (Graphics g, JComponent c) {
-	        AbstractButton b = (AbstractButton) c;
-	        paintBackground(g, b);
-	        super.paint(g, c);
-	    }
-
-	    private void paintBackground (Graphics g, JComponent c) {
-	        Dimension size = c.getSize();
-	        Graphics2D g2 = (Graphics2D) g;
-	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	        g.setColor(c.getBackground().darker());
-	        g.fillRoundRect(2, 2, size.width, size.height - 2, 10, 10);
-	        g.setColor(c.getBackground());
-	        g.fillRoundRect(0, 0, size.width, size.height - 5, 10, 10);
-	    }
-	}
+	
 }
