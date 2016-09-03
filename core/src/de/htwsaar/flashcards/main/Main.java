@@ -1,6 +1,7 @@
 package de.htwsaar.flashcards.main;
 
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.SwingUtilities;
@@ -16,7 +17,6 @@ import de.htwsaar.flashcards.ui.FrmSelectStack;
  *
  */
 public class Main {
-
 	
 	public static void main(String[] args) throws ClassNotFoundException {
 		// Um konkurenten Zugriff auf die als thread-unsicheren geltenden 
@@ -26,16 +26,27 @@ public class Main {
 			
 			@Override
 			public void run() {
-				try {
-					UIManager.setLookAndFeel(new NimbusLookAndFeel());
-				} catch (UnsupportedLookAndFeelException e) {
-					// TODO Auto-generated catch block
-					System.out.println(":(");
-				}	
-				UIManager.getLookAndFeelDefaults()
-		        .put("defaultFont", new Font("Tahoma", Font.PLAIN, 14));
+				configLookAndFeel();
 				new FrmSelectStack();
 			}
 		});		
+	}
+	
+	private static void configLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(new NimbusLookAndFeel());
+			UIManager.getLookAndFeelDefaults()
+	        .put("defaultFont", new Font("Tahoma", Font.PLAIN, 14));
+			 UIManager.getLookAndFeelDefaults()
+			 .put("nimbusOrange", (new Color(0, 163, 204)));
+			 UIManager.getLookAndFeelDefaults()
+			 .put("info", Color.white);
+		} catch (UnsupportedLookAndFeelException e1) {
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception e2) {
+				System.err.println("Fatal Error: Can't load Look and Fee defaults");
+			}
+		}	
 	}
 }
