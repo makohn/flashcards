@@ -29,9 +29,9 @@ import de.htwsaar.flashcards.util.FlashCardUtils;
 
 public class FrmEditStack {
 
-	private static final String FRAME_TITLE = "Stack bearbeiten";
-	private static final String LABELSTRING_QUESTION = "--- Frage ---";
-	private static final String LABELSTRING_ANSWER = "--- Antwort ---";
+	private static final String FRAME_TITLE = Messages.getString("edit_stack"); 
+	private static final String LABELSTRING_QUESTION = Messages.getString("question"); 
+	private static final String LABELSTRING_ANSWER = Messages.getString("answer");
 	
 	private static final ImageIcon ICN_ARROW_RIGHT = new ImageIcon("res/images/arrow-right.png");
 	private static final ImageIcon ICN_ARROW_LEFT = new ImageIcon("res/images/arrow-left.png");
@@ -91,7 +91,7 @@ public class FrmEditStack {
 		btnCardForward = ButtonFactory.createImageButton(ICN_ARROW_RIGHT);
 		btnCardBackward = ButtonFactory.createImageButton(ICN_ARROW_LEFT);
 		btnAddCard = ButtonFactory.createImageButton(ICN_ADD_CARD);
-		btnAddCard.setToolTipText("Karte hinzufuegen");
+		btnAddCard.setToolTipText(Messages.getString("add_card"));
 		pnlNavigation = new JPanel(new GridBagLayout());
 		pnlNavigation.setOpaque(false);
 		GridBagConstraints gc = new GridBagConstraints();
@@ -156,9 +156,9 @@ public class FrmEditStack {
 		pnlSaveDelete = new JPanel(new GridLayout(1, 3, 10, 30));
 		pnlSaveDelete.setOpaque(false);
 		
-		btnCancel = ButtonFactory.createColouredButton("Abbrechen", ButtonFactory.BTN_BLUE);
-		btnDeleteCurrentCard = ButtonFactory.createColouredButton("Löschen", ButtonFactory.BTN_RED);
-		btnSaveStack = ButtonFactory.createColouredButton("Speichern", ButtonFactory.BTN_GREEN);
+		btnCancel = ButtonFactory.createColouredButton(Messages.getString("discard"), ButtonFactory.BTN_BLUE); 
+		btnDeleteCurrentCard = ButtonFactory.createColouredButton(Messages.getString("delete"), ButtonFactory.BTN_RED);
+		btnSaveStack = ButtonFactory.createColouredButton(Messages.getString("save"), ButtonFactory.BTN_GREEN);
 		
 		pnlSaveDelete.add(btnSaveStack);
 		pnlSaveDelete.add(btnDeleteCurrentCard);

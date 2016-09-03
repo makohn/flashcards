@@ -91,10 +91,10 @@ public class FrmSelectStack {
 		pnlButtons.setOpaque(false);
 		pnlButtons.setLayout(new GridLayout(1,4,5,5));
 		
-		btnStudy = ButtonFactory.createColouredButton("Spielen", ButtonFactory.BTN_GREEN);
-		btnEdit = ButtonFactory.createColouredButton("Bearbeiten", ButtonFactory.BTN_BLUE);
-		btnExport = ButtonFactory.createColouredButton("Exportieren", ButtonFactory.BTN_YELLOW);
-		btnDelete = ButtonFactory.createColouredButton("Loschen", ButtonFactory.BTN_RED);
+		btnStudy = ButtonFactory.createColouredButton(Messages.getString("play"), ButtonFactory.BTN_GREEN);
+		btnEdit = ButtonFactory.createColouredButton(Messages.getString("edit"), ButtonFactory.BTN_BLUE);
+		btnExport = ButtonFactory.createColouredButton(Messages.getString("export"), ButtonFactory.BTN_YELLOW);
+		btnDelete = ButtonFactory.createColouredButton(Messages.getString("delete"), ButtonFactory.BTN_RED);
 		
 		pnlButtons.add(btnStudy);
 		pnlButtons.add(btnEdit);
@@ -116,7 +116,7 @@ public class FrmSelectStack {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.insets = new Insets(15, 0, 0, 20);
-		mainPanel.add(new JLabel("Wahle einen Stack:"), c);
+		mainPanel.add(new JLabel(Messages.getString("choose_a_stack")), c);
 		//-------------------------------------
 		c.insets = new Insets(0,0,0,0);
 		c.gridx = 1;
@@ -125,7 +125,7 @@ public class FrmSelectStack {
 		c.insets = new Insets(0, 0, 0, 20);
 		c.gridx = 0;
 		c.gridy = 1;
-		mainPanel.add(new JLabel("Vorschau:"), c);
+		mainPanel.add(new JLabel(Messages.getString("preview")), c);
 		//-------------------------------------
 		c.insets = new Insets(0,0,0,0);
 		c.gridx = 1;

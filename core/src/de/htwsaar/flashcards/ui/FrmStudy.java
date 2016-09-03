@@ -86,7 +86,7 @@ public class FrmStudy {
         progresscircle.setPreferredSize(new Dimension(50, 50));
         lblCardCounter = new JLabel("Q1");
         lblCardCounter.setFont(new Font("SansSerif", 1, 20));
-        lblStackname = new JLabel("Test");
+        lblStackname = new JLabel(Messages.getString("test"));
         lblStackname.setFont(FONT_COUNTER);
         pnlInfo.add(lblCardCounter);
         layout.setHgap(110);
@@ -110,7 +110,7 @@ public class FrmStudy {
         pnlAnswer = new JPanel(new CardLayout());
         pnlAnswer.setOpaque(false);
         pnlAnswer.setBorder(OUTER_CARD_BORDER);
-        btnShowAnswer = ButtonFactory.createColouredButton("Antwort", new Color(0, 163, 204));
+        btnShowAnswer = ButtonFactory.createColouredButton(Messages.getString("answer"), new Color(0, 163, 204));
         pnlAnswer.add(btnShowAnswer);
         txtAnswer = FlashCardUtils.createCardTextArea(false);
         txtAnswer.setText(engine.getCurrentCard().getCardAnswer());
@@ -158,7 +158,7 @@ public class FrmStudy {
         mainPanel.add(pnlAnswer);
         mainPanel.add(this.pnlEval);
         studyFrame.add(mainPanel);
-        studyFrame.setTitle("Study");
+        studyFrame.setTitle(Messages.getString("study"));
         studyFrame.setSize(650, 780);
         studyFrame.setDefaultCloseOperation(3);
         studyFrame.setVisible(true);

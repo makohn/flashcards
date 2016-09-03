@@ -76,7 +76,7 @@ public class DlgGameOptions extends JDialog {
 		btnBox[2] = ButtonFactory.createColouredRadioButton("3", ButtonFactory.BTN_BLUE);
 		btnBox[3] = ButtonFactory.createColouredRadioButton("4", ButtonFactory.BTN_GREEN);
 		btnBox[4] = ButtonFactory.createColouredRadioButton("*", ButtonFactory.BTN_PURPLE);
-		btnBox[4].setToolTipText("Alle");
+		btnBox[4].setToolTipText(Messages.getString("all")); 
 		
 		for (JRadioButton btn : btnBox) {
 			grpModeButtons.add(btn);
@@ -88,7 +88,7 @@ public class DlgGameOptions extends JDialog {
 	private void initSelectSortedArea() {
 		pnlSorted = new JPanel(new GridLayout(1, 1));
 		pnlSorted.setOpaque(false);
-		switchSorted = new JSwitchBox("Sortiert ", "Gemischt ");
+		switchSorted = new JSwitchBox(Messages.getString("sorted"), Messages.getString("mixed")); 
 		switchSorted.setEnabled(false);
 		pnlSorted.add(switchSorted);
 	}
@@ -103,7 +103,7 @@ public class DlgGameOptions extends JDialog {
 		sldTime.setPaintLabels(true);
 		sldTime.setLabelTable(sldTime.createStandardLabels(30));
 		pnlTime.add(sldTime);
-		chkUnlimitedTime = new JCheckBox("ohne Zeitlimit");
+		chkUnlimitedTime = new JCheckBox(Messages.getString("without_timelimit")); 
 		pnlTime.add(chkUnlimitedTime);
 		chkUnlimitedTime.addActionListener(new ActionListener() {
 			@Override
@@ -116,9 +116,9 @@ public class DlgGameOptions extends JDialog {
 	private void initConfirmationArea() {
 		pnlConfirm = new JPanel(new GridLayout(1, 2, 20, 15));
 		pnlConfirm.setOpaque(false);
-		btnOk = ButtonFactory.createColouredButton("Ok", ButtonFactory.BTN_GREEN);
+		btnOk = ButtonFactory.createColouredButton(Messages.getString("ok"), ButtonFactory.BTN_GREEN); 
 		btnOk.addActionListener(new OkButtonClickedListener());
-		btnCancel = ButtonFactory.createColouredButton("Abbrechen", ButtonFactory.BTN_RED);
+		btnCancel = ButtonFactory.createColouredButton(Messages.getString("discard"), ButtonFactory.BTN_RED); 
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 	}
@@ -131,21 +131,21 @@ public class DlgGameOptions extends JDialog {
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.gridx = gc.gridy = 0;
 		gc.insets = new Insets(5, 0, 0, 20);
-		mainPanel.add(new JLabel("Welche Box ?"), gc);
+		mainPanel.add(new JLabel(Messages.getString("which_box")), gc); 
 		gc.gridx = 1;
 		gc.insets = new Insets(0, 20, 20, 0);
 		mainPanel.add(pnlModeButtons, gc);
 		gc.gridx = 0;
 		gc.gridy++;
 		gc.insets = new Insets(10, 0, 0, 20);
-		mainPanel.add(new JLabel("Welche Reihenfolge ?"), gc);
+		mainPanel.add(new JLabel(Messages.getString("which_order")), gc); 
 		gc.gridx = 1;
 		gc.insets = new Insets(10, 20, 20, 0);
 		mainPanel.add(pnlSorted, gc);
 		gc.gridx = 0;
 		gc.gridy++;
 		gc.insets = new Insets(10, 0, 0, 20);
-		mainPanel.add(new JLabel("Wie viel Zeit ?"), gc);
+		mainPanel.add(new JLabel(Messages.getString("how_much_time")), gc); 
 		gc.gridx = 1;
 		gc.insets = new Insets(5, 17, 20, 0);
 		mainPanel.add(pnlTime, gc);
@@ -157,7 +157,7 @@ public class DlgGameOptions extends JDialog {
 		mainPanel.add(pnlConfirm, gc);
 		
 		add(mainPanel);
-		setTitle("Optionen");
+		setTitle(Messages.getString("options")); 
 		setSize(500, 300);
 		setResizable(false);
 		setLocation((getOwner().getX()), (getOwner().getY()));
