@@ -16,11 +16,7 @@ public class StackService {
 		stacks = stackDao.getStacks();
 	}
 	
-	public String[] getStackNames() {
-		String[] stackNames = new String[stacks.size()];
-		for(int i = 0; i < stackNames.length; i++) {
-			stackNames[i] = stacks.get(i).getStackName();
-		}
-		return stackNames;
+	public Stack[] getStackArray() {
+		return stacks.toArray(new Stack[stacks.size()]);
 	}
 }

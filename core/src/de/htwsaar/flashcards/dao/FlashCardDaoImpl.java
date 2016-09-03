@@ -63,7 +63,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	 */
 	@Override
 	public void saveCard(FlashCard flashcard) {
-		String insert = "INSERT INTO Cards (Card_Name, Card_Question, Card_Answer, Card_Stack_Name_Id, Card_Picture_Link, Card_Asked, Card_AnswerCorrect)"
+		String insert = "INSERT INTO Cards (Card_Name, Card_Question, Card_Answer, Card_Stack_Id, Card_Picture_Link, Card_Asked, Card_AnswerCorrect)"
 				+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Id, :Card_Picture_Link, :Card_Asked, :Card_AnswerCorrect)";
 
 		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);

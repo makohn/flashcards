@@ -3,6 +3,7 @@ package de.htwsaar.flashcards.service;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
@@ -26,7 +27,7 @@ public class FlashCardService {
 	}
 	
 	public List<FlashCard> getFlashCards(int stackId) {
-		return getFlashCards(stackId, FlashCardService.SORTED_OPTION_COMPLETE);
+		return getFlashCards(stackId, FlashCardService.SHUFFLED_OPTION);
 	}
 	
 	public List<FlashCard> getFlashCards(int stackId, int box) {
@@ -67,6 +68,10 @@ public class FlashCardService {
 	
 	public List<FlashCard> getFlashCards() {
 		return flashcards;
+	}
+	
+	public List<FlashCard> filter(int box) {
+		return flashcards.stream().filter(f -> f.getBoxCounter() == box).collect(Collectors.toList());
 	}
 	
 	private void timedCard(List<FlashCard> flashcards) {		

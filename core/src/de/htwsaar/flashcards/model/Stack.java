@@ -76,7 +76,6 @@ public class Stack {
 
 	@Override
 	public String toString() {
-		return "Stack [stackId=" + stackId + ", stackName=" + stackName + ", typ=" + typ + ", subject=" + subject
-				+ ", creationDate=" + creationDate + ", lastEditDate=" + lastEditDate + "]";
+		return stackName;
 	}
 }
