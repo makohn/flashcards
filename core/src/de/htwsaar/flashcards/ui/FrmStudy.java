@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
@@ -27,11 +28,10 @@ import de.htwsaar.flashcards.engine.interfaces.GameEngine;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.ProgressCircle;
 import de.htwsaar.flashcards.util.ButtonFactory;
-import de.htwsaar.flashcards.util.SwingUtils;
+import de.htwsaar.flashcards.util.FlashCardUtils;
 
 public class FrmStudy {
 	
-    private static final Font FONT_CARD = new Font("SansSerif", 0, 20);
     private static final Font FONT_COUNTER = new Font("SansSerif", 2, 20);
     private static final ImageIcon ICN_CORRECT = new ImageIcon("res/images/true.png");
     private static final ImageIcon ICN_INCORRECT = new ImageIcon("res/images/false.png");
@@ -57,6 +57,8 @@ public class FrmStudy {
     private JPanel pnlImage;
     private JPanel pnlAnswer;
     private JPanel pnlEval;
+    private JScrollPane scrlCard;
+    private JScrollPane scrlAnswer;
     private JFrame studyFrame;
 
     public FrmStudy(GameEngine engine) {
@@ -79,16 +81,16 @@ public class FrmStudy {
         pnlInfo = new JPanel(layout);
         pnlInfo.setOpaque(false);
         pnlInfo.setBorder(OUTER_CARD_BORDER);
-        progressbar = new JProgressBar(0, this.engine.getNrCards());
+        progressbar = new JProgressBar(0, engine.getNrCards());
         progresscircle = new ProgressCircle(20);
         progresscircle.setPreferredSize(new Dimension(50, 50));
         lblCardCounter = new JLabel("Q1");
         lblCardCounter.setFont(new Font("SansSerif", 1, 20));
         lblStackname = new JLabel("Test");
         lblStackname.setFont(FONT_COUNTER);
-        pnlInfo.add(this.lblCardCounter);
+        pnlInfo.add(lblCardCounter);
         layout.setHgap(110);
-        pnlInfo.add(this.progressbar);
+        pnlInfo.add(progressbar);
         layout.setHgap(110);
         pnlInfo.add(progresscircle);
     }
@@ -97,14 +99,11 @@ public class FrmStudy {
         pnlFlashcard = new JPanel(new CardLayout());
         pnlFlashcard.setOpaque(false);
         pnlFlashcard.setBorder(OUTER_CARD_BORDER);
-        txtCard = new JTextArea();
-        txtCard.setLineWrap(true);
-        txtCard.setWrapStyleWord(true);
-        txtCard.setEditable(false);
-        txtCard.setBorder(INNER_CARD_BORDER);
-        txtCard.setFont(FONT_CARD);
+        txtCard = FlashCardUtils.createCardTextArea(false);
         txtCard.setText(engine.getCurrentCard().getCardQuestion());
-        pnlFlashcard.add(this.txtCard);
+        scrlCard = new JScrollPane(txtCard);
+        scrlCard.setBorder(INNER_CARD_BORDER);
+        pnlFlashcard.add(scrlCard);
     }
 
     private void initAnswerArea() {
@@ -112,16 +111,14 @@ public class FrmStudy {
         pnlAnswer.setOpaque(false);
         pnlAnswer.setBorder(OUTER_CARD_BORDER);
         btnShowAnswer = ButtonFactory.createColouredButton("Antwort", new Color(0, 163, 204));
-        pnlAnswer.add(this.btnShowAnswer);
-        txtAnswer = new JTextArea();
-        txtAnswer.setLineWrap(true);
-        txtAnswer.setWrapStyleWord(true);
-        txtAnswer.setEditable(false);
-        txtAnswer.setFont(FONT_CARD);
-        txtAnswer.setBorder(INNER_CARD_BORDER);
+        pnlAnswer.add(btnShowAnswer);
+        txtAnswer = FlashCardUtils.createCardTextArea(false);
         txtAnswer.setText(engine.getCurrentCard().getCardAnswer());
-        txtAnswer.setVisible(false);
-        pnlAnswer.add(this.txtAnswer);
+        scrlAnswer = new JScrollPane(txtAnswer);
+        scrlAnswer.setOpaque(false);
+        scrlAnswer.setVisible(false);
+        scrlAnswer.setBorder(INNER_CARD_BORDER);
+        pnlAnswer.add(scrlAnswer);
     }
 
     private void initImageArea() {
@@ -137,17 +134,13 @@ public class FrmStudy {
         pnlEval = new JPanel(new GridBagLayout());
         pnlEval.setOpaque(false);
         GridBagConstraints cos = new GridBagConstraints();
-        btnCorrect = new JButton(ICN_CORRECT);
-        btnCorrect.setContentAreaFilled(false);
-        btnCorrect.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnCorrect = ButtonFactory.createImageButton(ICN_CORRECT);
         btnCorrect.setEnabled(false);
         cos.gridx = 0;
         cos.gridy = 2;
         cos.insets = new Insets(0, 0, 0, 100);
         pnlEval.add(btnCorrect, cos);
-        btnInCorrect = new JButton(ICN_INCORRECT);
-        btnInCorrect.setContentAreaFilled(false);
-        btnInCorrect.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnInCorrect = ButtonFactory.createImageButton(ICN_INCORRECT);
         btnInCorrect.setEnabled(false);
         cos.gridx = 2;
         cos.gridy = 2;
@@ -174,7 +167,7 @@ public class FrmStudy {
     private void loadImage() {
         imagePath =  this.engine.getCurrentCard().getCardPicture();
         ImageIcon icon = this.imagePath != null ? new ImageIcon(this.imagePath) : ICN_QUEST_IMG;
-        lblQuestionImage.setIcon(SwingUtils.scale((ImageIcon)icon, 200, 200));
+        lblQuestionImage.setIcon(FlashCardUtils.scale((ImageIcon)icon, 200, 200));
     }
 
     private void initListener() {
@@ -182,7 +175,7 @@ public class FrmStudy {
 			
 			public void actionPerformed(ActionEvent e) {
 				btnShowAnswer.setVisible(false);
-				txtAnswer.setVisible(true);
+				scrlAnswer.setVisible(true);
 				btnCorrect.setEnabled(true);
 				btnInCorrect.setEnabled(true);
 			}
@@ -208,13 +201,13 @@ public class FrmStudy {
     }
 
     private void btnCorrectInCorrect_Click() {
-        int currentCard = this.progressbar.getValue() + 1;
+        int currentCard = progressbar.getValue() + 1;
         btnCorrect.setEnabled(false);
         btnInCorrect.setEnabled(false);
-        txtAnswer.setVisible(false);
+        scrlAnswer.setVisible(false);
         btnShowAnswer.setVisible(true);
-        txtCard.setText(this.engine.getCurrentCard().getCardQuestion());
-        txtAnswer.setText(this.engine.getCurrentCard().getCardAnswer());
+        txtCard.setText(engine.getCurrentCard().getCardQuestion());
+        txtAnswer.setText(engine.getCurrentCard().getCardAnswer());
         loadImage();
         progressbar.setValue(currentCard);
         lblCardCounter.setText("Q" + (currentCard + 1));

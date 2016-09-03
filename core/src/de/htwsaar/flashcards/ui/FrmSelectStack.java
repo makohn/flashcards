@@ -21,8 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
-import de.htwsaar.flashcards.engine.GameEngineImpl;
 import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.model.Stack;
+import de.htwsaar.flashcards.service.EditFlashCardService;
 import de.htwsaar.flashcards.service.FlashCardService;
 import de.htwsaar.flashcards.service.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
@@ -38,7 +39,7 @@ public class FrmSelectStack {
 	private JButton btnExport;
 	private JButton btnStudy;
 	private JButton btnCreateStack;
-	private JComboBox<String> cmbStackSelector;
+	private JComboBox<Stack> cmbStackSelector;
 	private JPanel pnlSelection;
 	private JScrollPane scrlPreview;
 	private JPanel pnlButtons;
@@ -64,7 +65,7 @@ public class FrmSelectStack {
 		pnlSelection = new JPanel();
 		pnlSelection.setOpaque(false);
 		
-		cmbStackSelector = new JComboBox<String>(stackService.getStackNames());
+		cmbStackSelector = new JComboBox<Stack>(stackService.getStackArray());
 		cmbStackSelector.addActionListener(new UpdateTableActionListener());
 		
 		btnCreateStack = ButtonFactory.createImageButton(ICN_CREATE_STACK);
@@ -75,7 +76,7 @@ public class FrmSelectStack {
 	
 	private void initPreviewArea() {
 		tblStacksPreview = new JTable();
-		List<FlashCard> flashcards = cardService.getFlashCards(cmbStackSelector.getSelectedIndex()+1);
+		List<FlashCard> flashcards = cardService.getFlashCards(getSelectedStackId());
 		tableModel = new FlashCardsTableModel(flashcards);
 		tblStacksPreview.setModel(tableModel);
 		tblStacksPreview.setRowHeight(20);
@@ -111,7 +112,6 @@ public class FrmSelectStack {
 		GridBagConstraints c = new GridBagConstraints();
 		new Insets(0, 0, 0, 10);
 		c.anchor = GridBagConstraints.BASELINE_LEADING;
-		//c.fill = GridBagConstraints.HORIZONTAL;
 		//-------------------------------------
 		c.gridx = 0;
 		c.gridy = 0;
@@ -143,16 +143,20 @@ public class FrmSelectStack {
 		selectStackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	private int getSelectedStackId() {
+		return ((Stack)cmbStackSelector.getSelectedItem()).getStackId();
+	}
+	
 	private void initListeners() {
 		btnStudy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DlgGameOptions(selectStackFrame, true, cmbStackSelector.getSelectedIndex()+1);
+				new DlgGameOptions(selectStackFrame, true, getSelectedStackId());
 			}
 		});
 		
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new FrmEditStack(new GameEngineImpl(cardService.getFlashCards()));
+				new FrmEditStack(new EditFlashCardService(cardService.getFlashCards().listIterator()));
 				selectStackFrame.dispose();
 			}
 		});
@@ -161,7 +165,7 @@ public class FrmSelectStack {
 	private class UpdateTableActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			tableModel.setFlashCards(cardService.getFlashCards(cmbStackSelector.getSelectedIndex()+1));
+			tableModel.setFlashCards(cardService.getFlashCards(getSelectedStackId()));
 			tblStacksPreview.repaint();
 		}
 		
