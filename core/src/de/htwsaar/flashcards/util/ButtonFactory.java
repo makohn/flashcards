@@ -54,11 +54,12 @@ public class ButtonFactory {
 		JButton btn = new JButton(image);
 	    btn.setContentAreaFilled(false);
 	    btn.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-	    btn.setPressedIcon(new ImageIcon(generatePressedDarkImage(image.getImage())));
+	    btn.setPressedIcon(new ImageIcon(setShader(image.getImage(), 4)));
+	    btn.setRolloverIcon(new ImageIcon(setShader(image.getImage(), 8)));
 	    return btn;
 	}
 	
-	private static Image generatePressedDarkImage(final Image image) {
+	private static Image setShader(final Image image, int deg) {
 		final ImageProducer prod = new FilteredImageSource(image.getSource(), new RGBImageFilter() {
 			
 			@Override
@@ -66,7 +67,7 @@ public class ButtonFactory {
 				final int red = (rgb >> 16) & 0xff;
 	            final int green = (rgb >> 8) & 0xff;
 	            final int blue = rgb & 0xff;
-	            final int gray = (int)((0.30 * red + 0.59 * green + 0.11 * blue) / 4);
+	            final int gray = (int)((0.30 * red + 0.59 * green + 0.11 * blue) / deg);
 
 	            return (rgb & 0xff000000) | (grayTransform(red, gray) << 16) | (grayTransform(green, gray) << 8) | (grayTransform(blue, gray) << 0);
 			}
