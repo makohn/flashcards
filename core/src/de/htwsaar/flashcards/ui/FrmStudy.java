@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -203,8 +204,14 @@ public class FrmStudy {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.evaluateAnswer(true);
-				btnCorrectInCorrect_Click();
+				if(engine.evaluateAnswer(true))
+					btnCorrectInCorrect_Click();
+				else {
+					progressbar.setValue(progressbar.getMaximum());
+					JOptionPane.showMessageDialog(studyFrame, "Fertig!");
+					studyFrame.dispose();
+					new FrmSelectStack();
+				}
 			}
 		});
         
@@ -212,8 +219,8 @@ public class FrmStudy {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				engine.evaluateAnswer(false);
-				btnCorrectInCorrect_Click();
+				if(engine.evaluateAnswer(false))
+					btnCorrectInCorrect_Click();
 			}
 		});
     }

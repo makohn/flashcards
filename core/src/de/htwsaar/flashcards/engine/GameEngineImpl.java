@@ -32,20 +32,7 @@ public class GameEngineImpl implements GameEngine {
 		this.flashcards = flashcards;
 		cardIterator = flashcards.listIterator();
 		cardDao = new FlashCardDaoImpl();
-		currentCard = getNextCard();
-	}
-	
-	/**
-	 * Lädt die nächste Karte aus der Liste.
-	 * @returns die zu spielende Karte.
-	 */
-	@Override
-	public FlashCard getNextCard() {
-		if (! cardIterator.hasNext())
-			return null;
-		else {
-			return cardIterator.next();
-		}
+		currentCard = cardIterator.next();
 	}
 
 	/**
@@ -65,10 +52,11 @@ public class GameEngineImpl implements GameEngine {
 		}	
 		cardDao.updateCard(currentCard);
 		
-		if ((currentCard = getNextCard()) == null) {
-			return false;
+		if (cardIterator.hasNext()) {
+			currentCard = cardIterator.next();
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	@Override
