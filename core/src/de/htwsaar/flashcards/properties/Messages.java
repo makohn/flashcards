@@ -1,10 +1,10 @@
-package de.htwsaar.flashcards.ui;
+package de.htwsaar.flashcards.properties;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
-	private static final String BUNDLE_NAME = "de.htwsaar.flashcards.ui.messages_de"; 
+	private static final String BUNDLE_NAME = "de.htwsaar.flashcards.properties.messages_de"; 
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
