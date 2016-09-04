@@ -3,7 +3,6 @@ package de.htwsaar.flashcards.ui;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -32,7 +31,6 @@ import de.htwsaar.flashcards.util.FlashCardUtils;
 
 public class FrmStudy {
 	
-    private static final Font FONT_COUNTER = new Font("SansSerif", 2, 20);
     private static final ImageIcon ICN_CORRECT = new ImageIcon("res/images/true.png");
     private static final ImageIcon ICN_INCORRECT = new ImageIcon("res/images/false.png");
     private static final ImageIcon ICN_QUEST_IMG = new ImageIcon("res/images/questionmarks.png");
@@ -43,7 +41,8 @@ public class FrmStudy {
     
     private JTextArea txtCard;
     private JTextArea txtAnswer;
-    private JLabel lblStackname;
+    private JLabel lblBoxCounter;
+    private JLabel lblCardname;
     private JLabel lblCardCounter;
     private JProgressBar progressbar;
     private ProgressCircle progresscircle;
@@ -77,22 +76,42 @@ public class FrmStudy {
     }
 
     private void initInfoArea() {
-    	FlowLayout layout = new FlowLayout();
-        pnlInfo = new JPanel(layout);
+        pnlInfo = new JPanel(new GridBagLayout());
         pnlInfo.setOpaque(false);
         pnlInfo.setBorder(OUTER_CARD_BORDER);
         progressbar = new JProgressBar(0, engine.getNrCards());
         progresscircle = new ProgressCircle(20);
         progresscircle.setPreferredSize(new Dimension(50, 50));
+        progresscircle.setMinimumSize(new Dimension(50, 50));
         lblCardCounter = new JLabel("Q1");
         lblCardCounter.setFont(new Font("SansSerif", 1, 20));
-        lblStackname = new JLabel(Messages.getString("test"));
-        lblStackname.setFont(FONT_COUNTER);
-        pnlInfo.add(lblCardCounter);
-        layout.setHgap(110);
-        pnlInfo.add(progressbar);
-        layout.setHgap(110);
-        pnlInfo.add(progresscircle);
+        lblCardname = new JLabel(engine.getCurrentCard().getCardName());
+        lblBoxCounter = new JLabel("Box: " + engine.getCurrentCard().getBoxCounter());
+        GridBagConstraints gc = new GridBagConstraints();
+        //-------------------------------------
+		gc.gridx = 0; gc.gridy = 0;
+		gc.insets = new Insets(0, 10, 0, 120);
+		pnlInfo.add(lblBoxCounter, gc);
+		//-------------------------------------
+		gc.gridx++;
+		gc.insets = new Insets(0, 45, 0, 0);
+		pnlInfo.add(lblCardname,gc);
+		//-------------------------------------
+		gc.gridx = 0; gc.gridy++;
+		gc.insets = new Insets(0, 10, 0, 120);
+		pnlInfo.add(lblCardCounter,gc);
+		//-------------------------------------
+		gc.gridx++;
+		gc.insets = new Insets(0, 45, 0, 0);
+		pnlInfo.add(progressbar,gc);
+		//-------------------------------------
+		gc.gridx++;
+		gc.gridy = 0;
+		gc.gridheight = 2;
+		gc.insets = new Insets(5, 160, 0, 0);
+		//-------------------------------------
+		pnlInfo.add(progresscircle,gc);
+		pnlInfo.setMaximumSize(new Dimension(650,200));
     }
 
     private void initQuestionArea() {
@@ -210,6 +229,8 @@ public class FrmStudy {
         loadImage();
         progressbar.setValue(currentCard);
         lblCardCounter.setText("Q" + (currentCard + 1));
+        lblBoxCounter.setText("Box: " + engine.getCurrentCard().getBoxCounter());
+        lblCardname.setText(engine.getCurrentCard().getCardName());
         progresscircle.restart();
     }
 }
