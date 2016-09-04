@@ -11,19 +11,23 @@ public class EditFlashCardService {
 	private ListIterator<FlashCard> flashcardIterator;
 	private FlashCardDao cardDao;
 	private FlashCard currentCard;
+	private int stackId;
 	
-	public EditFlashCardService(ListIterator<FlashCard> flashcardIterator) {
+	public EditFlashCardService(ListIterator<FlashCard> flashcardIterator, int stackId) {
 		this.flashcardIterator = flashcardIterator;
 		this.cardDao = new FlashCardDaoImpl();
-		this.currentCard = flashcardIterator.next();
+		this.stackId = stackId;
+		setCurrentCard();
 	}
 	
-	public FlashCard nextCard() {
-		return currentCard = flashcardIterator.next();
+	public void nextCard() {
+		if(flashcardIterator.hasNext())
+			currentCard = flashcardIterator.next();
 	}
 	
-	public FlashCard previousCard() {
-		return currentCard = flashcardIterator.previous();
+	public void previousCard() {
+		if(flashcardIterator.hasPrevious())
+			currentCard = flashcardIterator.previous();
 	}
 	
 	public void addCard() {
@@ -31,17 +35,24 @@ public class EditFlashCardService {
 		flashcardIterator.add(currentCard);
 	}
 	
-	public void saveCard(String cardName, String cardQuestion, String cardAnswer, int stackId, String cardPicture) {
+	public void saveCard(String cardName, String cardQuestion, String cardAnswer, String cardPicture) {
 		currentCard.setCardName(cardName);
 		currentCard.setCardQuestion(cardQuestion);
 		currentCard.setCardAnswer(cardAnswer);
 		currentCard.setStackId(stackId);
 		currentCard.setCardPicture(cardPicture);
-		cardDao.saveCard(currentCard);
+		if(currentCard.getCardId() == 0)
+			cardDao.saveCard(currentCard);
 	}
 	
 	public FlashCard getCurrentCard() {
 		return currentCard;
+	}
+	
+	private void setCurrentCard() {
+		if (flashcardIterator.hasNext()) 
+			this.currentCard = flashcardIterator.next();
+		else addCard();
 	}
 	
 }

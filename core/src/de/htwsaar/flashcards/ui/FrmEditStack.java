@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.EditFlashCardService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.ButtonFactory;
@@ -29,9 +33,10 @@ import de.htwsaar.flashcards.util.FlashCardUtils;
 
 public class FrmEditStack {
 
+	private static final String VERTICAL_LINE = Messages.getString("vertical_line");
 	private static final String FRAME_TITLE = Messages.getString("edit_stack"); 
-	private static final String LABELSTRING_QUESTION = Messages.getString("question"); 
-	private static final String LABELSTRING_ANSWER = Messages.getString("answer");
+	private static final String LABELSTRING_QUESTION = VERTICAL_LINE +  Messages.getString("question") + VERTICAL_LINE; 
+	private static final String LABELSTRING_ANSWER = VERTICAL_LINE + Messages.getString("answer") + VERTICAL_LINE;
 	
 	private static final ImageIcon ICN_ARROW_RIGHT = new ImageIcon("res/images/arrow-right.png");
 	private static final ImageIcon ICN_ARROW_LEFT = new ImageIcon("res/images/arrow-left.png");
@@ -41,7 +46,6 @@ public class FrmEditStack {
 	private static final Border INNER_CARD_BORDER = BorderFactory.createLineBorder(Color.GRAY);
 	private static final Border OUTER_CARD_BORDER = BorderFactory.createEmptyBorder(10,10,10,10);
 	
-	// Labels
 	//private JLabel lblStackName;
 	private JLabel lblQuestion;
 	private JLabel lblAnswer;
@@ -66,6 +70,9 @@ public class FrmEditStack {
 	private JPanel pnlQuestion;
 	private JPanel pnlAnswer;
 	
+	private JFileChooser chooser;
+	private String imagePath = "";
+	
 	private EditFlashCardService cardService;
 	
 	private JFrame editStackWindow;
@@ -80,10 +87,11 @@ public class FrmEditStack {
 		initSaveDeleteArea();
 		initFrame();
 		initListeners();
+		updateTextFields();
 	}
 	
 	private void initNavigationArea() {
-		txtCardName = new JTextField(cardService.getCurrentCard().getCardName());
+		txtCardName = new JTextField();
 		txtCardName.setBorder(BorderFactory.createEmptyBorder());
 		txtCardName.setOpaque(false);
 		txtCardName.setPreferredSize(new Dimension(250,60));
@@ -119,7 +127,6 @@ public class FrmEditStack {
 		lblQuestion = new JLabel(LABELSTRING_QUESTION);
 		lblQuestion.setAlignmentX(Component.CENTER_ALIGNMENT);
 		txtQuestion = FlashCardUtils.createCardTextArea(true);
-		txtQuestion.setText(cardService.getCurrentCard().getCardQuestion());
 		
 		btnAddPicture = ButtonFactory.createImageButton(ICN_ADD_PICTURE);
 		btnAddPicture.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -142,7 +149,6 @@ public class FrmEditStack {
 		lblAnswer = new JLabel(LABELSTRING_ANSWER);
 		lblAnswer.setAlignmentX(Component.CENTER_ALIGNMENT);
 		txtAnswer = FlashCardUtils.createCardTextArea(true);
-		txtAnswer.setText(cardService.getCurrentCard().getCardAnswer());
 		
 		JScrollPane scrlAnswer = new JScrollPane(txtAnswer);
         scrlAnswer.setOpaque(false);
@@ -204,17 +210,50 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardService.addCard();
-				txtCardName.setText("");
-				txtQuestion.setText("");
-				txtAnswer.setText("");
+				updateTextFields();
+				txtCardName.requestFocus();
 			}
 		});
 		
+		btnSaveStack.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardService.saveCard(
+						txtCardName.getText(), 
+						txtQuestion.getText(),
+						txtAnswer.getText(),
+						imagePath);
+			}
+		});
+		
+		btnAddPicture.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Bilddateien", "jpg", "png");
+				chooser.setFileFilter(filter);
+				int returnVal = chooser.showOpenDialog(editStackWindow);
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+				      imagePath = chooser.getSelectedFile().getPath(); 
+				      /*"/Volumes/Storage/Github/" + chooser.getSelectedFile().getName();*/
+				 }
+			}
+		});
 	}
 	
+//	private void copyImage() {
+//		 try {
+//				Files.copy(Paths.get(chooser.getSelectedFile().getPath()), Paths.get(imagePath));
+//			} catch (IOException e1) {
+//				e1.printStackTrace();
+//				System.err.println("Fehler beim Kopieren der Datei");
+//			}
+//	}
+	
 	private void updateTextFields() {
-		txtCardName.setText(cardService.getCurrentCard().getCardName());
-		txtQuestion.setText(cardService.getCurrentCard().getCardQuestion());
-		txtAnswer.setText(cardService.getCurrentCard().getCardAnswer());
+		FlashCard card = cardService.getCurrentCard();
+		txtCardName.setText(card != null ? card.getCardName() : "");
+		txtQuestion.setText(card != null ? card.getCardQuestion() : "");
+		txtAnswer.setText(card != null ? card.getCardAnswer() : "");
 	}
 }
