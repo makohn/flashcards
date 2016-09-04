@@ -6,8 +6,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -23,6 +27,7 @@ import javax.swing.UIManager;
 
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.model.Stack;
+import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.EditFlashCardService;
 import de.htwsaar.flashcards.service.FlashCardService;
 import de.htwsaar.flashcards.service.StackService;
@@ -148,16 +153,44 @@ public class FrmSelectStack {
 	}
 	
 	private void initListeners() {
+		/*
+		 * Listener: Bei Betätitgung des 'Spielen' Buttons öffnet sich das Fenster
+		 * 			 zum Lernen der ausgewählten FlashCards
+		 */
 		btnStudy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new DlgGameOptions(selectStackFrame, true, getSelectedStackId());
 			}
 		});
 		
+		/*
+		 * Listener: Bei Betätitgung des 'Bearbeiten' Buttons öffnet sich eine Maske
+		 * 			 zum Bearbeiten von FlashCards
+		 */
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new FrmEditStack(new EditFlashCardService(cardService.getFlashCards().listIterator()));
+				List<FlashCard> cards = cardService.getFlashCards();	
+				if (cards == null) cards = new ArrayList<FlashCard>();
+				new FrmEditStack(new EditFlashCardService(cards.listIterator(), getSelectedStackId()));
 				selectStackFrame.dispose();
+			}
+		});
+		
+		/*
+		 * Listener: Wird eine Zeile in der Vorschautabelle per Doppelklick ausgewählt
+		 * 			 so öffnet sich die Bearbeitungsmaske
+		 */
+		tblStacksPreview.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent me) {
+				JTable table = (JTable) me.getSource();
+				Point p = me.getPoint();
+				int row = table.rowAtPoint(p);
+				if (me.getClickCount() == 2 && row != -1) {
+					new FrmEditStack(
+							new EditFlashCardService(cardService.getFlashCards().listIterator(row), 
+									getSelectedStackId()));
+				}
 			}
 		});
 	}
