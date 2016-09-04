@@ -21,10 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import de.htwsaar.flashcards.engine.interfaces.GameEngine;
+import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.ProgressCircle;
 import de.htwsaar.flashcards.util.ButtonFactory;
@@ -149,7 +149,6 @@ public class FrmStudy {
     }
 
     private void initFrame() {
-        UIManager.put("ToolTip.background", Color.white);
         GradientPanel mainPanel = new GradientPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.add(pnlInfo);
