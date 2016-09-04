@@ -19,4 +19,9 @@ public class StackService {
 	public Stack[] getStackArray() {
 		return stacks.toArray(new Stack[stacks.size()]);
 	}
+	
+	public StackDao StackInfo()
+	{
+		return stackDao;
+	}
 }

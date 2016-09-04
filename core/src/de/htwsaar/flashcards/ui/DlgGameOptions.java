@@ -203,7 +203,7 @@ public class DlgGameOptions extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			cardService.getFlashCards(stackId);
 			GameEngine engine = new GameEngineImpl(cardService.getFlashCards());
-			new FrmStudy(engine);
+			new FrmStudy(engine, stackId);
 			self.dispose();
 			self.getOwner().dispose();
 		}

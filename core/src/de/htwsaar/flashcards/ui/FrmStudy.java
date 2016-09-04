@@ -21,10 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import de.htwsaar.flashcards.engine.interfaces.GameEngine;
+import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Messages;
+import de.htwsaar.flashcards.service.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.ProgressCircle;
 import de.htwsaar.flashcards.util.ButtonFactory;
@@ -56,21 +59,30 @@ public class FrmStudy {
     private JPanel pnlFlashcard;
     private JPanel pnlImage;
     private JPanel pnlAnswer;
+    private JPanel pnlVokabel;
     private JPanel pnlEval;
+    private JTextField txtVokabelAnswer;
     private JScrollPane scrlCard;
     private JScrollPane scrlAnswer;
     private JFrame studyFrame;
+    private StackService stackService;
+    private Stack stack;
+    private JButton btnNextQuestion;
+    
 
-    public FrmStudy(GameEngine engine) {
+    public FrmStudy(GameEngine engine, int stackId) {
     	this.engine = engine;
+    	 
     	studyFrame = new JFrame();
-    	
+    	stackService = new StackService();
     	studyFrame.setResizable(false);
+    	stack = stackService.StackInfo().getStack(stackId);
     	
         initInfoArea();
         initQuestionArea();
         initImageArea();
         initAnswerArea();
+        initVokabel();
         initEvaluationArea();
         initFrame();
         initListener();
@@ -149,23 +161,47 @@ public class FrmStudy {
         loadImage();
         pnlImage.add(this.lblQuestionImage);
     }
+    
+    private void initVokabel()
+    {
+    	pnlVokabel = new JPanel();
+    	pnlVokabel.setOpaque(false);
+    	pnlVokabel.setBorder(OUTER_CARD_BORDER);
+    	txtVokabelAnswer = new JTextField(40);
+    	pnlVokabel.add(txtVokabelAnswer);
+    	
+    	
+    }
 
     private void initEvaluationArea() {
-        pnlEval = new JPanel(new GridBagLayout());
-        pnlEval.setOpaque(false);
-        GridBagConstraints cos = new GridBagConstraints();
-        btnCorrect = ButtonFactory.createImageButton(ICN_CORRECT);
-        btnCorrect.setEnabled(false);
-        cos.gridx = 0;
-        cos.gridy = 2;
-        cos.insets = new Insets(0, 0, 0, 100);
-        pnlEval.add(btnCorrect, cos);
-        btnInCorrect = ButtonFactory.createImageButton(ICN_INCORRECT);
-        btnInCorrect.setEnabled(false);
-        cos.gridx = 2;
-        cos.gridy = 2;
-        cos.insets = new Insets(0, 100, 0, 0);
-        pnlEval.add(btnInCorrect, cos);
+    	if(stack.getTyp() != 2)
+    	{
+    		pnlEval = new JPanel(new GridBagLayout());
+    		pnlEval.setOpaque(false);
+    		GridBagConstraints cos = new GridBagConstraints();
+    		btnCorrect = ButtonFactory.createImageButton(ICN_CORRECT);
+    		btnCorrect.setEnabled(false);
+    		cos.gridx = 0;
+    		cos.gridy = 2;
+    		cos.insets = new Insets(0, 0, 0, 100);
+    		pnlEval.add(btnCorrect, cos);
+    		btnInCorrect = ButtonFactory.createImageButton(ICN_INCORRECT);
+    		btnInCorrect.setEnabled(false);
+    		cos.gridx = 2;
+    		cos.gridy = 2;
+    		cos.insets = new Insets(0, 100, 0, 0);
+    		pnlEval.add(btnInCorrect, cos);
+    	}
+    	else
+    	{
+    		pnlEval = new JPanel();
+    		pnlEval.setOpaque(false);
+    		pnlEval.setBorder(OUTER_CARD_BORDER);
+    		btnNextQuestion = new JButton("Next Question"); //Image einfügen
+    		btnNextQuestion.setEnabled(false);
+    		pnlEval.add(btnNextQuestion);
+    	}
+    	
     }
 
     private void initFrame() {
@@ -174,8 +210,21 @@ public class FrmStudy {
         mainPanel.add(pnlInfo);
         mainPanel.add(pnlFlashcard);
         mainPanel.add(pnlImage);
-        mainPanel.add(pnlAnswer);
-        mainPanel.add(this.pnlEval);
+        
+        if(stack.getTyp() == 2)
+        {
+        	mainPanel.add(pnlVokabel);
+        	mainPanel.add(pnlAnswer);        	
+        	mainPanel.add(this.pnlEval);
+        	
+        }
+        else
+        {
+        	mainPanel.add(pnlAnswer);
+        	mainPanel.add(this.pnlEval);
+        }
+        
+        
         studyFrame.add(mainPanel);
         studyFrame.setTitle(Messages.getString("study"));
         studyFrame.setSize(650, 780);
@@ -193,15 +242,15 @@ public class FrmStudy {
         btnShowAnswer.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				btnShowAnswer.setVisible(false);
-				scrlAnswer.setVisible(true);
-				btnCorrect.setEnabled(true);
-				btnInCorrect.setEnabled(true);
+				btnShowAnswer_Click();
 			}
 		});
         
-        btnCorrect.addActionListener(new ActionListener() {
+        if(stack.getTyp() != 2)
+        {
+        	btnCorrect.addActionListener(new ActionListener() {
 			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(engine.evaluateAnswer(true))
@@ -214,16 +263,64 @@ public class FrmStudy {
 				}
 			}
 		});
+
         
-        btnInCorrect.addActionListener(new ActionListener() {
+        	btnInCorrect.addActionListener(new ActionListener() {
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(engine.evaluateAnswer(false))
-					btnCorrectInCorrect_Click();
-			}
-		});
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(engine.evaluateAnswer(false))
+						btnCorrectInCorrect_Click();
+					else {
+						progressbar.setValue(progressbar.getMaximum());
+						JOptionPane.showMessageDialog(studyFrame, "Fertig!");
+						studyFrame.dispose();
+						new FrmSelectStack();
+					}
+				}
+			});
+        }
+        else
+        {
+        	btnNextQuestion.addActionListener(new ActionListener(){
+        		
+        		@Override
+        		public void actionPerformed(ActionEvent e) {
+        		        			
+        			if(txtVokabelAnswer.getText().compareTo(engine.getCurrentCard().getCardAnswer()) == 0)
+        			{
+        				if(engine.evaluateAnswer(true))
+        					nextQuestion();
+        				else {
+        					progressbar.setValue(progressbar.getMaximum());
+        					JOptionPane.showMessageDialog(studyFrame, "Fertig!");
+        					studyFrame.dispose();
+        					new FrmSelectStack();
+        				}
+        				//studyFrame.setBackground(Color.GREEN);
+        			}
+        			else
+        			{
+        				if(engine.evaluateAnswer(false))
+        					nextQuestion();
+        				else {
+        					progressbar.setValue(progressbar.getMaximum());
+        					JOptionPane.showMessageDialog(studyFrame, "Fertig!");
+        					studyFrame.dispose();
+        					new FrmSelectStack();
+        				}
+        			}
+        			
+        			
+        			
+        			
+        		}
+        	});
+        }
+
     }
+        
+        
 
     private void btnCorrectInCorrect_Click() {
         int currentCard = progressbar.getValue() + 1;
@@ -239,5 +336,48 @@ public class FrmStudy {
         lblBoxCounter.setText("Box: " + engine.getCurrentCard().getBoxCounter());
         lblCardname.setText(engine.getCurrentCard().getCardName());
         progresscircle.restart();
+    }
+    
+    
+    private void btnShowAnswer_Click()
+    {
+    	btnShowAnswer.setVisible(false);
+		scrlAnswer.setVisible(true);
+    	if(stack.getTyp() != 2)
+		{
+			
+			btnCorrect.setEnabled(true);
+			btnInCorrect.setEnabled(true);
+		}
+		else
+		{	btnNextQuestion.setEnabled(true);
+			txtVokabelAnswer.setEnabled(false);
+			
+			if(txtVokabelAnswer.getText().compareTo(engine.getCurrentCard().getCardAnswer()) == 0)
+			{	
+				studyFrame.getContentPane().setBackground(Color.GREEN);
+			}
+			else
+			{	
+				studyFrame.getContentPane().setBackground(Color.RED);
+			}
+			
+		}
+    }
+    
+    private void nextQuestion()
+    {
+    	btnNextQuestion.setEnabled(false);
+		int currentCard = progressbar.getValue() + 1;
+		txtVokabelAnswer.setEnabled(true);
+		scrlAnswer.setVisible(false);
+		btnShowAnswer.setVisible(true);
+		txtCard.setText(engine.getCurrentCard().getCardQuestion());
+		txtAnswer.setText(engine.getCurrentCard().getCardAnswer());
+		loadImage();
+		progressbar.setValue(currentCard);
+		lblCardCounter.setText("Q" + (currentCard + 1));
+		progresscircle.restart();
+		txtVokabelAnswer.setText("");
     }
 }
