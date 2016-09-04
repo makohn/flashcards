@@ -21,6 +21,7 @@ import javax.swing.JSlider;
 
 import de.htwsaar.flashcards.engine.GameEngineImpl;
 import de.htwsaar.flashcards.engine.interfaces.GameEngine;
+import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.FlashCardService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.JSwitchBox;
@@ -36,6 +37,7 @@ public class DlgGameOptions extends JDialog {
 	private JPanel pnlSorted;
 	private JPanel pnlTime;
 	private JPanel pnlConfirm;
+	private JPanel pnlReset;
 	
 	private ButtonGroup grpModeButtons;
 
@@ -46,6 +48,7 @@ public class DlgGameOptions extends JDialog {
 	
 	private JButton btnOk;
 	private JButton btnCancel;
+	private JButton btnReset;
 	
 	private FlashCardService cardService;
 	private int stackId;
@@ -62,6 +65,7 @@ public class DlgGameOptions extends JDialog {
 		initSelectModeArea();
 		initSelectSortedArea();
 		initTimeSelectionArea();
+		initResetArea();
 		initConfirmationArea();
 		initFrame();
 	}
@@ -113,6 +117,19 @@ public class DlgGameOptions extends JDialog {
 		});
 	}
 	
+	private void initResetArea() {
+		pnlReset = new JPanel();
+		btnReset = new JButton("Reset");
+		pnlReset.add(btnReset);
+		btnReset.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("RST");
+				cardService.reset(stackId);
+			}
+		});
+	}
+	
 	private void initConfirmationArea() {
 		pnlConfirm = new JPanel(new GridLayout(1, 2, 20, 15));
 		pnlConfirm.setOpaque(false);
@@ -122,6 +139,8 @@ public class DlgGameOptions extends JDialog {
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 	}
+	
+	
 	
 	private void initFrame() {
 		
@@ -151,6 +170,13 @@ public class DlgGameOptions extends JDialog {
 		mainPanel.add(pnlTime, gc);
 		gc.gridx = 0;
 		gc.gridy++;
+		gc.insets = new Insets(10, 0, 0, 20);
+		mainPanel.add(new JLabel("BoxCounter zurücksetzen"), gc); 
+		gc.gridx = 1;
+		gc.insets = new Insets(10, 20, 20, 0);
+		mainPanel.add(pnlReset, gc);
+		gc.gridx = 0;
+		gc.gridy++;
 		gc.gridwidth = 2;
 		gc.anchor = GridBagConstraints.CENTER;
 		mainPanel.add(new JSeparator(JSeparator.HORIZONTAL),gc);
@@ -158,7 +184,7 @@ public class DlgGameOptions extends JDialog {
 		
 		add(mainPanel);
 		setTitle(Messages.getString("options")); 
-		setSize(500, 300);
+		setSize(500, 400);
 		setResizable(false);
 		setLocation((getOwner().getX()), (getOwner().getY()));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -181,6 +207,5 @@ public class DlgGameOptions extends JDialog {
 			self.dispose();
 			self.getOwner().dispose();
 		}
-		
 	}
 }

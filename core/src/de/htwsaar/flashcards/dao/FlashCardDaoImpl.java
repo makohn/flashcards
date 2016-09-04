@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.util.FlashCardConstants;
 
 /**
  * Die FlashCardDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe
@@ -67,7 +68,9 @@ public class FlashCardDaoImpl implements FlashCardDao {
 				+ "VALUES (:Card_Name, :Card_Question, :Card_Answer, :Card_Stack_Id, :Card_Picture_Link, :Card_Asked, :Card_AnswerCorrect)";
 
 		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
-
+		
+		System.out.println(paramSource.getValue("Card_Picture_Link"));
+		
 		jdbc.update(insert, paramSource);
 	}
 
@@ -114,6 +117,25 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("Card_Box_Counter", box);
 		paramSource.addValue("Card_Id", id);
+
+		jdbc.update(query, paramSource);
+	}
+	
+	/**
+	 * Klasse zum "aktualisieren" einer Karte
+	 * 
+	 * @param flashcard
+	 *            - object
+	 */
+	@Override
+	public void resetBoxCounter(int stackId) {
+
+		int box = FlashCardConstants.START_PHASE;
+		String query = "UPDATE Cards SET Card_Box_Counter = :Card_Box_Counter WHERE Card_Stack_Id = :Card_Stack_Id";
+
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Card_Box_Counter", box);
+		paramSource.addValue("Card_Stack_Id", stackId);
 
 		jdbc.update(query, paramSource);
 	}

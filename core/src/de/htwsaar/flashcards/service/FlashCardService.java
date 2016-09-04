@@ -74,6 +74,10 @@ public class FlashCardService {
 		return flashcards.stream().filter(f -> f.getBoxCounter() == box).collect(Collectors.toList());
 	}
 	
+	public void reset(int stackId) {
+		cardDao.resetBoxCounter(stackId);
+	}
+	
 	private void timedCard(List<FlashCard> flashcards) {		
 		Collections.sort(flashcards, new Comparator<FlashCard>() {
 			  public int compare(FlashCard flashcard1, FlashCard flashcard2) {
