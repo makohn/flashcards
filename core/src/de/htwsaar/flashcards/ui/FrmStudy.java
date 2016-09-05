@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -212,7 +214,7 @@ public class FrmStudy {
         mainPanel.add(pnlImage);
         
         if(stack.getTyp() == 2)
-        {
+        {																			
         	mainPanel.add(pnlVokabel);
         	mainPanel.add(pnlAnswer);        	
         	mainPanel.add(this.pnlEval);
@@ -239,6 +241,7 @@ public class FrmStudy {
     }
 
     private void initListener() {
+    	
         btnShowAnswer.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -287,7 +290,7 @@ public class FrmStudy {
         		@Override
         		public void actionPerformed(ActionEvent e) {
         		        			
-        			if(txtVokabelAnswer.getText().compareTo(engine.getCurrentCard().getCardAnswer()) == 0)
+        			if(txtVokabelAnswer.getText().trim().compareTo(engine.getCurrentCard().getCardAnswer().trim()) == 0)
         			{
         				if(engine.evaluateAnswer(true))
         					nextQuestion();
@@ -352,14 +355,15 @@ public class FrmStudy {
 		else
 		{	btnNextQuestion.setEnabled(true);
 			txtVokabelAnswer.setEnabled(false);
+			btnNextQuestion.requestFocus();
 			
-			if(txtVokabelAnswer.getText().compareTo(engine.getCurrentCard().getCardAnswer()) == 0)
+			if(txtVokabelAnswer.getText().trim().compareTo(engine.getCurrentCard().getCardAnswer().trim()) == 0)
 			{	
-				studyFrame.getContentPane().setBackground(Color.GREEN);
+				txtAnswer.setBackground(Color.GREEN);
 			}
 			else
 			{	
-				studyFrame.getContentPane().setBackground(Color.RED);
+				txtAnswer.setBackground(Color.RED);
 			}
 			
 		}
