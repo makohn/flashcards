@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.Callable;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,17 +27,21 @@ public class ProgressCircle extends JPanel {
     private int prgValue = 0;
     private int maxProgress;
     private JLabel lblTime;
+    private Callable<Void> handler;
 
     public ProgressCircle(int seconds) {
     	  this.maxProgress = seconds*20;
-    	  this.lblTime = new JLabel(""+seconds);
+    	  this.lblTime = new JLabel(seconds == 0 ? "∞" : ""+seconds);
     	  lblTime.setHorizontalAlignment(SwingUtilities.CENTER);
     	  lblTime.setFont(FONT_COUNTER);
     	  super.setLayout(new BorderLayout());
     	  super.setOpaque(false);
     	  super.add(lblTime);
           timer = new Timer(DELAY, new MyChangeListener());
-          timer.start();
+    }
+    
+    public void setHandler(Callable<Void> handler) {
+    	this.handler = handler;
     }
 
     @Override
@@ -58,6 +63,10 @@ public class ProgressCircle extends JPanel {
     	prgValue = 0;
     	timer.start();
     }
+    
+    public void stop() {
+    	timer.stop();
+    }
 
    class MyChangeListener implements ActionListener {
        @Override
@@ -68,6 +77,11 @@ public class ProgressCircle extends JPanel {
            if (prgValue >= maxProgress) {
                 timer.stop();
                 lblTime.setText("0");
+                try {
+					handler.call();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
            }
       }
   }

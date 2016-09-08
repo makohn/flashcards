@@ -41,6 +41,7 @@ public class FrmEditStack {
 	private static final ImageIcon ICN_ARROW_RIGHT = new ImageIcon("res/images/arrow-right.png");
 	private static final ImageIcon ICN_ARROW_LEFT = new ImageIcon("res/images/arrow-left.png");
 	private static final ImageIcon ICN_ADD_PICTURE= new ImageIcon("res/images/add-picture.png");
+	private static final ImageIcon ICN_DEL_PICTURE= new ImageIcon("res/images/rem-picture.png");
 	private static final ImageIcon ICN_ADD_CARD= new ImageIcon("res/images/add-card.png");
 	
 	private static final Border INNER_CARD_BORDER = BorderFactory.createLineBorder(Color.GRAY);
@@ -59,6 +60,7 @@ public class FrmEditStack {
 	private JButton btnCardForward;
 	private JButton btnCardBackward;
 	private JButton btnAddPicture;
+	private JButton btnDelPicture;
 	private JButton btnCancel;
 	private JButton btnDeleteCurrentCard;
 	private JButton btnSaveStack;
@@ -87,7 +89,7 @@ public class FrmEditStack {
 		initSaveDeleteArea();
 		initFrame();
 		initListeners();
-		updateTextFields();
+		update();
 	}
 	
 	private void initNavigationArea() {
@@ -130,6 +132,10 @@ public class FrmEditStack {
 		
 		btnAddPicture = ButtonFactory.createImageButton(ICN_ADD_PICTURE);
 		btnAddPicture.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnAddPicture.setVisible(false); 
+		btnDelPicture = ButtonFactory.createImageButton(ICN_DEL_PICTURE);
+		btnDelPicture.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnDelPicture.setVisible(false); 
 		
 		JScrollPane scrlQuestion = new JScrollPane(txtQuestion);
 		scrlQuestion.setOpaque(false);
@@ -138,6 +144,7 @@ public class FrmEditStack {
 		pnlQuestion.add(lblQuestion);
 		pnlQuestion.add(scrlQuestion);
 		pnlQuestion.add(btnAddPicture);
+		pnlQuestion.add(btnDelPicture);
 	}
 	
 	private void initAnswerArea() {
@@ -194,7 +201,7 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardService.nextCard();
-				updateTextFields();
+				update();
 			}
 		});
 		
@@ -202,7 +209,7 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardService.previousCard();
-				updateTextFields();
+				update();
 			}
 		});
 		
@@ -210,7 +217,7 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardService.addCard();
-				updateTextFields();
+				update();
 				txtCardName.requestFocus();
 			}
 		});
@@ -235,25 +242,32 @@ public class FrmEditStack {
 				int returnVal = chooser.showOpenDialog(editStackWindow);
 				if(returnVal == JFileChooser.APPROVE_OPTION) {
 				      imagePath = chooser.getSelectedFile().getPath(); 
-				      /*"/Volumes/Storage/Github/" + chooser.getSelectedFile().getName();*/
 				 }
+			}
+		});
+		
+		btnDelPicture.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imagePath = null;
+				btnAddPicture.setVisible(true);
+				btnDelPicture.setVisible(false);
 			}
 		});
 	}
 	
-//	private void copyImage() {
-//		 try {
-//				Files.copy(Paths.get(chooser.getSelectedFile().getPath()), Paths.get(imagePath));
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//				System.err.println("Fehler beim Kopieren der Datei");
-//			}
-//	}
-	
-	private void updateTextFields() {
+	private void update() {
 		FlashCard card = cardService.getCurrentCard();
 		txtCardName.setText(card != null ? card.getCardName() : "");
 		txtQuestion.setText(card != null ? card.getCardQuestion() : "");
 		txtAnswer.setText(card != null ? card.getCardAnswer() : "");
+		if(card.hasPic()) {
+			btnAddPicture.setVisible(false);
+			btnDelPicture.setVisible(true);
+		}
+		else {
+			btnAddPicture.setVisible(true);
+			btnDelPicture.setVisible(false);
+		}
 	}
 }

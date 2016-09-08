@@ -146,6 +146,10 @@ public class FlashCard implements Comparable<FlashCard> {
 	public void setCardAnswerCorrect(int cardAnswerCorrect) {
 		this.cardAnswerCorrect = cardAnswerCorrect;
 	}
+	
+	public boolean hasPic() {
+		return this.cardPicture != null;
+	}
 
 	@Override
 	public String toString() {

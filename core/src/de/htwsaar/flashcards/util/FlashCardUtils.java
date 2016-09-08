@@ -2,6 +2,7 @@ package de.htwsaar.flashcards.util;
 
 import java.awt.Font;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 
@@ -21,5 +22,13 @@ public class FlashCardUtils {
         txtArea.setEditable(editable);
         txtArea.setFont(FONT_CARD);
         return txtArea;
+	}
+	
+	public static int getSelectedButtonIndex(AbstractButton[] buttons) {
+		for(int i = 0; i < buttons.length; i++) {
+			if (buttons[i].isSelected())
+				return i+1;
+		}
+		return -1;
 	}
 }

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 public class GradientPanel extends JPanel {
 
 	private static final long serialVersionUID = -5828241851827054583L;
+	private static Color backgroundColor = new Color(230, 247, 255);
 	
 	@Override
     protected void paintComponent(Graphics g) {
@@ -20,9 +21,13 @@ public class GradientPanel extends JPanel {
         int w = getWidth();
         int h = getHeight();
         Color color1 = Color.white;
-        Color color2 = new Color(230, 247, 255);
+        Color color2 = backgroundColor;
         GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, w, h);
     }
+	
+	public static void changeBackground(Color bg) {
+		backgroundColor = bg;
+	}
 }

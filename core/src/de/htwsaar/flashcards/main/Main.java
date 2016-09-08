@@ -41,11 +41,13 @@ public class Main {
 			 .put("nimbusOrange", (new Color(0, 163, 204)));
 			 UIManager.getLookAndFeelDefaults()
 			 .put("info", Color.white);
+			 UIManager.getLookAndFeelDefaults()
+			 .put("InternalFrame.background", new Color(230, 247, 255));
 		} catch (UnsupportedLookAndFeelException e1) {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (Exception e2) {
-				System.err.println("Fatal Error: Can't load Look and Fee defaults");
+				System.err.println("Fatal Error: Can't load Look and Feel defaults");
 			}
 		}	
 	}

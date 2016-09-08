@@ -10,5 +10,6 @@ import de.htwsaar.flashcards.model.FlashCard;
 public interface GameEngine {
 	public boolean evaluateAnswer(boolean isCorrect);
 	public FlashCard getCurrentCard();
+	public void nextCard();
 	public int getNrCards();
 }

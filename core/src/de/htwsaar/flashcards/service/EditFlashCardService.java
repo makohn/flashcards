@@ -43,6 +43,8 @@ public class EditFlashCardService {
 		currentCard.setCardPicture(cardPicture);
 		if(currentCard.getCardId() == 0)
 			cardDao.saveCard(currentCard);
+		else
+			cardDao.updateCard(currentCard);
 	}
 	
 	public FlashCard getCurrentCard() {
@@ -54,5 +56,4 @@ public class EditFlashCardService {
 			this.currentCard = flashcardIterator.next();
 		else addCard();
 	}
-	
 }

@@ -70,7 +70,7 @@ public class FlashCardsTableModel implements TableModel {
 		case 0: return flashcards.get(rowIndex).getCardName();
 		case 1: return flashcards.get(rowIndex).getBoxCounter();
 		case 2: return flashcards.get(rowIndex).getCardLastAccessDate();
-		case 3: return flashcards.get(rowIndex).getCardPicture() != null ? ICN_HAS_IMG : null;
+		case 3: return flashcards.get(rowIndex).hasPic() ? ICN_HAS_IMG : null;
 		default: return null;
 		}
 	}

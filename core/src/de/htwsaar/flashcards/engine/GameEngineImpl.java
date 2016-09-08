@@ -53,7 +53,7 @@ public class GameEngineImpl implements GameEngine {
 		cardDao.updateCard(currentCard);
 		
 		if (cardIterator.hasNext()) {
-			currentCard = cardIterator.next();
+			
 			return true;
 		}
 		return false;
@@ -67,5 +67,11 @@ public class GameEngineImpl implements GameEngine {
 	@Override
 	public int getNrCards() {
 		return flashcards.size();
+	}
+
+	@Override
+	public void nextCard() {
+		if (cardIterator.hasNext()) 
+			currentCard = cardIterator.next();
 	}
 }

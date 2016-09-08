@@ -20,8 +20,7 @@ public class StackService {
 		return stacks.toArray(new Stack[stacks.size()]);
 	}
 	
-	public StackDao StackInfo()
-	{
-		return stackDao;
+	public Stack getStack(int stackId) {
+		return stackDao.getStack(stackId);
 	}
 }

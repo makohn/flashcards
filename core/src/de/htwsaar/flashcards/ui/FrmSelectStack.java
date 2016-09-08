@@ -81,7 +81,7 @@ public class FrmSelectStack {
 	
 	private void initPreviewArea() {
 		tblStacksPreview = new JTable();
-		List<FlashCard> flashcards = cardService.getFlashCards(getSelectedStackId());
+		List<FlashCard> flashcards = cardService.getFlashCards(getSelectedStack().getStackId());
 		tableModel = new FlashCardsTableModel(flashcards);
 		tblStacksPreview.setModel(tableModel);
 		tblStacksPreview.setRowHeight(20);
@@ -120,7 +120,7 @@ public class FrmSelectStack {
 		//-------------------------------------
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(15, 0, 0, 20);
+		c.insets = new Insets(15, 0, 0, 18);
 		mainPanel.add(new JLabel(Messages.getString("choose_a_stack")), c);
 		//-------------------------------------
 		c.insets = new Insets(0,0,0,0);
@@ -148,8 +148,8 @@ public class FrmSelectStack {
 		selectStackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	private int getSelectedStackId() {
-		return ((Stack)cmbStackSelector.getSelectedItem()).getStackId();
+	private Stack getSelectedStack() {
+		return ((Stack)cmbStackSelector.getSelectedItem());
 	}
 	
 	private void initListeners() {
@@ -159,7 +159,7 @@ public class FrmSelectStack {
 		 */
 		btnStudy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DlgGameOptions(selectStackFrame, true, getSelectedStackId());
+				new DlgGameOptions(selectStackFrame, true, getSelectedStack());
 			}
 		});
 		
@@ -171,7 +171,7 @@ public class FrmSelectStack {
 			public void actionPerformed(ActionEvent e) {
 				List<FlashCard> cards = cardService.getFlashCards();	
 				if (cards == null) cards = new ArrayList<FlashCard>();
-				new FrmEditStack(new EditFlashCardService(cards.listIterator(), getSelectedStackId()));
+				new FrmEditStack(new EditFlashCardService(cards.listIterator(), getSelectedStack().getStackId()));
 				selectStackFrame.dispose();
 			}
 		});
@@ -189,7 +189,7 @@ public class FrmSelectStack {
 				if (me.getClickCount() == 2 && row != -1) {
 					new FrmEditStack(
 							new EditFlashCardService(cardService.getFlashCards().listIterator(row), 
-									getSelectedStackId()));
+									getSelectedStack().getStackId()));
 				}
 			}
 		});
@@ -198,7 +198,7 @@ public class FrmSelectStack {
 	private class UpdateTableActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			tableModel.setFlashCards(cardService.getFlashCards(getSelectedStackId()));
+			tableModel.setFlashCards(cardService.getFlashCards(getSelectedStack().getStackId()));
 			tblStacksPreview.repaint();
 		}
 		
