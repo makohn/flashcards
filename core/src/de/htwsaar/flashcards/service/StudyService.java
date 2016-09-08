@@ -43,7 +43,7 @@ public class StudyService {
 			flashcards = cardDao.getFlashCards(stackId, box);
 		}
 		// Gibt es eine maximale Anzahl an Karten ?
-		if(limit > 0 && limit < nrOfCards) {
+		if(limit > 0 && limit < flashcards.size()) {
 			flashcards = flashcards.subList(0, limit);
 		}
 		// Sollen die Karten sortiert werden ?
