@@ -110,14 +110,11 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	@Override
 	public void updateCard(FlashCard flashcard) {
 
-		int box = flashcard.getBoxCounter();
-		int id = flashcard.getCardId();
-		String query = "UPDATE Cards SET Card_Box_Counter = :Card_Box_Counter WHERE Card_Id = :Card_Id";
+		String query = "UPDATE Cards SET Card_Name = :Card_Name, Card_Question = :Card_Question, Card_Answer = :Card_Answer, "
+				+ "Card_Picture_Link = :Card_Picture_Link, Card_Box_Counter = :Card_Box_Counter WHERE Card_Id = :Card_Id";
 
-		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		paramSource.addValue("Card_Box_Counter", box);
-		paramSource.addValue("Card_Id", id);
-
+		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
+	
 		jdbc.update(query, paramSource);
 	}
 	
