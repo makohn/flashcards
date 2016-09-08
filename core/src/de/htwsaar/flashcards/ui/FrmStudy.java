@@ -36,7 +36,7 @@ public class FrmStudy {
     
     private StudyTypeUIFactory uiFactory;
     private StudyService studyService;
-
+    
     public FrmStudy(StudyService studyService, StudyTypeUIFactory uiFactory) {
     	this.uiFactory = uiFactory;
     	this.studyService = studyService;
@@ -57,7 +57,8 @@ public class FrmStudy {
         pnlEval = uiFactory.createEvaluationPanel();
         initFrame();
         uiFactory.updateCard(currentCard);
-        uiFactory.setListeners(() -> {return nextQuestion();});
+        uiFactory.setListeners((answer) -> {return nextQuestion(answer);},
+        					   (timerStopped) -> {return stopTimer();});
     }
     
     private void initInfoArea() {
@@ -68,7 +69,7 @@ public class FrmStudy {
 			@Override
 			public Void call() throws Exception {
 				JOptionPane.showMessageDialog(studyFrame, "Die Zeit ist abgelaufen");
-				nextQuestion();
+				nextQuestion(false);
 				return null;
 			}
 		});
@@ -105,7 +106,8 @@ public class FrmStudy {
         lblQuestionImage.setIcon(FlashCardUtils.scale((ImageIcon)icon, 200, 200));
     }
     
-    private FlashCard nextQuestion() {
+    private FlashCard nextQuestion(boolean answer) {
+    	studyService.saveCard(currentCard, answer);
     	if(cardIterator.hasNext()) {
 			currentCard = cardIterator.next();
 		    loadImage();
@@ -118,5 +120,10 @@ public class FrmStudy {
 			new FrmSelectStack();
     	}
     	return currentCard;
+    }
+    
+    private Void stopTimer() {
+    	pnlInfo.stopTimer();
+    	return null;
     }
 }

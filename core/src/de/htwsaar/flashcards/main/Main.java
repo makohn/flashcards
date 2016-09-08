@@ -3,6 +3,7 @@ package de.htwsaar.flashcards.main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -42,7 +43,11 @@ public class Main {
 			 UIManager.getLookAndFeelDefaults()
 			 .put("info", Color.white);
 			 UIManager.getLookAndFeelDefaults()
-			 .put("InternalFrame.background", new Color(230, 247, 255));
+			 .put("OptionPane.background", new Color(230, 247, 255));
+			 UIManager.getLookAndFeelDefaults()
+			 .put("Panel.background", new Color(230, 247, 255));
+			 UIManager.getLookAndFeelDefaults()
+			 .put("MenuBar:Menu.contentMargins", new Insets(1, 8, 2, 8));
 		} catch (UnsupportedLookAndFeelException e1) {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

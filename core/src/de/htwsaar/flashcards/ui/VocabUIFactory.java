@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Callable;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -19,6 +18,7 @@ import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.util.ButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
+import de.htwsaar.flashcards.util.Handler;
 
 public class VocabUIFactory implements StudyTypeUIFactory {
 
@@ -32,6 +32,7 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 	private JButton btnNextQuestion;
 	
 	private FlashCard currentCard;
+	private boolean answer;
 	
 	@Override
 	public JPanel createQuestionPanel(boolean editable) {
@@ -84,16 +85,18 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 	}
 
 	@Override
-	public void setListeners(Callable<FlashCard> handler) {
+	public void setListeners(Handler<FlashCard> nextQuestion,
+							 Handler<Void> stopTimer) {
 		
 		btnShowAnswer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				stopTimer.call(true);
 				btnShowAnswer.setVisible(false);
 				txtShowAnswer.setVisible(true);
 				btnNextQuestion.setEnabled(true);
 				txtAnswer.setEditable(false);
-				if(txtAnswer.getText().trim().equals(currentCard.getCardAnswer().trim())) {
+				if(answer = txtAnswer.getText().trim().equals(currentCard.getCardAnswer().trim())) {
 					txtAnswer.setBackground(new Color(217, 242, 217));
 				}
 				else {
@@ -112,7 +115,7 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 				txtAnswer.setBackground(Color.white);
 				txtAnswer.setText("");
 				try {
-					updateCard(handler.call());
+					updateCard(nextQuestion.call(answer));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

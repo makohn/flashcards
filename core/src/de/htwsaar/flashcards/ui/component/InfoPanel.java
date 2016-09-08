@@ -85,6 +85,11 @@ public class InfoPanel extends JPanel {
 			progresscircle.stop();
 	}
 	
+	public void stopTimer() {
+		if (time > 0)
+			progresscircle.stop();
+	}
+	
 	public void setHandler(Callable<Void> handler) {
 		if (time > 0)
 			progresscircle.setHandler(handler);

@@ -254,6 +254,14 @@ public class FrmEditStack {
 				btnDelPicture.setVisible(false);
 			}
 		});
+		
+		btnCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editStackWindow.dispose();
+				new FrmSelectStack();
+			}
+		});
 	}
 	
 	private void update() {

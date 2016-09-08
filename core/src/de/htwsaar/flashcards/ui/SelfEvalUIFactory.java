@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Callable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +20,7 @@ import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.util.ButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
 import de.htwsaar.flashcards.util.FlashCardUtils;
+import de.htwsaar.flashcards.util.Handler;
 
 public class SelfEvalUIFactory implements StudyTypeUIFactory {
 	
@@ -90,10 +90,12 @@ public class SelfEvalUIFactory implements StudyTypeUIFactory {
 	}
 	
 	@Override
-	public void setListeners(Callable<FlashCard> handler) {
+	public void setListeners(Handler<FlashCard> nextQuestion, 
+							 Handler<Void> stopTimer ) {
 
 		btnShowAnswer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				stopTimer.call(true);
 				btnCorrect.setEnabled(true);
 				btnInCorrect.setEnabled(true);
 				btnShowAnswer.setVisible(false);
@@ -105,7 +107,7 @@ public class SelfEvalUIFactory implements StudyTypeUIFactory {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				nextQuestion(handler);
+				nextQuestion(nextQuestion, true);
 			}
 		});
 
@@ -113,18 +115,18 @@ public class SelfEvalUIFactory implements StudyTypeUIFactory {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				nextQuestion(handler);	
+				nextQuestion(nextQuestion, false);	
 			}
 		});
 	}
 	
-	private void nextQuestion(Callable<FlashCard> handler) {
+	private void nextQuestion(Handler<FlashCard> handler, boolean arg) {
 		btnCorrect.setEnabled(false);
 	    btnInCorrect.setEnabled(false);
 	    scrlAnswer.setVisible(false);
 	    btnShowAnswer.setVisible(true);
 	    try {
-			updateCard(handler.call());
+			updateCard(handler.call(arg));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

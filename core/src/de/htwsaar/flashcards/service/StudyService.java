@@ -69,19 +69,23 @@ public class StudyService {
 		return nrOfCards;
 	}
 	
-	public void saveCard(FlashCard card) {
+	public void saveCard(FlashCard card, boolean answer) {
 		int boxCount = card.getBoxCounter();
-		
-		switch(options.getEvalType()) {
-		case BACK_TO_FIRST_BOX:
-			boxCount = 1;
-			break;
-		case DECREMENT_BY_ONE:
-			boxCount--;
-			break;
-		default:
-		case STAY_IN_BOX:
-			break;
+		if(!answer) { 
+			switch(options.getEvalType()) {
+			case BACK_TO_FIRST_BOX:
+				boxCount = 1;
+				break;
+			case DECREMENT_BY_ONE:
+				if(boxCount > 1) boxCount--;
+				break;
+			default:
+			case STAY_IN_BOX:
+				break;
+			}
+		}
+		else {
+			if(boxCount < 5) boxCount++;
 		}
 		card.setBoxCounter(boxCount);
 		cardDao.updateCard(card);

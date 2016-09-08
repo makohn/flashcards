@@ -1,5 +1,6 @@
 package de.htwsaar.flashcards.ui.tableModels;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import de.htwsaar.flashcards.model.FlashCard;
 public class FlashCardsTableModel implements TableModel {
 	
 	private static final ImageIcon ICN_HAS_IMG = new ImageIcon("res/images/tiny_tick.png");
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy (HH:mm)");
 	
 	private List<FlashCard> flashcards;
 	private List<TableModelListener> listeners;
@@ -20,7 +22,7 @@ public class FlashCardsTableModel implements TableModel {
 	private static final String COL_FLASHCARD_NAME = "Bezeichnung";
 	private static final String COL_BOX_COUNTER = "Box";
 	private static final String COL_IMAGE = "Bild";
-	private static final String COL_LAST_TIME = "Letzes Mal";
+	private static final String COL_LAST_TIME = "zuletzt gespielt am";
 	
 	public FlashCardsTableModel(List<FlashCard> flashCardList) {
 		this.flashcards = flashCardList;
@@ -69,7 +71,7 @@ public class FlashCardsTableModel implements TableModel {
 		switch(columnIndex) {
 		case 0: return flashcards.get(rowIndex).getCardName();
 		case 1: return flashcards.get(rowIndex).getBoxCounter();
-		case 2: return flashcards.get(rowIndex).getCardLastAccessDate();
+		case 2: return DATE_FORMAT.format(flashcards.get(rowIndex).getCardLastAccessDate());
 		case 3: return flashcards.get(rowIndex).hasPic() ? ICN_HAS_IMG : null;
 		default: return null;
 		}
