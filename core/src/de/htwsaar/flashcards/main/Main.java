@@ -3,12 +3,17 @@ package de.htwsaar.flashcards.main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Insets;
 
+import javax.swing.JFileChooser;
+import javax.swing.Painter;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
+import org.springframework.cglib.core.Constants;
 
 import de.htwsaar.flashcards.ui.FrmSelectStack;
 
@@ -47,7 +52,18 @@ public class Main {
 			 UIManager.getLookAndFeelDefaults()
 			 .put("Panel.background", new Color(230, 247, 255));
 			 UIManager.getLookAndFeelDefaults()
+			 .put("FileChooser.background", new Color(230, 247, 255));
+			 UIManager.getLookAndFeelDefaults()
 			 .put("MenuBar:Menu.contentMargins", new Insets(1, 8, 2, 8));
+			 UIManager.getLookAndFeelDefaults()
+			 .put("FileChooser[Enabled].backgroundPainter", new Painter<JFileChooser>() {
+                @Override
+                public void paint(Graphics2D g, JFileChooser object, int width, int height)
+                {
+                    g.setColor(new Color(230, 247, 255));
+                    g.draw(object.getBounds());
+                }
+            });
 		} catch (UnsupportedLookAndFeelException e1) {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
