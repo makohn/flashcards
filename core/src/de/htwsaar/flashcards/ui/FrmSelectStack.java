@@ -38,13 +38,15 @@ import de.htwsaar.flashcards.util.ButtonFactory;
 
 public class FrmSelectStack {
 	
-	private static final ImageIcon ICN_CREATE_STACK = new ImageIcon("res/images/create_stack.png");
+	private static final ImageIcon ICN_CREATE_STACK = new ImageIcon("res/images/add_small.png");
+	private static final ImageIcon ICN_EDIT_STACK = new ImageIcon("res/images/edit_small.png");
 	
 	private JButton btnEdit;
 	private JButton btnDelete;
 	private JButton btnExport;
 	private JButton btnStudy;
 	private JButton btnCreateStack;
+	private JButton btnEditStack;
 	private JComboBox<Stack> cmbStackSelector;
 	private JPanel pnlSelection;
 	private JScrollPane scrlPreview;
@@ -75,9 +77,10 @@ public class FrmSelectStack {
 		cmbStackSelector.addActionListener(new UpdateTableActionListener());
 		
 		btnCreateStack = ButtonFactory.createImageButton(ICN_CREATE_STACK);
-		
+		btnEditStack =  ButtonFactory.createImageButton(ICN_EDIT_STACK);
 		pnlSelection.add(cmbStackSelector);
 		pnlSelection.add(btnCreateStack);
+		pnlSelection.add(btnEditStack);
 	}
 	
 	private void initPreviewArea() {
@@ -144,9 +147,10 @@ public class FrmSelectStack {
 		//-------------------------------------
 		
 		selectStackFrame.add(mainPanel);
-		selectStackFrame.setVisible(true);
 		selectStackFrame.setMinimumSize(new Dimension(730, 500));
 		selectStackFrame.setJMenuBar(MenuBar.createMenuBar());
+		selectStackFrame.setLocationRelativeTo(null);
+		selectStackFrame.setVisible(true);
 		selectStackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	

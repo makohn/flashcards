@@ -9,6 +9,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.properties.Messages;
 
 public class FlashCardsTableModel implements TableModel {
 	
@@ -19,10 +20,10 @@ public class FlashCardsTableModel implements TableModel {
 	private List<TableModelListener> listeners;
 	
 	private static final int COLUMN_COUNT = 4;
-	private static final String COL_FLASHCARD_NAME = "Bezeichnung";
-	private static final String COL_BOX_COUNTER = "Box";
-	private static final String COL_IMAGE = "Bild";
-	private static final String COL_LAST_TIME = "zuletzt gespielt am";
+	private static final String COL_FLASHCARD_NAME = Messages.getString("label");
+	private static final String COL_BOX_COUNTER = Messages.getString("box");
+	private static final String COL_IMAGE = Messages.getString("image");
+	private static final String COL_LAST_TIME = Messages.getString("last_acc");
 	
 	public FlashCardsTableModel(List<FlashCard> flashCardList) {
 		this.flashcards = flashCardList;

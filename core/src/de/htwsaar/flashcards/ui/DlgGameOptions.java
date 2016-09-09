@@ -114,7 +114,7 @@ public class DlgGameOptions extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			StudyService service = new StudyService(option, stack);
 			if(service.noFlashCardsInList()) {
-				JOptionPane.showMessageDialog(self, "Keine Karten für diese Konfiguration!");
+				JOptionPane.showMessageDialog(self, Messages.getString("no_cards"));
 			}
 			else {
 				switch(stack.getTyp()) {

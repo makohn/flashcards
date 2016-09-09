@@ -41,9 +41,6 @@ public class FrmStudy {
     	this.uiFactory = uiFactory;
     	this.studyService = studyService;
     	cardIterator = studyService.getFlashCards().listIterator();
-    	if(! cardIterator.hasNext()) {
-    		JOptionPane.showMessageDialog(studyFrame, "Keine Karten in dieser Box!");
-    	}
     	currentCard = cardIterator.next();
     	nrOfCards = studyService.getNrOfCards();
     	
@@ -68,7 +65,7 @@ public class FrmStudy {
     	pnlInfo.setHandler(new Callable<Void>() {
 			@Override
 			public Void call() throws Exception {
-				JOptionPane.showMessageDialog(studyFrame, "Die Zeit ist abgelaufen");
+				JOptionPane.showMessageDialog(studyFrame, Messages.getString("times_up"));
 				nextQuestion(false);
 				return null;
 			}
@@ -96,8 +93,9 @@ public class FrmStudy {
         studyFrame.add(mainPanel);
         studyFrame.setTitle(Messages.getString("study"));
         studyFrame.setSize(uiFactory.getFrameSize());
-        studyFrame.setDefaultCloseOperation(3);
+        studyFrame.setLocationRelativeTo(null);
         studyFrame.setVisible(true);
+        studyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void loadImage() {
@@ -115,7 +113,7 @@ public class FrmStudy {
     	}
     	else {
 			pnlInfo.finish();
-			JOptionPane.showMessageDialog(studyFrame, "Fertig!"); 
+			JOptionPane.showMessageDialog(studyFrame, Messages.getString("finished")); 
 			studyFrame.dispose();
 			new FrmSelectStack();
     	}

@@ -28,7 +28,7 @@ public class DlgCreateStack extends JDialog {
 	
 	private static final long serialVersionUID = 7027007772101016979L;
 
-	private static final String[] STACK_TYPE = {"Normal", "Vokabeln"};
+	private static final String[] STACK_TYPE = {Messages.getString("normal"), Messages.getString("vocab")};
 	
 	private JPanel pnlStackName;
 	private JPanel pnlConfirm;
@@ -55,7 +55,7 @@ public class DlgCreateStack extends JDialog {
 		mainPanel.add(pnlStackName);
 		mainPanel.add(pnlConfirm);
 		add(mainPanel);
-		setTitle(Messages.getString("options")); 
+		setTitle(Messages.getString("edit_stack")); 
 		setSize(340, 330);
 		setResizable(false);
 		setLocationRelativeTo(getOwner());
@@ -75,26 +75,26 @@ public class DlgCreateStack extends JDialog {
 		txtStackSubject.setLineWrap(true);
 		txtStackSubject.setWrapStyleWord(true);
 		txtStackSubject.setPreferredSize(new Dimension(230,130));
-		JLabel lblName = new JLabel("Name: ");
+		JLabel lblName = new JLabel(Messages.getString("name"));
 		lblName.setPreferredSize(new Dimension(60,25));
 		pnlStackName.add(lblName);
 		pnlStackName.add(txtStackName);
-		JLabel lblSubject = new JLabel("Thema: ");
+		JLabel lblSubject = new JLabel(Messages.getString("subject"));
 		lblSubject.setPreferredSize(lblName.getPreferredSize());
 		pnlStackName.add(lblSubject);
 		pnlStackName.add(txtStackSubject);
-		JLabel lblTyp = new JLabel("Typ: ");
+		JLabel lblTyp = new JLabel(Messages.getString("type"));
 		lblTyp.setPreferredSize(lblName.getPreferredSize());
 		pnlStackName.add(lblTyp);
 		pnlStackName.add(cmbStackType);
-		pnlStackName.setBorder(BorderFactory.createTitledBorder("Neuer Stack: "));
+		pnlStackName.setBorder(BorderFactory.createTitledBorder(Messages.getString("new_stack")));
 	}
 	
 	private void initConfirmArea() {
 		pnlConfirm = new JPanel(new GridLayout(1, 2,10,10));
 		pnlConfirm.setOpaque(false);
-		btnOk = ButtonFactory.createColouredButton("Ok", ButtonFactory.BTN_GREEN);
-		btnCancel = ButtonFactory.createColouredButton("Abbrechen", ButtonFactory.BTN_RED);
+		btnOk = ButtonFactory.createColouredButton(Messages.getString("ok"), ButtonFactory.BTN_GREEN);
+		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(10,40,10,40));

@@ -80,7 +80,7 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 	public JPanel createEvaluationPanel() {
 		JPanel pnlEval = new JPanel();
 		pnlEval.setOpaque(false);
-		btnNextQuestion = ButtonFactory.createColouredButton("Weiter", new Color(0, 163, 204));
+		btnNextQuestion = ButtonFactory.createColouredButton(Messages.getString("next"), new Color(0, 163, 204));
 		btnNextQuestion.setEnabled(false);
 		pnlEval.add(btnNextQuestion);
 		return pnlEval;

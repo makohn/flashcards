@@ -91,11 +91,11 @@ public class FrmGameOptions  {
 		gc.anchor = GridBagConstraints.NORTHWEST;
 		gc.insets = new Insets(5, 5, 0, 80);
 		gc.gridx = gc.gridy = 0;
-		pnlSelectSlot.add(new JLabel("Überschreibe: "), gc);
+		pnlSelectSlot.add(new JLabel(Messages.getString("overwrite")), gc);
 		gc.insets = new Insets(0, 20, 0, 120);
 		gc.gridx = 1;
 		pnlSelectSlot.add(cmbSlotSelection, gc);
-		pnlSelectSlot.setBorder(BorderFactory.createTitledBorder("Welche Option überschreiben ?"));
+		pnlSelectSlot.setBorder(BorderFactory.createTitledBorder(Messages.getString("which_option")));
 	}
 	
 	private void initSelectModeArea() {
@@ -118,7 +118,7 @@ public class FrmGameOptions  {
 			btn.setActionCommand(btn.getText());
 		}
 		
-		chkAllCards = new JCheckBox("Alle Boxen");
+		chkAllCards = new JCheckBox(Messages.getString("all_boxes"));
 		pnlSelectMode.add(pnlModeButtons);
 		pnlSelectMode.add(chkAllCards);
 	}
@@ -154,7 +154,7 @@ public class FrmGameOptions  {
 	
 	private void initLimitArea() {
 		pnlLimit = new JPanel();
-		chkUnlimitedCards = new JCheckBox("Unbegrenzt");
+		chkUnlimitedCards = new JCheckBox(Messages.getString("unlimited"));
 		pnlLimit.setOpaque(false);
 		spnLimit = new JSpinner();
 		SpinnerNumberModel model = new SpinnerNumberModel(5, 1, 50, 1);
@@ -167,14 +167,16 @@ public class FrmGameOptions  {
 	private void initDateArea() {
 		pnlDate = new JPanel();
 		pnlDate.setOpaque(false);
-		switchConsiderDate = new JSwitchBox("Ja", "Nein");
+		switchConsiderDate = new JSwitchBox(Messages.getString("yes"), Messages.getString("no"));
 		pnlDate.add(switchConsiderDate);
 	}
 	
 	private void initEvaluationTypeArea() {
 		pnlEval = new JPanel();
 		pnlEval.setOpaque(false);
-		String[] types = {"Zurück in Box 1", "Eine Box zurück", "In Box bleiben"};
+		String[] types = {Messages.getString("back_to_first"), 
+				Messages.getString("one_box_back"),
+				Messages.getString("stay_in_box")};
 		cmbEvaluationType = new JComboBox<String>(types);
 		pnlEval.add(cmbEvaluationType);
 	}
@@ -184,7 +186,7 @@ public class FrmGameOptions  {
 		pnlConfirm.setOpaque(false);
 		btnOk = ButtonFactory.createColouredButton(Messages.getString("ok"), ButtonFactory.BTN_GREEN); 
 		btnOk.addActionListener(new OkButtonClickedListener());
-		btnCancel = ButtonFactory.createColouredButton(Messages.getString("discard"), ButtonFactory.BTN_RED); 
+		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_RED); 
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
@@ -223,26 +225,26 @@ public class FrmGameOptions  {
 		gc.gridx = 0;
 		gc.gridy++;
 		gc.insets = new Insets(10, 0, 0, 20);
-		mainPanel.add(new JLabel("Anzahl Karten ?"), gc); 
+		mainPanel.add(new JLabel(Messages.getString("number_cards")), gc); 
 		gc.gridx = 1;
 		gc.insets = new Insets(0, 10, 20, 0);
 		mainPanel.add(pnlLimit, gc);
 		gc.gridx = 0;
 		gc.gridy++;
 		gc.insets = new Insets(10, 0, 0, 20);
-		mainPanel.add(new JLabel("Datum berücksichtigen ?"), gc); 
+		mainPanel.add(new JLabel(Messages.getString("consider_date")), gc); 
 		gc.gridx = 1;
 		gc.insets = new Insets(5, 10, 20, 0);
 		mainPanel.add(pnlDate, gc);
 		gc.gridx = 0;
 		gc.gridy++;
 		gc.insets = new Insets(15, 0, 0, 20);
-		mainPanel.add(new JLabel("Bei falscher Antwort ?"), gc); 
+		mainPanel.add(new JLabel(Messages.getString("wrong_answer")), gc); 
 		gc.gridx = 1;
 		gc.insets = new Insets(5, 7, 20, 0);
 		mainPanel.add(pnlEval, gc);
 		
-		mainPanel.setBorder(BorderFactory.createTitledBorder("Wie möchtest du lernen ?"));
+		mainPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("how_to_learn")));
 		containingPanel.add(pnlSelectSlot, BorderLayout.NORTH);
 		containingPanel.add(mainPanel, BorderLayout.CENTER);
 		containingPanel.add(pnlConfirm, BorderLayout.SOUTH);

@@ -73,7 +73,7 @@ public class FrmEditStack {
 	private JPanel pnlAnswer;
 	
 	private JFileChooser chooser;
-	private String imagePath = "";
+	private String imagePath;
 	
 	private EditFlashCardService cardService;
 	
@@ -169,7 +169,7 @@ public class FrmEditStack {
 		pnlSaveDelete = new JPanel(new GridLayout(1, 3, 10, 30));
 		pnlSaveDelete.setOpaque(false);
 		
-		btnCancel = ButtonFactory.createColouredButton(Messages.getString("discard"), ButtonFactory.BTN_BLUE); 
+		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_BLUE); 
 		btnDeleteCurrentCard = ButtonFactory.createColouredButton(Messages.getString("delete"), ButtonFactory.BTN_RED);
 		btnSaveStack = ButtonFactory.createColouredButton(Messages.getString("save"), ButtonFactory.BTN_GREEN);
 		
@@ -189,10 +189,11 @@ public class FrmEditStack {
 		mainPanel.add(pnlAnswer);
 		mainPanel.add(pnlSaveDelete);
 		editStackWindow.add(mainPanel);
-		editStackWindow.setVisible(true);
 		editStackWindow.setMinimumSize(new Dimension(650, 780));
 		editStackWindow.setResizable(false);
 		editStackWindow.setTitle(FRAME_TITLE);
+		editStackWindow.setLocationRelativeTo(null);
+		editStackWindow.setVisible(true);
 		editStackWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -237,7 +238,7 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Bilddateien", "jpg", "png");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(Messages.getString("image_files"), "jpg", "png");
 				chooser.setFileFilter(filter);
 				int returnVal = chooser.showOpenDialog(editStackWindow);
 				if(returnVal == JFileChooser.APPROVE_OPTION) {

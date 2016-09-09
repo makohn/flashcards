@@ -58,7 +58,7 @@ public class DlgSaveOptions extends JDialog {
 		pnlName.setOpaque(false);
 		txtName = new JTextField(option.getName());
 		pnlName.add(txtName);
-		pnlName.setBorder(BorderFactory.createTitledBorder("Name"));
+		pnlName.setBorder(BorderFactory.createTitledBorder(Messages.getString("name")));
 		pnlName.setMaximumSize(new Dimension(350,70));
 	}
 	
@@ -69,15 +69,15 @@ public class DlgSaveOptions extends JDialog {
 		txtDesc.setLineWrap(true);
 		txtDesc.setWrapStyleWord(true);
 		pnlDesc.add(txtDesc);
-		pnlDesc.setBorder(BorderFactory.createTitledBorder("Beschreibung"));
+		pnlDesc.setBorder(BorderFactory.createTitledBorder(Messages.getString("decription")));
 		pnlDesc.setMaximumSize(new Dimension(350,210));
 	}
 	
 	private void initConfirmArea() {
 		pnlConfirm = new JPanel(new GridLayout(1, 2,10,10));
 		pnlConfirm.setOpaque(false);
-		btnOk = ButtonFactory.createColouredButton("Speichern", ButtonFactory.BTN_GREEN);
-		btnCancel = ButtonFactory.createColouredButton("Abbrechen", ButtonFactory.BTN_RED);
+		btnOk = ButtonFactory.createColouredButton(Messages.getString("save"), ButtonFactory.BTN_GREEN);
+		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(30,50,30,50));
@@ -107,7 +107,7 @@ public class DlgSaveOptions extends JDialog {
 		JPanel pnlCaption = new JPanel();
 		pnlCaption.setOpaque(false);
 		pnlCaption.setMaximumSize(new Dimension(350, 30));
-		JLabel lblCaption = new JLabel("Konfiguration speichern: ");
+		JLabel lblCaption = new JLabel(Messages.getString("save_config"));
 		pnlCaption.add(lblCaption);
 		mainPanel.add(pnlCaption);
 		mainPanel.add(pnlName);
