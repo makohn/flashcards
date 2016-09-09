@@ -13,11 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import de.htwsaar.flashcards.builder.ServiceObjectBuilder;
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.GameOptionServiceImpl;
 import de.htwsaar.flashcards.service.StudyServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
@@ -53,7 +53,7 @@ public class DlgGameOptions extends JDialog {
 	public DlgGameOptions(Frame owner, boolean modal,Stack stack) {
 		super(owner, modal);
 		this.stack = stack;
-		optionService = new GameOptionServiceImpl();
+		optionService = ServiceObjectBuilder.getGameOptionService();
 		options = optionService.getGameOptionArray();
 		self = this;
 		initButtons();
@@ -64,18 +64,16 @@ public class DlgGameOptions extends JDialog {
 		
 		btnGameOption = new JButton[MAX_OPTION_NR][MAX_BTN_NR];
 		btnGameOption[0][OPTION] = FlashCardButtonFactory.createColouredButton(options[0].getName(), FlashCardButtonFactory.BTN_BLUE);
-		btnGameOption[0][OPTION].addActionListener(new OptionButtonPressedListener(options[0]));
 		btnGameOption[1][OPTION] = FlashCardButtonFactory.createColouredButton(options[1].getName(), FlashCardButtonFactory.BTN_YELLOW);
-		btnGameOption[1][OPTION].addActionListener(new OptionButtonPressedListener(options[1]));
 		btnGameOption[2][OPTION] = FlashCardButtonFactory.createColouredButton(options[2].getName(), FlashCardButtonFactory.BTN_GREEN);
-		btnGameOption[2][OPTION].addActionListener(new OptionButtonPressedListener(options[2]));
 		btnGameOption[3][OPTION] = FlashCardButtonFactory.createColouredButton(options[3].getName(), FlashCardButtonFactory.BTN_RED);
-		btnGameOption[3][OPTION].addActionListener(new OptionButtonPressedListener(options[3]));
 
-		for (JButton[] button : btnGameOption) {
-			button[OPTION].setPreferredSize(Dimensions.getDimension("goptions.dim_button"));
-			button[EDIT] = FlashCardButtonFactory.createImageButton(ICN_EDIT);
-			button[EDIT].addActionListener(new ActionListener() {
+		for (int i = 0; i < btnGameOption.length; ++i) {
+			btnGameOption[i][OPTION].setPreferredSize(Dimensions.getDimension("goptions.dim_button"));
+			btnGameOption[i][OPTION].addActionListener(new OptionButtonPressedListener(options[i]));
+			btnGameOption[i][OPTION].setToolTipText(options[i].getDescription());
+			btnGameOption[i][EDIT] = FlashCardButtonFactory.createImageButton(ICN_EDIT);
+			btnGameOption[i][EDIT].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					new FrmGameOptions();

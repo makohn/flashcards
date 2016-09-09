@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
+import de.htwsaar.flashcards.builder.DaoObjectBuilder;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.model.GameOption;
@@ -40,7 +40,7 @@ public class StudyServiceImpl implements StudyService {
 	 * @param stack - der Stack der gespielt werden soll.
 	 */
 	public StudyServiceImpl(GameOption options, Stack stack) {
-		cardDao = new FlashCardDaoImpl();
+		cardDao = DaoObjectBuilder.getFlashCardDao();
 		this.options = options;
 		this.stack = stack;
 		this.flashcards = loadFlashCards();

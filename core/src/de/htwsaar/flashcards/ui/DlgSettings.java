@@ -18,11 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import de.htwsaar.flashcards.builder.ServiceObjectBuilder;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.FlashCardServiceImpl;
-import de.htwsaar.flashcards.service.StackServiceImpl;
+import de.htwsaar.flashcards.service.interfaces.FlashCardService;
+import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
@@ -71,16 +72,16 @@ public class DlgSettings extends JDialog {
 	private JRadioButton btnEnglish;
 	private JRadioButton btnSpanish;
 	
-	private StackServiceImpl stackService;
-	private FlashCardServiceImpl cardService;
+	private StackService stackService;
+	private FlashCardService cardService;
 	
 	private JDialog self;
 	
 	public DlgSettings(Frame owner, boolean modal) {
 		super(owner, modal);
 		self = this;
-		stackService = new StackServiceImpl();
-		cardService = new FlashCardServiceImpl();
+		stackService = ServiceObjectBuilder.getStackService();
+		cardService = ServiceObjectBuilder.getFlashCardService();
 		
 		initLanguageArea();
 		initColorArea();

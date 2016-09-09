@@ -8,7 +8,7 @@ import java.io.File;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
-import de.htwsaar.flashcards.files.ExporterCSVImpl;
+import de.htwsaar.flashcards.builder.FileHandlerObjectBuilder;
 import de.htwsaar.flashcards.files.interfaces.ExporterCSV;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Messages;
@@ -33,7 +33,7 @@ public class ExportFileListener implements ActionListener {
 	    chooser.setAcceptAllFileFilterUsed(false);   
 	    if (chooser.showOpenDialog(caller) == JFileChooser.APPROVE_OPTION) {
 	    	 filePath += chooser.getSelectedFile() + File.separator + stack.getStackName();
-	    	 ExporterCSV exporter = new ExporterCSVImpl();
+	    	 ExporterCSV exporter = FileHandlerObjectBuilder.getExporterCSVObject();
 	    	 exporter.exportCSV(stack, filePath); 
 	    }
 	}

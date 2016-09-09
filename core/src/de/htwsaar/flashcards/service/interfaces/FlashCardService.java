@@ -17,4 +17,6 @@ public interface FlashCardService {
 	public List<FlashCard> getFlashCards(int stackId, int box);
 	public void reset(Stack stack);
 	public int[] getCardsInBox(Stack stack);
+	public int getCountAsked(Stack stack);
+	public int getCountAnsweredCorrect(Stack stack);
 }

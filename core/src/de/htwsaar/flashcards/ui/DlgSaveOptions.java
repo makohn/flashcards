@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import de.htwsaar.flashcards.builder.ServiceObjectBuilder;
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.GameOptionServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
@@ -55,7 +55,7 @@ public class DlgSaveOptions extends JDialog {
 		super(owner, modal);
 		self = this;
 		this.option = option;
-		optionService = new GameOptionServiceImpl();
+		optionService = ServiceObjectBuilder.getGameOptionService();
 		initNameArea();
 		initDescArea();
 		initConfirmArea();

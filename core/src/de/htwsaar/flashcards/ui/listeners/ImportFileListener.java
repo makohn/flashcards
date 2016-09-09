@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.htwsaar.flashcards.files.ImporterCSVImpl;
+import de.htwsaar.flashcards.builder.FileHandlerObjectBuilder;
 import de.htwsaar.flashcards.files.interfaces.ImporterCSV;
 import de.htwsaar.flashcards.properties.Messages;
 
@@ -32,7 +32,7 @@ public class ImportFileListener implements ActionListener {
 	    chooser.setDialogTitle(Messages.getString("chooseafile"));
 	    chooser.setFileFilter(new FileNameExtensionFilter("CSV", "csv"));   
 	    if (chooser.showOpenDialog(caller) == JFileChooser.APPROVE_OPTION) {
-	    	 ImporterCSV importer = new ImporterCSVImpl();
+	    	 ImporterCSV importer = FileHandlerObjectBuilder.getImporterCSVObject();
 	    	 importer.importCSV(chooser.getSelectedFile());
 	    	 if(handler != null)
 				try {handler.call();}catch(Exception e1){}

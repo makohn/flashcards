@@ -2,7 +2,7 @@ package de.htwsaar.flashcards.service;
 
 import java.util.List;
 
-import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
+import de.htwsaar.flashcards.builder.DaoObjectBuilder;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.model.Stack;
@@ -20,7 +20,7 @@ public class FlashCardServiceImpl implements FlashCardService{
 	private List<FlashCard> flashcards;
 	
 	public FlashCardServiceImpl() {
-		this.cardDao = new FlashCardDaoImpl();
+		this.cardDao = DaoObjectBuilder.getFlashCardDao();
 	}
 	
 	/**
@@ -73,5 +73,21 @@ public class FlashCardServiceImpl implements FlashCardService{
 			values[i]=cardDao.getNrCardsInBox(stack, i+1);
 		}
 		return values;
+	}
+
+	/**
+	 * Gibt die Gesamtanzahl der Abfragen der Karten eines Stacks zurueck.
+	 */
+	@Override
+	public int getCountAsked(Stack stack) {
+		return cardDao.getAskedCount(stack);
+	}
+
+	/**
+	 * Gibt die Gesamtanzahl der richtigen Antworten eines Stack zurueck.
+	 */
+	@Override
+	public int getCountAnsweredCorrect(Stack stack) {
+		return cardDao.getAnswerCorrectCount(stack);
 	}
 }

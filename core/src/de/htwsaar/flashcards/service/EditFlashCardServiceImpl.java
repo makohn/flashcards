@@ -2,10 +2,11 @@ package de.htwsaar.flashcards.service;
 
 import java.util.ListIterator;
 
-import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
+import de.htwsaar.flashcards.builder.DaoObjectBuilder;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.service.interfaces.EditFlashCardService;
+import de.htwsaar.flashcards.ui.FrmEditStack;
 
 /**
  * <code>EditFlashCardService</code> - dient dem Navigieren durch eine gegebene
@@ -24,7 +25,7 @@ public class EditFlashCardServiceImpl implements EditFlashCardService {
 	
 	public EditFlashCardServiceImpl(ListIterator<FlashCard> flashcardIterator, int stackId) {
 		this.flashcardIterator = flashcardIterator;
-		this.cardDao = new FlashCardDaoImpl();
+		this.cardDao = DaoObjectBuilder.getFlashCardDao();
 		this.stackId = stackId;
 		setCurrentCard();
 	}

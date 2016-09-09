@@ -25,13 +25,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
+import de.htwsaar.flashcards.builder.ServiceObjectBuilder;
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.EditFlashCardServiceImpl;
-import de.htwsaar.flashcards.service.FlashCardServiceImpl;
-import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.FlashCardService;
 import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
@@ -73,8 +71,8 @@ public class FrmSelectStack {
 	private FlashCardService cardService;
 	
 	public FrmSelectStack() {
-		stackService = new StackServiceImpl();
-		cardService = new FlashCardServiceImpl();
+		stackService = ServiceObjectBuilder.getStackService();
+		cardService = ServiceObjectBuilder.getFlashCardService();
 		selectStackFrame = new JFrame();
 		
 		initSelectionArea();
@@ -197,7 +195,7 @@ public class FrmSelectStack {
 			public void actionPerformed(ActionEvent e) {
 				List<FlashCard> cards = cardService.getFlashCards();	
 				if (cards == null) cards = new ArrayList<FlashCard>();
-				new FrmEditStack(new EditFlashCardServiceImpl(cards.listIterator(), getSelectedStack().getStackId()));
+				new FrmEditStack(ServiceObjectBuilder.getEditFlashCardService(cards.listIterator(), getSelectedStack().getStackId()));
 				selectStackFrame.toBack();
 			}
 		});
@@ -214,7 +212,7 @@ public class FrmSelectStack {
 				int row = table.rowAtPoint(p);
 				if (me.getClickCount() == 2 && row != -1) {
 					new FrmEditStack(
-							new EditFlashCardServiceImpl(cardService.getFlashCards().listIterator(row), 
+							ServiceObjectBuilder.getEditFlashCardService(cardService.getFlashCards().listIterator(row), 
 									getSelectedStack().getStackId()));
 				}
 			}

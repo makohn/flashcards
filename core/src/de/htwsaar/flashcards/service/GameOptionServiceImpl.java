@@ -2,7 +2,7 @@ package de.htwsaar.flashcards.service;
 
 import java.util.List;
 
-import de.htwsaar.flashcards.dao.GameOptionDaoImpl;
+import de.htwsaar.flashcards.builder.DaoObjectBuilder;
 import de.htwsaar.flashcards.dao.interfaces.GameOptionDao;
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.service.interfaces.GameOptionService;
@@ -16,7 +16,7 @@ public class GameOptionServiceImpl implements GameOptionService {
 	private GameOptionDao optionDao;
 	
 	public GameOptionServiceImpl() {
-		optionDao = new GameOptionDaoImpl();
+		optionDao = DaoObjectBuilder.getGameOptionDao();
 	}
 	/**
 	 * Gibt eine Liste aller verfuegbaren Spieloptionen zurueck.

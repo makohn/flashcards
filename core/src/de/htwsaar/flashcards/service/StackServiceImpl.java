@@ -2,7 +2,7 @@ package de.htwsaar.flashcards.service;
 
 import java.util.List;
 
-import de.htwsaar.flashcards.dao.StackDaoImpl;
+import de.htwsaar.flashcards.builder.DaoObjectBuilder;
 import de.htwsaar.flashcards.dao.interfaces.StackDao;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.service.interfaces.StackService;
@@ -16,7 +16,7 @@ public class StackServiceImpl implements StackService {
 	private StackDao stackDao;
 	
 	public StackServiceImpl() {
-		stackDao = new StackDaoImpl();
+		stackDao = DaoObjectBuilder.getStackDao();
 	}
 	
 	/**

@@ -20,10 +20,10 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import de.htwsaar.flashcards.builder.ServiceObjectBuilder;
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.GameOptionServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.JSwitchBox;
@@ -86,7 +86,7 @@ public class FrmGameOptions  {
 	
 	public FrmGameOptions() {
 		frmGameOptions = new JFrame();
-		optionService = new GameOptionServiceImpl();
+		optionService = ServiceObjectBuilder.getGameOptionService();
 		
 		initSelectSlotArea();
 		initSelectModeArea();

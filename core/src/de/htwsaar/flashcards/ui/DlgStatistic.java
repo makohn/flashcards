@@ -16,13 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
-import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
+import de.htwsaar.flashcards.builder.ServiceObjectBuilder;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.FlashCardServiceImpl;
-import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.FlashCardService;
 import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.chart.BarChart2D;
@@ -44,6 +41,9 @@ public class DlgStatistic extends JDialog {
 
 	private static final long serialVersionUID = -2758740201812060160L;
 	
+	private static final Color GREEN = new Color(135, 180, 0);
+	private static final Color RED = new Color(138, 30, 0);
+	
 	private JPanel pnlStackSelect;
 	private JPanel pnlStack2Select;
 	private JComboBox<Stack> cmbStackSelect;
@@ -57,13 +57,11 @@ public class DlgStatistic extends JDialog {
 	private StackService stackService;
 	private FlashCardService cardService;
 	
-	private FlashCardDao dao = new FlashCardDaoImpl();
-	
 	public DlgStatistic(Frame owner, boolean modal){
 		super(owner, modal);
 		stackStatistic = new JFrame();
-		stackService = new StackServiceImpl();
-		cardService = new FlashCardServiceImpl();
+		stackService = ServiceObjectBuilder.getStackService();
+		cardService = ServiceObjectBuilder.getFlashCardService();
 		initPieChartArea();
 		initPieChart2Area();
 		initBarChartArea();
@@ -76,8 +74,8 @@ public class DlgStatistic extends JDialog {
 		pnlStackSelect.setOpaque(false);
 		cmbStackSelect = new JComboBox<Stack>(stackService.getStackArray());
 		pieChart = PieChartFactory.createPieChart(new String[] {Messages.getString("right"), Messages.getString("false")},
-				new double[] {80, 20},
-				new Color[] {new Color(135, 180, 0),new Color(138, 30, 0)},
+				getPieChartValues((Stack)cmbStackSelect.getSelectedItem()),
+				new Color[] {GREEN, RED},
 				Dimensions.getInteger("stats.size_pie_chart"));
 
 		pnlStackSelect.add(cmbStackSelect);
@@ -87,10 +85,7 @@ public class DlgStatistic extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Stack selection = (Stack)cmbStackSelect.getSelectedItem();
-				int i = dao.getAnswerCorrectCount(selection);
-				int j = dao.getAskedCount(selection);
-				double quote = j > 0 ? i*100/j : 0;
-				pieChart.update(new double[] {quote, 100-quote});
+				pieChart.update(getPieChartValues(selection));
 				barChart.setValues1(cardService.getCardsInBox(selection));
 			}
 		});
@@ -102,8 +97,8 @@ public class DlgStatistic extends JDialog {
 		pnlStack2Select.setOpaque(false);
 		cmbStack2Select = new JComboBox<Stack>(stackService.getStackArray());
 		pieChart2 = PieChartFactory.createPieChart(new String[] {Messages.getString("right"), Messages.getString("false")},
-				new double[] {80, 20},
-				new Color[] {new Color(135, 180, 0),new Color(138, 30, 0)},
+				getPieChartValues((Stack)cmbStack2Select.getSelectedItem()),
+				new Color[] {GREEN, RED},
 				Dimensions.getInteger("stats.size_pie_chart"));
 
 		pnlStack2Select.add(cmbStack2Select);
@@ -113,10 +108,7 @@ public class DlgStatistic extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Stack selection = (Stack)cmbStack2Select.getSelectedItem();
-				int i = dao.getAnswerCorrectCount(selection);
-				int j = dao.getAskedCount(selection);
-				double quote = j > 0 ? i*100/j : 0;
-				pieChart2.update(new double[] {quote, 100-quote});
+				pieChart2.update(getPieChartValues(selection));
 				barChart.setValues2(cardService.getCardsInBox(selection));
 			}
 		});
@@ -166,4 +158,13 @@ public class DlgStatistic extends JDialog {
 	    stackStatistic.setVisible(true);
 		stackStatistic.setResizable(false);
 	  }
+	
+	private double[] getPieChartValues(Stack selection) {
+		double[] values = new double[2];
+		int i = cardService.getCountAnsweredCorrect(selection);
+		int j = cardService.getCountAsked(selection);
+		values[0] = j > 0 ? i*100/j : 0;
+		values[1] = 100-values[0];
+		return values;
+	}
 }

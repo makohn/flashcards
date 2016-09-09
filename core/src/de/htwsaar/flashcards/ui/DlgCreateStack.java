@@ -17,10 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import de.htwsaar.flashcards.builder.ServiceObjectBuilder;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
@@ -48,7 +48,7 @@ public class DlgCreateStack extends JDialog {
 	public DlgCreateStack(Frame owner, boolean modal, Stack stack) { 
 		super(owner, modal);
 		self = this;
-		stackService = new StackServiceImpl();
+		stackService = ServiceObjectBuilder.getStackService();
 		this.stack = stack;
 		initNameArea();
 		initConfirmArea();
