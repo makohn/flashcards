@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.htwsaar.flashcards.model.GameOption;
@@ -112,16 +113,21 @@ public class DlgGameOptions extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			StudyService service = new StudyService(option, stack);
-			switch(stack.getTyp()) {
-			case 1: 
-				new FrmStudy(service, new SelfEvalUIFactory());
-				break;
-			case 2: 
-				new FrmStudy(service, new VocabUIFactory());
-				break;
+			if(service.noFlashCardsInList()) {
+				JOptionPane.showMessageDialog(self, "Keine Karten für diese Konfiguration!");
 			}
-			self.dispose();
-			self.getOwner().dispose();
+			else {
+				switch(stack.getTyp()) {
+				case 1: 
+					new FrmStudy(service, new SelfEvalUIFactory());
+					break;
+				case 2: 
+					new FrmStudy(service, new VocabUIFactory());
+					break;
+				}
+				self.dispose();
+				self.getOwner().dispose();
+			}
 		}	
 	}
 	

@@ -19,46 +19,46 @@ public class StudyService {
 	private GameOption options;
 	private Stack stack;
 	private FlashCardDao cardDao;
-	private int nrOfCards;
+	private List<FlashCard> flashcards;
 	
 	public StudyService(GameOption options, Stack stack) {
+		cardDao = new FlashCardDaoImpl();
 		this.options = options;
 		this.stack = stack;
-		cardDao = new FlashCardDaoImpl();
+		this.flashcards = loadFlashCards();
 	}
 	
-	public List<FlashCard> getFlashCards() {
+	private List<FlashCard> loadFlashCards() {
 		int stackId = stack.getStackId();
 		int box = options.getBoxOption();
 		int limit = options.getLimit();
 		boolean sorted = options.isSorted();
 		boolean dateSensitive = options.isDateSensitive();
 		
-		List<FlashCard> flashcards;
+		List<FlashCard> cards;
 		// Sollen die Karten aus einer bestimmten Box geladen werden ?
 		if(box == 0) {
-			flashcards = cardDao.getFlashCards(stackId);
+			cards = cardDao.getFlashCards(stackId);
 		}
 		else {
-			flashcards = cardDao.getFlashCards(stackId, box);
+			cards = cardDao.getFlashCards(stackId, box);
 		}
 		// Gibt es eine maximale Anzahl an Karten ?
-		if(limit > 0 && limit < flashcards.size()) {
-			flashcards = flashcards.subList(0, limit);
+		if(limit > 0 && limit < cards.size()) {
+			cards = cards.subList(0, limit);
 		}
 		// Sollen die Karten sortiert werden ?
 		if(sorted) {
-			Collections.sort(flashcards);
+			Collections.sort(cards);
 		}
 		else {
-			Collections.shuffle(flashcards);
+			Collections.shuffle(cards);
 		}
 		// Spielt das Datum bei der Sortierung eine Rolle ?
 		if(dateSensitive) {
-			timedCard(flashcards);
+			timedCard(cards);
 		}
-		this.nrOfCards = flashcards.size();
-		return flashcards;
+		return cards;
 	}
 	
 	public int getTime() {
@@ -66,7 +66,15 @@ public class StudyService {
 	}
 	
 	public int getNrOfCards() {
-		return nrOfCards;
+		return flashcards.size();
+	}
+	
+	public List<FlashCard> getFlashCards() {
+		return flashcards;
+	}
+	
+	public boolean noFlashCardsInList() {
+		return flashcards.isEmpty();
 	}
 	
 	public void saveCard(FlashCard card, boolean answer) {

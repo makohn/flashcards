@@ -13,8 +13,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import org.springframework.cglib.core.Constants;
-
 import de.htwsaar.flashcards.ui.FrmSelectStack;
 
  /** 
