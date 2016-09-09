@@ -100,7 +100,7 @@ public class DlgGameOptions extends JDialog {
 		setTitle(Messages.getString("options")); 
 		setSize(500, 400);
 		setResizable(false);
-		setLocation((getOwner().getX()), (getOwner().getY()));
+		setLocationRelativeTo(getOwner());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}

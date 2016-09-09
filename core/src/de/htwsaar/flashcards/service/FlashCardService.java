@@ -1,9 +1,6 @@
 package de.htwsaar.flashcards.service;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
@@ -27,61 +24,14 @@ public class FlashCardService {
 	}
 	
 	public List<FlashCard> getFlashCards(int stackId) {
-		return getFlashCards(stackId, FlashCardService.SHUFFLED_OPTION);
-	}
-	
-	public List<FlashCard> getFlashCards(int stackId, int box) {
-		switch(box) {
-		case BOX1_OPTION:
-			flashcards = cardDao.getFlashCards(stackId, box);
-			break;
-		case BOX2_OPTION:
-			flashcards = cardDao.getFlashCards(stackId, box);
-			break;
-		case BOX3_OPTION:
-			flashcards = cardDao.getFlashCards(stackId, box);
-			break;
-		case BOX4_OPTION: 
-			flashcards = cardDao.getFlashCards(stackId, box);
-			break;
-		case SHUFFLED_OPTION:
-			//Zufaellig Karten aus Stack laden (aus verschiedene Boxen)
-			flashcards = cardDao.getFlashCards(stackId);
-			Collections.shuffle(flashcards);
-			break;
-		case SORTED_OPTION:
-			//Karten aus bestimmter Box laden mit zeitlicher Komponente 
-			flashcards = cardDao.getFlashCards(stackId, box);
-			timedCard(flashcards);
-			break;
-		case SORTED_OPTION_COMPLETE:	
-			//Alle Karten aus Stack laden mit zeitlicher Komponente 
-			flashcards = cardDao.getFlashCards(stackId);
-			timedCard(flashcards);
-			break;
-		default:
-			flashcards = cardDao.getFlashCards(stackId);
-			Collections.sort(flashcards);
-		}	
-		return flashcards;
+		return flashcards = cardDao.getFlashCards(stackId);
 	}
 	
 	public List<FlashCard> getFlashCards() {
 		return flashcards;
 	}
 	
-	public List<FlashCard> filter(int box) {
-		return flashcards.stream().filter(f -> f.getBoxCounter() == box).collect(Collectors.toList());
-	}
-	
 	public void reset(int stackId) {
 		cardDao.resetBoxCounter(stackId);
 	}
-	
-	private void timedCard(List<FlashCard> flashcards) {		
-		Collections.sort(flashcards, new Comparator<FlashCard>() {
-			  public int compare(FlashCard flashcard1, FlashCard flashcard2) {
-			      return flashcard1.getCardLastAccessDate().compareTo(flashcard2.getCardLastAccessDate());}
-			});
-	}	
 }

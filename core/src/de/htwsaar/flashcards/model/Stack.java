@@ -24,6 +24,12 @@ public class Stack {
 		this.lastEditDate = lastEditDate;
 	}
 	
+	public Stack(String stackName, int typ, String subject) {
+		this.stackName = stackName;
+		this.typ = typ;
+		this.subject = subject;
+	}
+	
 	public Stack() {}
 	
 	public int getStackId() {

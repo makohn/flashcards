@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -192,6 +193,22 @@ public class FrmSelectStack {
 							new EditFlashCardService(cardService.getFlashCards().listIterator(row), 
 									getSelectedStack().getStackId()));
 				}
+			}
+		});
+		
+		btnCreateStack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new DlgCreateStack(selectStackFrame, true);
+				cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));
+			}
+		});
+		
+		btnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				stackService.deleteStack((Stack)cmbStackSelector.getSelectedItem());
+				cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));
 			}
 		});
 	}
