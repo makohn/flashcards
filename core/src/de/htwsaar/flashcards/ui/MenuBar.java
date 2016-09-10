@@ -3,17 +3,24 @@ package de.htwsaar.flashcards.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import de.htwsaar.flashcards.service.GameOptionService;
+import de.htwsaar.flashcards.util.ButtonFactory;
 
 public class MenuBar {
 	
-	public static JMenuBar createMenuBar() {
+	private static final ImageIcon ICN_BACK = new ImageIcon("res/images/back.png");
+	
+	public static JMenuBar createMenuBar(JFrame owner) {
 		JMenuBar menuBar = new JMenuBar();
+		
+		JButton btnBack = ButtonFactory.createImageButton(ICN_BACK);
+		btnBack.setToolTipText("Zurück");
 		
 		JMenu fileMenu = new JMenu("Datei");
 		JMenuItem itemImport = new JMenuItem("Importieren");
@@ -35,17 +42,22 @@ public class MenuBar {
 		windowMenu.add(showViewSubMenu);
 		
 		JMenu navigateMenu = new JMenu("Navigieren");
-		JMenuItem itemBack = new JMenuItem("Zurück");
-		navigateMenu.add(itemBack);
 		
 		JMenu helpMenu = new JMenu("Hilfe");
-				
+			
+		menuBar.add(btnBack);
 		menuBar.add(fileMenu);
 		menuBar.add(windowMenu);
 		menuBar.add(navigateMenu);
 		menuBar.add(helpMenu);
+		
+		itemPreferences.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new DlgSettings(owner, true);
+			}
+		});
 
 		return menuBar;
 	}
-
 }

@@ -148,7 +148,7 @@ public class FrmSelectStack {
 		
 		selectStackFrame.add(mainPanel);
 		selectStackFrame.setMinimumSize(new Dimension(730, 500));
-		selectStackFrame.setJMenuBar(MenuBar.createMenuBar());
+		selectStackFrame.setJMenuBar(MenuBar.createMenuBar(selectStackFrame));
 		selectStackFrame.setLocationRelativeTo(null);
 		selectStackFrame.setVisible(true);
 		selectStackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

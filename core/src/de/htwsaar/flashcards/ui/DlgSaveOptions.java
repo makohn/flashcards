@@ -69,7 +69,7 @@ public class DlgSaveOptions extends JDialog {
 		txtDesc.setLineWrap(true);
 		txtDesc.setWrapStyleWord(true);
 		pnlDesc.add(txtDesc);
-		pnlDesc.setBorder(BorderFactory.createTitledBorder(Messages.getString("decription")));
+		pnlDesc.setBorder(BorderFactory.createTitledBorder(Messages.getString("description")));
 		pnlDesc.setMaximumSize(new Dimension(350,210));
 	}
 	
@@ -118,7 +118,7 @@ public class DlgSaveOptions extends JDialog {
 		setTitle(Messages.getString("options")); 
 		setSize(430, 340);
 		setResizable(false);
-		setLocation((getOwner().getX()), (getOwner().getY()));
+		setLocationRelativeTo(getOwner());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}

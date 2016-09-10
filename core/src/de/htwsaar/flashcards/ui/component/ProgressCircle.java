@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import de.htwsaar.flashcards.properties.Messages;
+
 public class ProgressCircle extends JPanel {
    
 	private static final long serialVersionUID = 7588646195596150575L;
@@ -31,7 +33,7 @@ public class ProgressCircle extends JPanel {
 
     public ProgressCircle(int seconds) {
     	  this.maxProgress = seconds*20;
-    	  this.lblTime = new JLabel(seconds == 0 ? "∞" : ""+seconds);
+    	  this.lblTime = new JLabel(seconds == 0 ? Messages.getString("infinity") : ""+seconds);
     	  lblTime.setHorizontalAlignment(SwingUtilities.CENTER);
     	  lblTime.setFont(FONT_COUNTER);
     	  super.setLayout(new BorderLayout());

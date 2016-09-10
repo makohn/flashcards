@@ -84,12 +84,9 @@ public class ButtonFactory {
 	
 	static class StyledButtonUI extends BasicButtonUI {
 		
-		private Color background;
-		
 	    @Override
 	    public void installUI (JComponent c) {
-	        super.installUI(c);
-	        background = c.getBackground();
+	        super.installUI(c); 
 	        AbstractButton button = (AbstractButton) c;
 	        button.setOpaque(false);
 	        button.setBorder(new EmptyBorder(5, 15, 5, 15));
@@ -101,7 +98,7 @@ public class ButtonFactory {
 	        if(!c.isEnabled()) 
 	        	c.setBackground(new Color(242, 242, 242));
 	        else
-	        	c.setBackground(background);
+	        	c.setBackground(c.getBackground());
 	        if(c instanceof JRadioButton) {
 	        	paintBackground(g, b, b.getModel().isSelected() ? 2 : 0);
 	        }

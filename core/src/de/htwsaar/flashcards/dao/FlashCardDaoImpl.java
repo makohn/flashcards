@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.util.FlashCardConstants;
 
 /**
@@ -125,14 +126,14 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	 *            - object
 	 */
 	@Override
-	public void resetBoxCounter(int stackId) {
+	public void resetBoxCounter(Stack stack) {
 
 		int box = FlashCardConstants.START_PHASE;
 		String query = "UPDATE Cards SET Card_Box_Counter = :Card_Box_Counter WHERE Card_Stack_Id = :Card_Stack_Id";
 
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		paramSource.addValue("Card_Box_Counter", box);
-		paramSource.addValue("Card_Stack_Id", stackId);
+		paramSource.addValue("Card_Stack_Id", stack.getStackId());
 
 		jdbc.update(query, paramSource);
 	}

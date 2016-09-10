@@ -254,6 +254,7 @@ public class FrmGameOptions  {
 		frmGameOptions.setSize(550, 630);
 		frmGameOptions.setResizable(false);
 		frmGameOptions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmGameOptions.setLocationRelativeTo(null);
 		frmGameOptions.setVisible(true);
 	}
 	
