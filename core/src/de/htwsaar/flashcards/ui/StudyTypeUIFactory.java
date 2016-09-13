@@ -17,7 +17,7 @@ import de.htwsaar.flashcards.util.Handler;
  * 		- <code>SelfEvalUIFactory</code> (Selbstevaluierung)
  * 		- <code>VocabUIFactory</code>    (Vokabeln, Evalierung durch ActionListener)
  * 
- * @author mkohn
+ * @author Marek Kohn
  * @see SelfEvalUIFactory, VocabUIFactory
  */
 public interface StudyTypeUIFactory {

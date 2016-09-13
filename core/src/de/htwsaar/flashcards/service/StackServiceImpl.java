@@ -8,7 +8,7 @@ import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.service.interfaces.StackService;
 /**
  * * <code>StackServiceImpl</code> - Kapselt den Zugriff auf DAO Methoden.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class StackServiceImpl implements StackService {

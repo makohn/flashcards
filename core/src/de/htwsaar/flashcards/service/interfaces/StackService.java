@@ -7,7 +7,7 @@ import de.htwsaar.flashcards.model.Stack;
 /**
  * <code>StackService</code> -Dienst fuer die (normale) Datenbankinteraktion bzgl. 
  * der Entitaet <code>Stack</code>.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public interface StackService {

@@ -19,7 +19,7 @@ import de.htwsaar.flashcards.service.interfaces.StudyService;
  * werden, insb. <code>BoxCount</code>,<code>Asked</code> und <code>AnsweredCorrect</code>.
  * 
  * @see GameOption, FrmStud
- * @author mkohn, mfeick
+ * @author Marek Kohn, Martin Feick
  *
  */
 public class StudyServiceImpl implements StudyService {

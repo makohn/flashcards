@@ -6,7 +6,7 @@ import de.htwsaar.flashcards.model.Stack;
  * <code>ExporterCSV</code> Dient dem Serialisieren von Karteikarten in eine
  * CSV Datei.
  * 
- * @author mkohn
+ * @author Marek Kohn
  * @see ExporterCSVImpl, ImporterCSV
  */
 public interface ExporterCSV {

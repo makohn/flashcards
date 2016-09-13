@@ -7,7 +7,7 @@ import de.htwsaar.flashcards.model.Stack;
 /**
  * Interface der StackDaoImpl-Klasse
  * 
- * @author Feick Martin
+ * @author Martin Feick
  * 
  */
 

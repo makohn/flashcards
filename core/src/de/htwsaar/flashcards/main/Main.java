@@ -17,7 +17,7 @@ import de.htwsaar.flashcards.ui.FrmSelectStack;
 
  /** 
  * Hauptklasse des Programms.
- * @author mkohn, Feick Martin
+ * @author Marek Kohn, Martin Feick
  *
  */
 public class Main {

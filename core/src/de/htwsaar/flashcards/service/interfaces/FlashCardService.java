@@ -8,7 +8,7 @@ import de.htwsaar.flashcards.model.Stack;
 /**
  * <code>FlashCardService</code> -Dienst fuer die (normale) Datenbankinteraktion bzgl. 
  * der Entitaet <code>FlashCard</code>.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public interface FlashCardService {

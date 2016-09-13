@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  * <code>BarChart2D</code> Sehr einfacher SWT Barchart, zugeschnitten auf die Anforderungen
  * im <code>flashcards</code> Projekt. Hat eine Legende und besteht aus einem Doppel-
  * balken, wessen Werte individuell gesetzt werden koennen.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class BarChart2D extends JPanel {

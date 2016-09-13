@@ -26,7 +26,7 @@ import de.htwsaar.flashcards.util.Handler;
  * <code>StudyTypeUIFactory</code>. Erzeugt die Komponenten so, dass eine Evaluierung
  * mittels dafuer vorgesehener Buttons erfolgen kann.
  * 
- * @author mkohn, Marco Becker
+ * @author Marek Kohn, Marco Becker
  */
 
 public class SelfEvalUIFactory implements StudyTypeUIFactory {

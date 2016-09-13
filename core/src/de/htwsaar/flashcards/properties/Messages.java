@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 /**
  * Dient dem Erzeugen von Strings (z.b. fuer JLabels) mithilfe von .properties
  * Dateien. So kann eine multilinguale Beschriftung realisiert werden.
- * @author nora sommer
+ * @author Nora Sommer
  *
  */
 public class Messages {

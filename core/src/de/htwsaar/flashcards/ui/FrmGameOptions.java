@@ -45,7 +45,7 @@ import de.htwsaar.flashcards.util.FlashCardUtils;
  * koennen keine neuen Optionen erstellt werden, diese sind auf ein Maximum von 
  * vier beschraenkt. Dies wird durch einen entsprechenden Trigger sichergestellt.
  * 
- * @author Ben Meder, mkohn
+ * @author Ben Meder, Marek Kohn
  * @see DlgGameOptions, DlgSaveOptions
  *
  */

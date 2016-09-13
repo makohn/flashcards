@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 /**
  * <code>GradientPanel</code> Eine Unterklasse von JPanel. Rendert dieses mit einem
  * Farbverlauf als Hintergrund.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class GradientPanel extends JPanel {

@@ -8,7 +8,7 @@ import de.htwsaar.flashcards.model.Stack;
 /**
  * Interface der FlashCardDaoImpl-Klasse
  * 
- * @author Feick Martin
+ * @author Martin Feick
  * 
  */
 public interface FlashCardDao {
@@ -20,7 +20,7 @@ public interface FlashCardDao {
 	public int getAskedCount(Stack stack);
 	public int getAnswerCorrectCount(Stack stack);
 	public int getNrCardsInBox(Stack stack, int box);
-	public List<FlashCard> getFlashCards(); //TODO: Add the deck as a parameter
+	public List<FlashCard> getFlashCards(); 
 	public List<FlashCard> getFlashCards(int stackId);
 	public List<FlashCard> getFlashCards(int stackId, int box);
 	public FlashCard getCard(int id);

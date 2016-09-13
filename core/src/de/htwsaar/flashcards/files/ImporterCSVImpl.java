@@ -18,7 +18,7 @@ import de.htwsaar.flashcards.model.Stack;
  * <code>ImporterCSVImpl</code> - Importiert die Karten einer uebergebenen CSV Datei 
  * (bzw. deren Pfad) in die Datenbank.
  * 
- * @author mkohn
+ * @author Marek Kohn
  */
 public class ImporterCSVImpl implements ImporterCSV {
 	

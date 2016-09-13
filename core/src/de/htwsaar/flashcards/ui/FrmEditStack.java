@@ -37,7 +37,7 @@ import de.htwsaar.flashcards.util.FlashCardUtils;
  * der Karten koennen jeweils ueber die entsprechende Maske veraendert werden. Zudem kann ueber einen
  * Button eine neue Karte hinzugefuegt werden.
  * 
- * @author mkohn, David Berres
+ * @author Marek Kohn, David Berres
  * @see EditStackService, EditStackServiceImpl
  *
  */

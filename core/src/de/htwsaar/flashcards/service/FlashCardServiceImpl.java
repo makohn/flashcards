@@ -9,7 +9,7 @@ import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.service.interfaces.FlashCardService;
 /**
  * <code>FlashCardServiceImpl</code> - Kapselt den Zugriff auf DAO Methoden.
- * @author mkohn, mfeick
+ * @author Marek Kohn, Martin Feick
  *
  */
 public class FlashCardServiceImpl implements FlashCardService{

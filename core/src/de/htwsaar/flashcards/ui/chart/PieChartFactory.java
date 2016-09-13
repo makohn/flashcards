@@ -9,7 +9,7 @@ import de.htwsaar.flashcards.ui.chart.PieChart2D.Slice;
 /**
  * <code>PieChartFactory</code> - Dient dem Erstellen von Piecharts aus uebergebenen
  * Wertetripeln (Label, Wert, Farbe).
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class PieChartFactory  {

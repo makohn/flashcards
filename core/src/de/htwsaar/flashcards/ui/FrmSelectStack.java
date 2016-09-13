@@ -47,7 +47,7 @@ import de.htwsaar.flashcards.util.FlashCardButtonFactory;
  * 		- Exportieren
  * 		- Loeschen
  * 
- * @author Nora Sommer, mkohn
+ * @author Nora Sommer, Marek Kohn
  *
  */
 public class FrmSelectStack {
@@ -168,7 +168,7 @@ public class FrmSelectStack {
 		
 		selectStackFrame.add(mainPanel);
 		selectStackFrame.setMinimumSize(new Dimension(730, 500));
-		selectStackFrame.setJMenuBar(MenuBar.createMenuBar(selectStackFrame));
+		selectStackFrame.setJMenuBar(MenuBar.createMenuBar(selectStackFrame, () -> update()));
 		selectStackFrame.setLocationRelativeTo(null);
 		selectStackFrame.setVisible(true);
 		selectStackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -244,6 +244,12 @@ public class FrmSelectStack {
 	private void updateTableView() {
 		tableModel.setFlashCards(cardService.getFlashCards(getSelectedStack().getStackId()));
 		tblStacksPreview.repaint();
+	}
+	
+	private Void update() {
+		cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));
+		updateTableView();
+		return null;
 	}
 }
 

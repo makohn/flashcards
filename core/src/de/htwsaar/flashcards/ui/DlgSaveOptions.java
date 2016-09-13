@@ -29,7 +29,7 @@ import de.htwsaar.flashcards.util.FlashCardButtonFactory;
  * in der Datenbank. Der Option kann hierbei ein Name sowie eine Beschreibung gegeben
  * werden.
  * 
- * @author mkohn
+ * @author Marek Kohn
  * @see FrmGameOptions, DlgGameOptions
  */
 public class DlgSaveOptions extends JDialog {

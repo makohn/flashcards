@@ -4,7 +4,7 @@ import de.htwsaar.flashcards.model.FlashCard;
 
 /**
  * <code>EditFlashCardService</code> -Dienst fuer die Erstellung und Bearbeitung von Karteikarten.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public interface EditFlashCardService {

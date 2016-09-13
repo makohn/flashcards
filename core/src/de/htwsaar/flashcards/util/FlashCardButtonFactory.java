@@ -27,7 +27,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
  * 		- <code>ColouredButton</code> Ein bunter JButton mit 3D Effekt
  * 		- <code>ColouredRadioButton</code> Ein bunter RadioButton mit 3D Effekt
  * 		- <code>ImageButton</code> Ein Button, der nur aus einem Bild besteht
- * @author mkohn
+ * @author Marek Kohn
  */
 
 /*

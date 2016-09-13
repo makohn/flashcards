@@ -27,7 +27,7 @@ import de.htwsaar.flashcards.util.FlashCardUtils;
  * 		- Antwortbereich       <- Erzeugung durch Fabrik
  * 		- Evaluationsbereich   <- Erzeugung durch Fabrik
  * 
- * @author Marco Becker, mkohn
+ * @author Marco Becker, Marek Kohn
  * @see StudyTypeUIFactory, SelfEvalFactory, VocabUIFactory
  */
 public class FrmStudy {

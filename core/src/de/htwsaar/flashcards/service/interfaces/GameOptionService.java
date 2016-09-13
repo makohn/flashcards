@@ -7,7 +7,7 @@ import de.htwsaar.flashcards.model.GameOption;
 /**
  * <code>GameOptionService</code> -Dienst fuer die (normale) Datenbankinteraktion bzgl. 
  * der Entitaet <code>GameOption</code>.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public interface GameOptionService {

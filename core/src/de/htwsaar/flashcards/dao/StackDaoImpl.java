@@ -21,7 +21,7 @@ import de.htwsaar.flashcards.model.Stack;
  * Die StackDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe Hierfuer
  * wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
  * 
- * @author Feick Martin
+ * @author Martin Feick
  * 
  */
 

@@ -18,7 +18,7 @@ import de.htwsaar.flashcards.service.interfaces.FlashCardService;
  * <code>ExporterCSVImpl</code> - Exportiert die Karten eines uebergebenen Stacks in
  * eine CSV Datei.
  * 
- * @author mkohn
+ * @author Marek Kohn
  */
 public class ExporterCSVImpl implements ExporterCSV {
 

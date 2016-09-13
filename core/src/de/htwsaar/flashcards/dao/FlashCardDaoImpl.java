@@ -22,7 +22,7 @@ import de.htwsaar.flashcards.util.FlashCardConstants;
  * Die FlashCardDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe
  * Hierfuer wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
  * 
- * @author Feick Martin
+ * @author Martin Feick
  * 
  */
 

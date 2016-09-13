@@ -8,7 +8,7 @@ package de.htwsaar.flashcards.util;
  * In diesem speziellen Handler muss die Funktion allerdings immer einen
  * boolschen Wert zurueckgeben.
  * 
- * @author mkohn
+ * @author Marek Kohn
  *
  * @param <V> - Der Rueckgabewert der Funktion
  */

@@ -8,7 +8,7 @@ import javax.swing.JTextArea;
 
 /**
  * Hilfsklasse fuer das <code>flashcards</code> Projekt.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class FlashCardUtils {

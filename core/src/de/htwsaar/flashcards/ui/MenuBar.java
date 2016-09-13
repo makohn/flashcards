@@ -2,6 +2,7 @@ package de.htwsaar.flashcards.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.Callable;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -12,8 +13,11 @@ import de.htwsaar.flashcards.ui.listeners.ImportFileListener;
 
 public class MenuBar {
 	
-	
 	public static JMenuBar createMenuBar(JFrame owner) {
+		return createMenuBar(owner, null);
+	}
+	
+	public static JMenuBar createMenuBar(JFrame owner, Callable<Void> handler) {
 		JMenuBar menuBar = new JMenuBar();
 		
 		JMenu fileMenu = new JMenu("Datei");
@@ -58,7 +62,7 @@ public class MenuBar {
 			}
 		});
 		
-		itemImport.addActionListener(new ImportFileListener(owner));
+		itemImport.addActionListener(new ImportFileListener(owner, handler));
 
 		return menuBar;
 	}

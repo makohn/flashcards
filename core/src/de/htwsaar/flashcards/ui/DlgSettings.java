@@ -34,7 +34,7 @@ import de.htwsaar.flashcards.util.FlashCardConstants;
  * 		- Sprache: Deutsch, Englisch, Spanisch
  * 		- Hintergrundfarbe
  * 		- BoxCount eines Stacks zuruecksetzen
- * @author mkohn
+ * @author Marek Kohn
  */
 
 public class DlgSettings extends JDialog {

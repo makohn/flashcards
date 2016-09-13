@@ -19,7 +19,7 @@ import javax.swing.DefaultButtonModel;
  * ------------------------
  * |     ON    ###########|
  * ------------------------
- * @author olihoz, modifiziert von mkohn
+ * @author olihoz, modifiziert von Marek Kohn
  * @link http://stackoverflow.com/questions/7304017/how-to-add-sexy-on-off-sliders
  *
  */

@@ -12,7 +12,7 @@ import de.htwsaar.flashcards.service.interfaces.EditFlashCardService;
  * Liste von Karteikarten, dem Bearbeiten und dem Speichern von einzelnen Karten.
  * 
  * @see FrmEditStack
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class EditFlashCardServiceImpl implements EditFlashCardService {

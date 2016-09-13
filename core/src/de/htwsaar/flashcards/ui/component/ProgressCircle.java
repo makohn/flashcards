@@ -18,9 +18,9 @@ import javax.swing.Timer;
 import de.htwsaar.flashcards.properties.Messages;
 
 /**
- * <code>JSwitchBox</code> - eine visuelle Darstellung eines Timers. Besteht aus einem
+ * <code>JProgressCircle</code> - eine visuelle Darstellung eines Timers. Besteht aus einem
  * sich fuellenden Kreis und einer textuellen Anzeige der verbleibenden Zeit.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class ProgressCircle extends JPanel {
@@ -61,12 +61,12 @@ public class ProgressCircle extends JPanel {
           
            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
            if (prgValue <= maxProgress) {
-                 g.setColor(new Color(255, 153, 51));
-                 int angle = -(int) (((float) prgValue / maxProgress) * 360);
-                 g.fillArc(0, 0, getWidth(), getHeight(), 90, angle);
-                 g2.setColor(Color.WHITE);
-                 g.fillArc(getWidth() / FRACTION / 2, getHeight() / FRACTION / 2,
-        		  getWidth() * (FRACTION - 1) / FRACTION, getHeight() * (FRACTION - 1) / FRACTION, 90, angle-5);
+             g.setColor(new Color(255, 153, 51));
+             int angle = -(int) (((float) prgValue / maxProgress) * 360);
+             g.fillArc(0, 0, getWidth(), getHeight(), 90, angle);
+             g2.setColor(Color.WHITE);
+             g.fillArc(getWidth() / FRACTION / 2, getHeight() / FRACTION / 2,
+    		  getWidth() * (FRACTION - 1) / FRACTION, getHeight() * (FRACTION - 1) / FRACTION, 90, angle-5);
           }
    }
     

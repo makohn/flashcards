@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * im <code>flashcards</code> Projekt. Besteht aus einzelnen <code>Slices</code>, die als
  * Hilfsklasse beigefuegt sind. Einzelne <code>Slices</code> koennen auch ein Offset einthalten,
  * sodass diese aus dem Kreis herausstechen.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class PieChart2D extends JPanel {

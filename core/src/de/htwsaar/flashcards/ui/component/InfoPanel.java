@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  * 	- den Fortschritt innerhalb einer gespielten Liste
  * 	- die Nummer der gerade gespielten Karte
  *  - den Namen der gerade gespielten Karte
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class InfoPanel extends JPanel {

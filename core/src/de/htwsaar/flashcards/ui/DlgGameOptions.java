@@ -29,7 +29,7 @@ import de.htwsaar.flashcards.util.FlashCardButtonFactory;
  * <code>DlgGameOptions</code> - Dialog fuer die Auswahl einer gespeicherten Spieloption.
  * Die Option kann daraufin entweder bearbeitet werden oder es kann ein Spiel mit dieser
  * Option gestartet werden.
- * @author mkohn
+ * @author Marek Kohn
  */
 
 public class DlgGameOptions extends JDialog {

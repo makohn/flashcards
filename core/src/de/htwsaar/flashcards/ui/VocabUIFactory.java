@@ -28,7 +28,7 @@ import de.htwsaar.flashcards.util.Handler;
  * mittels ActionListener erfolgen kann. Statt TextAreas werden hier TextFields fuer die
  * Darstellung der Frage/Antwort Bereiche gewaehlt.
  * 
- * @author mkohn, Marco Becker
+ * @author Marek Kohn, Marco Becker
  */
 public class VocabUIFactory implements StudyTypeUIFactory {
 

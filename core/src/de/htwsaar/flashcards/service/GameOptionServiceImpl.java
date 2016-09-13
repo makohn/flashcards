@@ -8,7 +8,7 @@ import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 /**
  * * <code>GameOptionServiceImpl</code> - Kapselt den Zugriff auf DAO Methoden.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public class GameOptionServiceImpl implements GameOptionService {

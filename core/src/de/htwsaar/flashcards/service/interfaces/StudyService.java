@@ -7,7 +7,7 @@ import de.htwsaar.flashcards.model.FlashCard;
 /**
  * <code>StudyService</code> - Steuert den Spielfluss und bietet Zugriff auf spezielle
  * DAO - Methoden wie etwa dem Speichern und Aktualisieren von Karteikarten.
- * @author mkohn
+ * @author Marek Kohn
  *
  */
 public interface StudyService {
