@@ -16,12 +16,15 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import de.htwsaar.flashcards.ui.FrmSelectStack;
 
  /** 
- * Dient dem Starten des Programms.
+ * Hauptklasse des Programms.
  * @author mkohn, Feick Martin
  *
  */
 public class Main {
 	
+	/**
+	 *  Startet das Programm. 
+	 */
 	public static void main(String[] args) throws ClassNotFoundException {
 		// Um konkurenten Zugriff auf die als thread-unsicheren geltenden 
 		// Swing Datenstrukturen zu verhindern, wird die GUI auf einem seperaten
@@ -36,6 +39,11 @@ public class Main {
 		});		
 	}
 	
+	/**
+	 * Konfiguriert das Look and Feel. Nach Moeglichkeit wird hierbei das seit Java 8 
+	 * verfuegbare Nimbus LaF verwendet und entsprechend individualisiert.
+	 * 
+	 */
 	private static void configLookAndFeel() {
 		try {
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
@@ -68,6 +76,6 @@ public class Main {
 			} catch (Exception e2) {
 				System.err.println("Fatal Error: Can't load Look and Feel defaults");
 			}
-		}	
+		}
 	}
 }

@@ -24,12 +24,31 @@ import javax.swing.SpinnerNumberModel;
 
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.GameOptionService;
+import de.htwsaar.flashcards.service.GameOptionServiceImpl;
+import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.JSwitchBox;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardUtils;
 
+/**
+ * <code>FrmGameOptions</code> - Frame zum Einstellen der Spieleoptionen:
+ *
+ * 		- Welche Box ? Oder Alle Karten eines Stacks ?
+ * 		- Gemischt vs. Sortiert
+ * 		- Zeitlimit
+ * 		- Anzahl der Karten
+ * 		- Zeitstempel beruecksichtigen ?
+ * 		- Konsequenz bei falscher Antwort 
+ * 
+ * Die Optionen koennen persistent in der Datenbank hinterlegt werden. Allerdings
+ * koennen keine neuen Optionen erstellt werden, diese sind auf ein Maximum von 
+ * vier beschraenkt. Dies wird durch einen entsprechenden Trigger sichergestellt.
+ * 
+ * @author Ben Meder, mkohn
+ * @see DlgGameOptions, DlgSaveOptions
+ *
+ */
 public class FrmGameOptions  {
 	
 	private static final int NR_OF_BOXES = 4;
@@ -68,7 +87,7 @@ public class FrmGameOptions  {
 	
 	public FrmGameOptions() {
 		frmGameOptions = new JFrame();
-		optionService = new GameOptionService();
+		optionService = new GameOptionServiceImpl();
 		
 		initSelectSlotArea();
 		initSelectModeArea();
@@ -106,11 +125,11 @@ public class FrmGameOptions  {
 		grpModeButtons = new ButtonGroup();
 		pnlModeButtons.setEnabled(false);
 		btnBox = new JRadioButton[NR_OF_BOXES+1];
-		btnBox[0] = ButtonFactory.createColouredRadioButton("1", ButtonFactory.BTN_RED);
-		btnBox[1] = ButtonFactory.createColouredRadioButton("2", ButtonFactory.BTN_YELLOW);
-		btnBox[2] = ButtonFactory.createColouredRadioButton("3", ButtonFactory.BTN_BLUE);
-		btnBox[3] = ButtonFactory.createColouredRadioButton("4", ButtonFactory.BTN_GREEN);
-		btnBox[4] = ButtonFactory.createColouredRadioButton("5", ButtonFactory.BTN_PURPLE);
+		btnBox[0] = FlashCardButtonFactory.createColouredRadioButton("1", FlashCardButtonFactory.BTN_RED);
+		btnBox[1] = FlashCardButtonFactory.createColouredRadioButton("2", FlashCardButtonFactory.BTN_YELLOW);
+		btnBox[2] = FlashCardButtonFactory.createColouredRadioButton("3", FlashCardButtonFactory.BTN_BLUE);
+		btnBox[3] = FlashCardButtonFactory.createColouredRadioButton("4", FlashCardButtonFactory.BTN_GREEN);
+		btnBox[4] = FlashCardButtonFactory.createColouredRadioButton("5", FlashCardButtonFactory.BTN_PURPLE);
 		
 		for (JRadioButton btn : btnBox) {
 			grpModeButtons.add(btn);
@@ -184,9 +203,9 @@ public class FrmGameOptions  {
 	private void initConfirmationArea() {
 		pnlConfirm = new JPanel(new GridLayout(1, 2, 20, 15));
 		pnlConfirm.setOpaque(false);
-		btnOk = ButtonFactory.createColouredButton(Messages.getString("ok"), ButtonFactory.BTN_GREEN); 
+		btnOk = FlashCardButtonFactory.createColouredButton(Messages.getString("ok"), FlashCardButtonFactory.BTN_GREEN); 
 		btnOk.addActionListener(new OkButtonClickedListener());
-		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_RED); 
+		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED); 
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));

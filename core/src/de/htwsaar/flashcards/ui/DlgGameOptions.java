@@ -18,10 +18,19 @@ import javax.swing.JPanel;
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.GameOptionService;
-import de.htwsaar.flashcards.service.StudyService;
+import de.htwsaar.flashcards.service.GameOptionServiceImpl;
+import de.htwsaar.flashcards.service.StudyServiceImpl;
+import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
+
+/**
+ * /**
+ * <code>DlgGameOptions</code> - Dialog fuer die Auswahl einer gespeicherten Spieloption.
+ * Die Option kann daraufin entweder bearbeitet werden oder es kann ein Spiel mit dieser
+ * Option gestartet werden.
+ * @author mkohn
+ */
 
 public class DlgGameOptions extends JDialog {
 	
@@ -45,7 +54,7 @@ public class DlgGameOptions extends JDialog {
 	public DlgGameOptions(Frame owner, boolean modal,Stack stack) {
 		super(owner, modal);
 		this.stack = stack;
-		optionService = new GameOptionService();
+		optionService = new GameOptionServiceImpl();
 		options = optionService.getGameOptionArray();
 		self = this;
 		initButtons();
@@ -55,18 +64,18 @@ public class DlgGameOptions extends JDialog {
 	private void initButtons() {
 		
 		btnGameOption = new JButton[MAX_OPTION_NR][MAX_BTN_NR];
-		btnGameOption[0][OPTION] = ButtonFactory.createColouredButton(options[0].getName(), ButtonFactory.BTN_BLUE);
+		btnGameOption[0][OPTION] = FlashCardButtonFactory.createColouredButton(options[0].getName(), FlashCardButtonFactory.BTN_BLUE);
 		btnGameOption[0][OPTION].addActionListener(new OptionButtonPressedListener(options[0]));
-		btnGameOption[1][OPTION] = ButtonFactory.createColouredButton(options[1].getName(), ButtonFactory.BTN_YELLOW);
+		btnGameOption[1][OPTION] = FlashCardButtonFactory.createColouredButton(options[1].getName(), FlashCardButtonFactory.BTN_YELLOW);
 		btnGameOption[1][OPTION].addActionListener(new OptionButtonPressedListener(options[1]));
-		btnGameOption[2][OPTION] = ButtonFactory.createColouredButton(options[2].getName(), ButtonFactory.BTN_GREEN);
+		btnGameOption[2][OPTION] = FlashCardButtonFactory.createColouredButton(options[2].getName(), FlashCardButtonFactory.BTN_GREEN);
 		btnGameOption[2][OPTION].addActionListener(new OptionButtonPressedListener(options[2]));
-		btnGameOption[3][OPTION] = ButtonFactory.createColouredButton(options[3].getName(), ButtonFactory.BTN_RED);
+		btnGameOption[3][OPTION] = FlashCardButtonFactory.createColouredButton(options[3].getName(), FlashCardButtonFactory.BTN_RED);
 		btnGameOption[3][OPTION].addActionListener(new OptionButtonPressedListener(options[3]));
 
 		for (JButton[] button : btnGameOption) {
 			button[OPTION].setPreferredSize(new Dimension(280,65));
-			button[EDIT] = ButtonFactory.createImageButton(ICN_EDIT);
+			button[EDIT] = FlashCardButtonFactory.createImageButton(ICN_EDIT);
 			button[EDIT].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -112,7 +121,7 @@ public class DlgGameOptions extends JDialog {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			StudyService service = new StudyService(option, stack);
+			StudyServiceImpl service = new StudyServiceImpl(option, stack);
 			if(service.noFlashCardsInList()) {
 				JOptionPane.showMessageDialog(self, Messages.getString("no_cards"));
 			}

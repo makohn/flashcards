@@ -8,6 +8,12 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+/**
+ * <code>GradientPanel</code> Eine Unterklasse von JPanel. Rendert dieses mit einem
+ * Farbverlauf als Hintergrund.
+ * @author mkohn
+ *
+ */
 public class GradientPanel extends JPanel {
 
 	private static final long serialVersionUID = -5828241851827054583L;
@@ -27,6 +33,9 @@ public class GradientPanel extends JPanel {
         g2d.fillRect(0, 0, w, h);
     }
 	
+	/*
+	 * Aendere die Hintergrundfarbe
+	 */
 	public static void changeBackground(Color bg) {
 		backgroundColor = bg;
 	}

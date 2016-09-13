@@ -13,6 +13,17 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.Border;
 
+/**
+ * <code>InfoPanel</code> - Dient der Darstellung von Informationen ueber den
+ * Spielverlauf unabhaengig von der Art des Spiels (Selbstevaluation, Vokabel,..)
+ * Enthaelt Informationen ueber:
+ * 	- die verbleibende Zeit eines Spielzugs
+ * 	- den Fortschritt innerhalb einer gespielten Liste
+ * 	- die Nummer der gerade gespielten Karte
+ *  - den Namen der gerade gespielten Karte
+ * @author mkohn
+ *
+ */
 public class InfoPanel extends JPanel {
 
 	private static final long serialVersionUID = -2951701270136199284L;
@@ -69,6 +80,9 @@ public class InfoPanel extends JPanel {
 			this.setMaximumSize(new Dimension(650,200));
 	}
 	
+	/*
+	 * Aktualisiert das Infopanel nach Beenden eines Spielzugs. 
+	 */
 	public void update(String cardName, int box) {
 		round++;
 		lblCardname.setText(cardName);
@@ -90,6 +104,12 @@ public class InfoPanel extends JPanel {
 			progresscircle.stop();
 	}
 	
+	/*
+	 * Bietet eine Schittstelle zum Aktualisieren der Zeitanzeige
+	 * durch eine Elterkomponente.
+	 * Insbesondere interessant fuer das Stoppen der Zeit nach Beantwortung 
+	 * einer Frage.
+	 */
 	public void setHandler(Callable<Void> handler) {
 		if (time > 0)
 			progresscircle.setHandler(handler);

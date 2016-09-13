@@ -29,13 +29,27 @@ import javax.swing.UIManager;
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.EditFlashCardService;
-import de.htwsaar.flashcards.service.FlashCardService;
-import de.htwsaar.flashcards.service.StackService;
+import de.htwsaar.flashcards.service.EditFlashCardServiceImpl;
+import de.htwsaar.flashcards.service.FlashCardServiceImpl;
+import de.htwsaar.flashcards.service.StackServiceImpl;
+import de.htwsaar.flashcards.service.interfaces.FlashCardService;
+import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
+import de.htwsaar.flashcards.ui.listeners.ExportFileListener;
 import de.htwsaar.flashcards.ui.tableModels.FlashCardsTableModel;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 
+/**
+ * <code>FrmSelectStack</code> - Frame zum Auswaehlen eines Stacks. Zeigt eine
+ * Vorschau der darin enthaltenen Karten und bietet folgende Optionen:
+ * 		- Spielen
+ * 		- Bearbeiten
+ * 		- Exportieren
+ * 		- Loeschen
+ * 
+ * @author Nora Sommer, mkohn
+ *
+ */
 public class FrmSelectStack {
 	
 	private static final ImageIcon ICN_CREATE_STACK = new ImageIcon("res/images/add_small.png");
@@ -54,12 +68,13 @@ public class FrmSelectStack {
 	private JTable tblStacksPreview;
 	private FlashCardsTableModel tableModel;
 	private JFrame selectStackFrame;
+	
 	private StackService stackService;
 	private FlashCardService cardService;
 	
 	public FrmSelectStack() {
-		stackService = new StackService();
-		cardService = new FlashCardService();
+		stackService = new StackServiceImpl();
+		cardService = new FlashCardServiceImpl();
 		selectStackFrame = new JFrame();
 		
 		initSelectionArea();
@@ -74,10 +89,15 @@ public class FrmSelectStack {
 		pnlSelection.setOpaque(false);
 		
 		cmbStackSelector = new JComboBox<Stack>(stackService.getStackArray());
-		cmbStackSelector.addActionListener(new UpdateTableActionListener());
+		cmbStackSelector.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				updateTableView();
+			}
+		});
 		
-		btnCreateStack = ButtonFactory.createImageButton(ICN_CREATE_STACK);
-		btnEditStack =  ButtonFactory.createImageButton(ICN_EDIT_STACK);
+		btnCreateStack = FlashCardButtonFactory.createImageButton(ICN_CREATE_STACK);
+		btnEditStack =  FlashCardButtonFactory.createImageButton(ICN_EDIT_STACK);
 		pnlSelection.add(cmbStackSelector);
 		pnlSelection.add(btnCreateStack);
 		pnlSelection.add(btnEditStack);
@@ -100,10 +120,10 @@ public class FrmSelectStack {
 		pnlButtons.setOpaque(false);
 		pnlButtons.setLayout(new GridLayout(1,4,5,5));
 		
-		btnStudy = ButtonFactory.createColouredButton(Messages.getString("play"), ButtonFactory.BTN_GREEN);
-		btnEdit = ButtonFactory.createColouredButton(Messages.getString("edit"), ButtonFactory.BTN_BLUE);
-		btnExport = ButtonFactory.createColouredButton(Messages.getString("export"), ButtonFactory.BTN_YELLOW);
-		btnDelete = ButtonFactory.createColouredButton(Messages.getString("delete"), ButtonFactory.BTN_RED);
+		btnStudy = FlashCardButtonFactory.createColouredButton(Messages.getString("play"), FlashCardButtonFactory.BTN_GREEN);
+		btnEdit = FlashCardButtonFactory.createColouredButton(Messages.getString("edit"), FlashCardButtonFactory.BTN_BLUE);
+		btnExport = FlashCardButtonFactory.createColouredButton(Messages.getString("export"), FlashCardButtonFactory.BTN_YELLOW);
+		btnDelete = FlashCardButtonFactory.createColouredButton(Messages.getString("delete"), FlashCardButtonFactory.BTN_RED);
 		
 		pnlButtons.add(btnStudy);
 		pnlButtons.add(btnEdit);
@@ -177,7 +197,7 @@ public class FrmSelectStack {
 			public void actionPerformed(ActionEvent e) {
 				List<FlashCard> cards = cardService.getFlashCards();	
 				if (cards == null) cards = new ArrayList<FlashCard>();
-				new FrmEditStack(new EditFlashCardService(cards.listIterator(), getSelectedStack().getStackId()));
+				new FrmEditStack(new EditFlashCardServiceImpl(cards.listIterator(), getSelectedStack().getStackId()));
 				selectStackFrame.dispose();
 			}
 		});
@@ -194,7 +214,7 @@ public class FrmSelectStack {
 				int row = table.rowAtPoint(p);
 				if (me.getClickCount() == 2 && row != -1) {
 					new FrmEditStack(
-							new EditFlashCardService(cardService.getFlashCards().listIterator(row), 
+							new EditFlashCardServiceImpl(cardService.getFlashCards().listIterator(row), 
 									getSelectedStack().getStackId()));
 				}
 			}
@@ -213,17 +233,17 @@ public class FrmSelectStack {
 			public void actionPerformed(ActionEvent e) {
 				stackService.deleteStack((Stack)cmbStackSelector.getSelectedItem());
 				cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));
+				updateTableView();
 			}
 		});
+		
+		btnExport.addActionListener(new ExportFileListener((Stack)cmbStackSelector.getSelectedItem(), 
+				selectStackFrame));
 	}
 	
-	private class UpdateTableActionListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			tableModel.setFlashCards(cardService.getFlashCards(getSelectedStack().getStackId()));
-			tblStacksPreview.repaint();
-		}
-		
+	private void updateTableView() {
+		tableModel.setFlashCards(cardService.getFlashCards(getSelectedStack().getStackId()));
+		tblStacksPreview.repaint();
 	}
 }
 

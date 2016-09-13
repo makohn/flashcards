@@ -16,6 +16,7 @@ public interface StackDao {
 	public void deleteStack(Stack stack);
 	public void saveStack(Stack stack);
 	public void updateStack(Stack stack);
+	public void addStack(Stack stack);
 	public List<Stack> getStacks();
 	public Stack getStack(int stackId);
 	

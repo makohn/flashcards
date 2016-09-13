@@ -8,6 +8,18 @@ import javax.swing.JPanel;
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.util.Handler;
 
+/**
+ * <code>StudyTypeUIFactory</code> - Schnittstelle fuer die Erzeugung von GUI-Komponenten fuer die
+ * StudyFrame Klasse. Erzeugt je nach Typ, die Komponenten in unterschiedlicher
+ * Ausfuehrung (Groesse, Bestandteile, ...) und Funktion (ActionListener).
+ * 
+ * Bisher wird unterschieden zwischen:
+ * 		- <code>SelfEvalUIFactory</code> (Selbstevaluierung)
+ * 		- <code>VocabUIFactory</code>    (Vokabeln, Evalierung durch ActionListener)
+ * 
+ * @author mkohn
+ * @see SelfEvalUIFactory, VocabUIFactory
+ */
 public interface StudyTypeUIFactory {
 	
 	public  JPanel 		createQuestionPanel(boolean editable);

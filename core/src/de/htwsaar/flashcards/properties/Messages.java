@@ -3,6 +3,12 @@ package de.htwsaar.flashcards.properties;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * Dient dem Erzeugen von Strings (z.b. fuer JLabels) mithilfe von .properties
+ * Dateien. So kann eine multilinguale Beschriftung realisiert werden.
+ * @author nora sommer
+ *
+ */
 public class Messages {
 	public static final String BUNDLE_NAME_DE = "de.htwsaar.flashcards.properties.messages_de"; 
 	public static final String BUNDLE_NAME_EN = "de.htwsaar.flashcards.properties.messages_en"; 

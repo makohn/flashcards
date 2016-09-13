@@ -31,10 +31,9 @@ public class GameOptionDaoImpl implements GameOptionDao {
 		}
 
 	/**
-	 * Klasse zum loeschen einer Karte
+	 * Loescht eine gespeicherte Spieloption.
 	 * 
-	 * @param flashcard
-	 *            - object
+	 * @param options - Die Option die geloescht werden soll.
 	 */
 	@Override
 	public void deleteGameOption(GameOption options) {
@@ -48,10 +47,9 @@ public class GameOptionDaoImpl implements GameOptionDao {
 	}
 
 	/**
-	 * Klasse zum speichern einer Karte
+	 * Speichert eine  Spieloption.
 	 * 
-	 * @param flashcard
-	 *            - object
+	 * @param options - Die Option die gespeichert werden soll.
 	 */
 	@Override
 	public void saveGameOption(GameOption options) {
@@ -64,12 +62,10 @@ public class GameOptionDaoImpl implements GameOptionDao {
 	}
 
 	/**
-	 * Hilfsklasse zum speichern einer Karte
+	 * Hilfsmethode zum Speichern einer Karte. Fuegt die Attribute einer
+	 * Parameterquelle hinzu.
 	 * 
-	 * @param flashcard
-	 *            - object
-	 * @param check
-	 *            - integer zum zuordnen der aufrufenden Funktion
+	 * @param options - Das Objekt, dessen Attribute als Grundlage dienen.
 	 */
 	private MapSqlParameterSource getGameOptionsParameterSource(GameOption options) {
 
@@ -89,10 +85,10 @@ public class GameOptionDaoImpl implements GameOptionDao {
 	}
 
 	/**
-	 * Klasse zum "aktualisieren" einer Karte
+	 * Aktualisiert eine gespeicherte Spieloption.
 	 * 
-	 * @param flashcard
-	 *            - object
+	 * @param options - Die Option die aktualisiert werden soll.
+	 *            
 	 */
 	@Override
 	public void updateGameOption(GameOption options) {
@@ -109,9 +105,9 @@ public class GameOptionDaoImpl implements GameOptionDao {
 	
 
 	/**
-	 * Klasse die alle Karten ausgibt
+	 * Gibt alle, in der Datenbank gespeicherten Spieloptionen zurueck
 	 * 
-	 * @return Liste mit allen Karten die zur Zeit in der DB vorhanden sind
+	 * @return Liste mit allen Optionen die zur Zeit in der DB vorhanden sind
 	 */
 	@Override
 	public List<GameOption> getGameOptions() {
@@ -123,10 +119,9 @@ public class GameOptionDaoImpl implements GameOptionDao {
 
 
 	/**
-	 * Klasse die den Karte zu einer bestimmten ID zur�ck gibt
+	 * Gibt eine Option mit einer bestimmten ID zurueck.
 	 * 
-	 * @param cardId
-	 * @return flashcard - object
+	 * @param id - Die eindeutige ID fuer eine Spieloption
 	 */
 	@Override
 	public GameOption getGameOption(int id) {
@@ -145,10 +140,9 @@ public class GameOptionDaoImpl implements GameOptionDao {
 	}
 
 	/**
-	 * Diese Klasse erstellt Card-Objekte aus einem Resultset welches das
+	 * Diese Klasse erstellt GameOption-Objekte aus einem Resultset welches das
 	 * Ergebnis einer Datenbankanfrage war
 	 * 
-	 * @return flashcard - object
 	 */
 	private class GameOptionRowMapper implements RowMapper<GameOption> {
 

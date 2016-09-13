@@ -26,11 +26,21 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.EditFlashCardService;
+import de.htwsaar.flashcards.service.interfaces.EditFlashCardService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardUtils;
 
+/**
+ * <code>FrmEditStack</code> - Dient der Bearbeitung von Karteikarten eines ausgewaehlten
+ * Stacks. Ueber Pfeiltasten kann durch die Liste der Karten iteriert werden. Eigenschaften 
+ * der Karten koennen jeweils ueber die entsprechende Maske veraendert werden. Zudem kann ueber einen
+ * Button eine neue Karte hinzugefuegt werden.
+ * 
+ * @author mkohn, David Berres
+ * @see EditStackService, EditStackServiceImpl
+ *
+ */
 public class FrmEditStack {
 
 	private static final String VERTICAL_LINE = Messages.getString("vertical_line");
@@ -98,9 +108,9 @@ public class FrmEditStack {
 		txtCardName.setOpaque(false);
 		txtCardName.setPreferredSize(new Dimension(250,60));
 		txtCardName.setHorizontalAlignment(JTextField.CENTER);
-		btnCardForward = ButtonFactory.createImageButton(ICN_ARROW_RIGHT);
-		btnCardBackward = ButtonFactory.createImageButton(ICN_ARROW_LEFT);
-		btnAddCard = ButtonFactory.createImageButton(ICN_ADD_CARD);
+		btnCardForward = FlashCardButtonFactory.createImageButton(ICN_ARROW_RIGHT);
+		btnCardBackward = FlashCardButtonFactory.createImageButton(ICN_ARROW_LEFT);
+		btnAddCard = FlashCardButtonFactory.createImageButton(ICN_ADD_CARD);
 		btnAddCard.setToolTipText(Messages.getString("add_card"));
 		pnlNavigation = new JPanel(new GridBagLayout());
 		pnlNavigation.setOpaque(false);
@@ -130,10 +140,10 @@ public class FrmEditStack {
 		lblQuestion.setAlignmentX(Component.CENTER_ALIGNMENT);
 		txtQuestion = FlashCardUtils.createCardTextArea(true);
 		
-		btnAddPicture = ButtonFactory.createImageButton(ICN_ADD_PICTURE);
+		btnAddPicture = FlashCardButtonFactory.createImageButton(ICN_ADD_PICTURE);
 		btnAddPicture.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnAddPicture.setVisible(false); 
-		btnDelPicture = ButtonFactory.createImageButton(ICN_DEL_PICTURE);
+		btnDelPicture = FlashCardButtonFactory.createImageButton(ICN_DEL_PICTURE);
 		btnDelPicture.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnDelPicture.setVisible(false); 
 		
@@ -169,9 +179,9 @@ public class FrmEditStack {
 		pnlSaveDelete = new JPanel(new GridLayout(1, 3, 10, 30));
 		pnlSaveDelete.setOpaque(false);
 		
-		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_BLUE); 
-		btnDeleteCurrentCard = ButtonFactory.createColouredButton(Messages.getString("delete"), ButtonFactory.BTN_RED);
-		btnSaveStack = ButtonFactory.createColouredButton(Messages.getString("save"), ButtonFactory.BTN_GREEN);
+		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_BLUE); 
+		btnDeleteCurrentCard = FlashCardButtonFactory.createColouredButton(Messages.getString("delete"), FlashCardButtonFactory.BTN_RED);
+		btnSaveStack = FlashCardButtonFactory.createColouredButton(Messages.getString("save"), FlashCardButtonFactory.BTN_GREEN);
 		
 		pnlSaveDelete.add(btnSaveStack);
 		pnlSaveDelete.add(btnDeleteCurrentCard);

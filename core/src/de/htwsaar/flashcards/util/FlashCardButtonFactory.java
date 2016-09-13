@@ -21,7 +21,21 @@ import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 
-public class ButtonFactory {
+/**
+ * <code>FlashCardButtonFactory</code> Fabrik fuer die Erzeugung von verschiedenen JButtons
+ * im optischen Stil des <code>flashcards</code> Projektes. Enthaelt:
+ * 		- <code>ColouredButton</code> Ein bunter JButton mit 3D Effekt
+ * 		- <code>ColouredRadioButton</code> Ein bunter RadioButton mit 3D Effekt
+ * 		- <code>ImageButton</code> Ein Button, der nur aus einem Bild besteht
+ * @author mkohn
+ */
+
+/*
+ * Disclaimer: Teile des Codes wurden vom Java eigenen Aqua LaF uebernommen.
+ */
+
+
+public class FlashCardButtonFactory {
 	
 	public final static Color BTN_RED = new Color(179, 0, 0);
 	public final static Color BTN_BLUE = new Color(0, 102, 204);
@@ -29,8 +43,10 @@ public class ButtonFactory {
 	public final static Color BTN_GREEN = new Color(0, 153, 0);
 	public final static Color BTN_PURPLE = new Color(153, 51, 153);
 	
+	public final static Font  DEFAULT_FONT = new Font("Tahoma", Font.BOLD, 14);
+	
 	private static void setColour(Color color, AbstractButton btn) {
-		btn.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn.setFont(DEFAULT_FONT);
 		btn.setBackground(color);
 		btn.setForeground(Color.white);
 		btn.setOpaque(true);
@@ -59,6 +75,12 @@ public class ButtonFactory {
 	    return btn;
 	}
 	
+	/*
+	 * Shader fuer ImageButtons, erzeugt eine Schattierung des Buttons in unterschiedlich
+	 * starkem Grad. Notwendig, da das Nimbus LaF diese Funktion, bspw. bei Druecken eines
+	 * Buttons nicht unterstützt, diese LaF aber als Standard LaF fuer dieses Projekt gewaehlt 
+	 * wurde. (vgl. Aqua LaF)
+	 */
 	private static Image setShader(final Image image, int deg) {
 		final ImageProducer prod = new FilteredImageSource(image.getSource(), new RGBImageFilter() {
 			
@@ -82,11 +104,17 @@ public class ButtonFactory {
 		return Toolkit.getDefaultToolkit().createImage(prod);
 	}
 	
+	/*
+	 * Rendert einen JButton, sodass er bunt ist und einen 3D Effekt besitzt.
+	 */
 	static class StyledButtonUI extends BasicButtonUI {
+		
+		private Color background;
 		
 	    @Override
 	    public void installUI (JComponent c) {
 	        super.installUI(c); 
+	        background = c.getBackground();
 	        AbstractButton button = (AbstractButton) c;
 	        button.setOpaque(false);
 	        button.setBorder(new EmptyBorder(5, 15, 5, 15));
@@ -95,10 +123,12 @@ public class ButtonFactory {
 	    @Override
 	    public void paint (Graphics g, JComponent c) {
 	        AbstractButton b = (AbstractButton) c;
-	        if(!c.isEnabled()) 
-	        	c.setBackground(new Color(242, 242, 242));
-	        else
-	        	c.setBackground(c.getBackground());
+	        if(!b.isEnabled()) 
+	        	b.setBackground(new Color(242, 242, 242));
+	        else {
+	        	b.setBackground(background);
+	        }
+	        
 	        if(c instanceof JRadioButton) {
 	        	paintBackground(g, b, b.getModel().isSelected() ? 2 : 0);
 	        }
@@ -117,6 +147,8 @@ public class ButtonFactory {
 	        g.setColor(c.getBackground());
 	        g.fillRoundRect(0, yOffset, size.width, size.height + yOffset - 5, 10, 10);
 	    }
+	    
+	    public void setColor(Color bg) {background = bg;}
 	}
 	
 	

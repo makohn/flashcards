@@ -31,9 +31,11 @@ public class SQLiteJDBC {
 	 */
 	private static void initDataSource() {
 		try {
+			// Damit das Datum von SQLite <-> Java richtig uebersetzt wird:
 			SQLiteConfig sqLiteConfig = new SQLiteConfig();
 			Properties properties = sqLiteConfig.toProperties();
 			properties.setProperty(Pragma.DATE_STRING_FORMAT.pragmaName, "yyyy-MM-dd HH:mm:ss");
+			
 			dataSource = new DriverManagerDataSource();
 			dataSource.setDriverClassName(DRIVER);
 			dataSource.setUrl(URL);
@@ -47,7 +49,7 @@ public class SQLiteJDBC {
 	}
 	
 	/**
-	 * Zugriffsmethode
+	 * Zugriffsmethode, gibt eine Instanz dieser Klasse in Form eines Singletons zurueck.
 	 * @return
 	 */
 	public static synchronized DataSource getConnection() {

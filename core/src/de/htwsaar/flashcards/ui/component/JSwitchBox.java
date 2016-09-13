@@ -14,6 +14,15 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractButton;
 import javax.swing.DefaultButtonModel;
 
+/**
+ * <code>JSwitchBox</code> imitiert einen einfachen ON/OFF Switch in Java SWT.
+ * ------------------------
+ * |     ON    ###########|
+ * ------------------------
+ * @author olihoz, modifiziert von mkohn
+ * @link http://stackoverflow.com/questions/7304017/how-to-add-sexy-on-off-sliders
+ *
+ */
 public class JSwitchBox extends AbstractButton {
 
 	private static final long serialVersionUID = 9499207356234037L;

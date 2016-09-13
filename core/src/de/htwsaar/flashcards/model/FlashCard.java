@@ -47,8 +47,12 @@ public class FlashCard implements Comparable<FlashCard> {
 		
 	}
 
-	public void incrementBoxCounter() {
-		this.boxCounter++;
+	public void incrementAsked() {
+		this.cardAsked++;
+	}
+	
+	public void incrementAnsweredCorrect() {
+		this.cardAnswerCorrect++;
 	}
 
 	public int getCardId() {
@@ -125,10 +129,6 @@ public class FlashCard implements Comparable<FlashCard> {
 	
 	public int getStackId() {
 		return stackId;
-	}
-
-	public void setStackId(int stackId) {
-		this.stackId = stackId;
 	}
 
 	public int getCardAsked() {

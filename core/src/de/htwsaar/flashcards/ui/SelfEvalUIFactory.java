@@ -1,7 +1,6 @@
 package de.htwsaar.flashcards.ui;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,10 +16,18 @@ import javax.swing.JTextArea;
 
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
 import de.htwsaar.flashcards.util.FlashCardUtils;
 import de.htwsaar.flashcards.util.Handler;
+
+/**
+ * <code>SelfEvalUIFactory</code> - Konkrete Fabrikimplementierung des Interfaces 
+ * <code>StudyTypeUIFactory</code>. Erzeugt die Komponenten so, dass eine Evaluierung
+ * mittels dafuer vorgesehener Buttons erfolgen kann.
+ * 
+ * @author mkohn, Marco Becker
+ */
 
 public class SelfEvalUIFactory implements StudyTypeUIFactory {
 	
@@ -58,7 +65,7 @@ public class SelfEvalUIFactory implements StudyTypeUIFactory {
 		JPanel pnlAnswer = new JPanel(new CardLayout());
 		pnlAnswer.setOpaque(false);
 		pnlAnswer.setBorder(FlashCardConstants.OUTER_CARD_BORDER);
-		btnShowAnswer = ButtonFactory.createColouredButton(Messages.getString("answer"), new Color(0, 163, 204));
+		btnShowAnswer = FlashCardButtonFactory.createColouredButton(Messages.getString("answer"), FlashCardConstants.COLOR_FOREGROUND);
 		pnlAnswer.add(btnShowAnswer);
 		txtAnswer = FlashCardUtils.createCardTextArea(false);
 		scrlAnswer = new JScrollPane(txtAnswer);
@@ -74,13 +81,13 @@ public class SelfEvalUIFactory implements StudyTypeUIFactory {
 		JPanel pnlEval = new JPanel(new GridBagLayout());
 		pnlEval.setOpaque(false);
 		GridBagConstraints cos = new GridBagConstraints();
-		btnCorrect = ButtonFactory.createImageButton(ICN_CORRECT);
+		btnCorrect = FlashCardButtonFactory.createImageButton(ICN_CORRECT);
 		btnCorrect.setEnabled(false);
 		cos.gridx = 0;
 		cos.gridy = 2;
 		cos.insets = new Insets(0, 0, 0, 100);
 		pnlEval.add(btnCorrect, cos);
-		btnInCorrect = ButtonFactory.createImageButton(ICN_INCORRECT);
+		btnInCorrect = FlashCardButtonFactory.createImageButton(ICN_INCORRECT);
 		btnInCorrect.setEnabled(false);
 		cos.gridx = 2;
 		cos.gridy = 2;

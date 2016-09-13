@@ -12,11 +12,24 @@ import javax.swing.JPanel;
 
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.StudyService;
+import de.htwsaar.flashcards.service.interfaces.StudyService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.InfoPanel;
 import de.htwsaar.flashcards.util.FlashCardUtils;
 
+/**
+ * <code>FrmStudy</code> - Wrapper Frame fuer ein Spiel. Enthaelt die Basis-
+ * funktionalitaet. Ordnet die mittels einer Fabrik (<code>StudyTypeUIFactory</code>)
+ * erzeugten Kompontenten im Frame an. Besteht dementsprechend aus:
+ * 		- Infobereich
+ * 		- Fragebereich 		   <- Erzeugung durch Fabrik
+ * 		- Bildbereich  
+ * 		- Antwortbereich       <- Erzeugung durch Fabrik
+ * 		- Evaluationsbereich   <- Erzeugung durch Fabrik
+ * 
+ * @author Marco Becker, mkohn
+ * @see StudyTypeUIFactory, SelfEvalFactory, VocabUIFactory
+ */
 public class FrmStudy {
 	
     private static final ImageIcon ICN_QUEST_IMG = new ImageIcon("res/images/questionmarks.png");

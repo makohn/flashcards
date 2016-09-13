@@ -22,10 +22,20 @@ import javax.swing.JRadioButton;
 
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.FlashCardService;
-import de.htwsaar.flashcards.service.StackService;
+import de.htwsaar.flashcards.service.FlashCardServiceImpl;
+import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardConstants;
+
+/**
+ * <code>DlgSettings</code> - Dialog fuer die Uebersicht und Abaenderung von
+ * Einstellungen. Bisher werden folgende Einstellungen angeboten:
+ * 		- Sprache: Deutsch, Englisch, Spanisch
+ * 		- Hintergrundfarbe
+ * 		- BoxCount eines Stacks zuruecksetzen
+ * @author mkohn
+ */
 
 public class DlgSettings extends JDialog {
 	
@@ -56,16 +66,16 @@ public class DlgSettings extends JDialog {
 	private JRadioButton btnEnglish;
 	private JRadioButton btnSpanish;
 	
-	private StackService stackService;
-	private FlashCardService cardService;
+	private StackServiceImpl stackService;
+	private FlashCardServiceImpl cardService;
 	
 	private JDialog self;
 	
 	public DlgSettings(Frame owner, boolean modal) {
 		super(owner, modal);
 		self = this;
-		stackService = new StackService();
-		cardService = new FlashCardService();
+		stackService = new StackServiceImpl();
+		cardService = new FlashCardServiceImpl();
 		
 		initLanguageArea();
 		initColorArea();
@@ -103,7 +113,7 @@ public class DlgSettings extends JDialog {
 		pnlbackgroundColor.setOpaque(false);
 		cmbColor = new JComboBox<String>(colors);
 		pnlbackgroundColor.add(new JLabel("Hintergrund: "));
-		btnPreview = ButtonFactory.createColouredButton("Vorschau", BLUE[1]);
+		btnPreview = FlashCardButtonFactory.createColouredButton("Vorschau", BLUE[1]);
 		pnlbackgroundColor.add(cmbColor);
 		pnlbackgroundColor.add(btnPreview);
 		pnlbackgroundColor.setBorder(BorderFactory.createTitledBorder("Wähle ein Farbschema: "));
@@ -114,21 +124,22 @@ public class DlgSettings extends JDialog {
 				switch (cmbColor.getSelectedIndex()) {
 				case 0:
 					GradientPanel.changeBackground(BLUE[0]);
-					btnPreview.setBackground(BLUE[1]);
+					FlashCardConstants.COLOR_FOREGROUND = BLUE[1];
 					break;
 				case 1:
 					GradientPanel.changeBackground(RED[0]);
-					btnPreview.setBackground(RED[1]);
+					FlashCardConstants.COLOR_FOREGROUND = RED[1];
 					break;
 				case 2:
 					GradientPanel.changeBackground(YELLOW[0]);
-					btnPreview.setBackground(YELLOW[1]);
+					FlashCardConstants.COLOR_FOREGROUND = YELLOW[1];
 					break;
 				case 3:
 					GradientPanel.changeBackground(GREEN[0]);
-					btnPreview.setBackground(GREEN[1]);
+					FlashCardConstants.COLOR_FOREGROUND = GREEN[1];
 					break;
 				}
+				//btnPreview.setColor(FlashCardConstants.COLOR_FOREGROUND);
 				self.repaint();
 				self.getOwner().repaint();
 				btnPreview.repaint();
@@ -141,7 +152,7 @@ public class DlgSettings extends JDialog {
 		pnlReset.setOpaque(false);
 		pnlReset.add(new JLabel("Stack: "));
 		cmbStack = new JComboBox<Stack>(stackService.getStackArray());
-		btnReset = ButtonFactory.createColouredButton("Reset", ButtonFactory.BTN_RED);
+		btnReset = FlashCardButtonFactory.createColouredButton("Reset", FlashCardButtonFactory.BTN_RED);
 		pnlReset.add(cmbStack);
 		pnlReset.add(btnReset);
 		pnlReset.setBorder(BorderFactory.createTitledBorder("Boxcounter zurücksetzen: "));

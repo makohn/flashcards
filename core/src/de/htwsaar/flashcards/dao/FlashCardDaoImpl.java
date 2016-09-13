@@ -20,7 +20,7 @@ import de.htwsaar.flashcards.util.FlashCardConstants;
 
 /**
  * Die FlashCardDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe
- * Hierf�r wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
+ * Hierfuer wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
  * 
  * @author Feick Martin
  * 
@@ -41,7 +41,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	/**
-	 * Klasse zum loeschen einer Karte
+	 * Methode zum Loeschen einer Karte
 	 * 
 	 * @param flashcard
 	 *            - object
@@ -58,7 +58,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	/**
-	 * Klasse zum speichern einer Karte
+	 * Methode zum Speichern einer Karte
 	 * 
 	 * @param flashcard
 	 *            - object
@@ -70,18 +70,14 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
 		
-		System.out.println(paramSource.getValue("Card_Picture_Link"));
-		
 		jdbc.update(insert, paramSource);
 	}
 
 	/**
-	 * Hilfsklasse zum speichern einer Karte
+	 * Hilfsmethode zum Speichern einer Karte
 	 * 
 	 * @param flashcard
 	 *            - object
-	 * @param check
-	 *            - integer zum zuordnen der aufrufenden Funktion
 	 */
 	private MapSqlParameterSource getFlashCardParameterSource(FlashCard flashcard) {
 
@@ -103,7 +99,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	/**
-	 * Klasse zum "aktualisieren" einer Karte
+	 * Methode zum Aktualisieren einer Karte
 	 * 
 	 * @param flashcard
 	 *            - object
@@ -112,7 +108,8 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	public void updateCard(FlashCard flashcard) {
 
 		String query = "UPDATE Cards SET Card_Name = :Card_Name, Card_Question = :Card_Question, Card_Answer = :Card_Answer, "
-				+ "Card_Picture_Link = :Card_Picture_Link, Card_Box_Counter = :Card_Box_Counter WHERE Card_Id = :Card_Id";
+				+ "Card_Picture_Link = :Card_Picture_Link, Card_Box_Counter = :Card_Box_Counter, Card_Asked = :Card_Asked, "
+				+ "Card_AnswerCorrect = :Card_AnswerCorrect WHERE Card_Id = :Card_Id";
 
 		MapSqlParameterSource paramSource = getFlashCardParameterSource(flashcard);
 	
@@ -120,7 +117,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 	
 	/**
-	 * Klasse zum "aktualisieren" einer Karte
+	 * Methode zum Zuruecksetzen des BoxCounters
 	 * 
 	 * @param flashcard
 	 *            - object
@@ -137,9 +134,56 @@ public class FlashCardDaoImpl implements FlashCardDao {
 
 		jdbc.update(query, paramSource);
 	}
+	
+	/**
+	 * Methode zum Abfragen, wie oft eine Karte abgefragt wurde.
+	 * 
+	 * @param flashcard
+	 *            - object
+	 */
+	@Override
+	public int getAskedCount(Stack stack) {
+		String query = "SELECT SUM(Card_Asked) FROM Cards WHERE Card_Stack_Id = :Card_Stack_Id";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Card_Stack_Id", stack.getStackId());
+
+		return jdbc.queryForObject(query, paramSource, Integer.class);
+	}
 
 	/**
-	 * Klasse die alle Karten ausgibt
+	 * Methode zum Abfragen, wie oft eine Karte richtig beantwortet wurde.
+	 * 
+	 * @param flashcard
+	 *            - object
+	 */
+	@Override
+	public int getAnswerCorrectCount(Stack stack) {
+		String query = "SELECT SUM(Card_AnswerCorrect) FROM Cards WHERE Card_Stack_Id = :Card_Stack_Id";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Card_Stack_Id", stack.getStackId());
+
+		return jdbc.queryForObject(query, paramSource, Integer.class);
+	}
+	
+	/**
+	 * Methode um die Anzahl der Karten eines Stacks je Box abzufragen
+	 * 
+	 * @param flashcard
+	 *            - object
+	 */
+	@Override
+	public int getNrCardsInBox(Stack stack, int box) {
+		String query = "SELECT COUNT(*) FROM Cards WHERE Card_Stack_Id = :Card_Stack_Id "
+				+ "AND Card_Box_Counter = :Card_Box_Counter";
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		paramSource.addValue("Card_Stack_Id", stack.getStackId());
+		paramSource.addValue("Card_Box_Counter", box);
+
+		return jdbc.queryForObject(query, paramSource, Integer.class);
+	}
+
+	/**
+	 * Gibt alle Karten zurueck.
 	 * 
 	 * @return Liste mit allen Karten die zur Zeit in der DB vorhanden sind
 	 */
@@ -151,6 +195,11 @@ public class FlashCardDaoImpl implements FlashCardDao {
 		return jdbc.query(query, new FlashCardRowMapper());
 	}
 	
+	/**
+	 * Gibt alle Karten eines Stacks zurueck.
+	 * 
+	 * @return Liste mit allen Karten eines Stacks
+	 */
 	@Override
 	public List<FlashCard> getFlashCards(int stackId) {
 		String query = "SELECT * FROM Cards WHERE Card_Stack_Id = :Card_Stack_Id;";
@@ -162,7 +211,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	/**
-	 * Klasse die den Karten aus einer bestimmen box zur�ck gibt
+	 * Methode die den Karten aus einer bestimmen Box zurueck gibt
 	 * 
 	 * @param box
 	 *            - angabe der Box in der sich die Karte befindet
@@ -182,7 +231,7 @@ public class FlashCardDaoImpl implements FlashCardDao {
 	}
 
 	/**
-	 * Klasse die den Karte zu einer bestimmten ID zur�ck gibt
+	 * Methode, die die Karte zu einer bestimmten ID zurueck gibt
 	 * 
 	 * @param cardId
 	 * @return flashcard - object

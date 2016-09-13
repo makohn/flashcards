@@ -18,7 +18,7 @@ import de.htwsaar.flashcards.dao.interfaces.StackDao;
 import de.htwsaar.flashcards.model.Stack;
 
 /**
- * Die StackDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe Hierf�r
+ * Die StackDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe Hierfuer
  * wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
  * 
  * @author Feick Martin
@@ -40,7 +40,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	/**
-	 * Klasse zum loeschen eines Stacks
+	 * Methode zum loeschen eines Stacks
 	 * 
 	 * @param stack
 	 *            - object
@@ -57,7 +57,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	/**
-	 * Klasse zum speichern eines neuen Stacks
+	 * Methode zum Speichern eines neuen Stacks
 	 * 
 	 * @param stack
 	 *            - object
@@ -74,7 +74,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	/**
-	 * Klasse zum "aktualisieren" eines Stacks
+	 * Methode zum Aktualisieren eines Stacks
 	 * 
 	 * @param stack
 	 *            - object
@@ -82,7 +82,24 @@ public class StackDaoImpl implements StackDao {
 	@Override
 	public void updateStack(Stack stack) {
 
-		String query = "INSERT or replace INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate) "
+		String query = "INSERT OR REPLACE INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate) "
+				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate)";
+
+		MapSqlParameterSource paramSource = getStackParameterSource(stack, 1);
+
+		jdbc.update(query, paramSource);
+	}
+	
+	/**
+	 * Methode zum Hinzufuegen eines Stacks
+	 * 
+	 * @param stack
+	 *            - object
+	 */
+	@Override
+	public void addStack(Stack stack) {
+
+		String query = "INSERT OR IGNORE INTO Stacks (Stack_Id, Stack_Name, Stack_Typ, Stack_Subject, Stack_CreationDate, Stack_LastEditDate) "
 				+ "VALUES (:Stack_Id, :Stack_Name, :Stack_Typ, :Stack_Subject, :Stack_CreationDate, :Stack_LastEditDate)";
 
 		MapSqlParameterSource paramSource = getStackParameterSource(stack, 1);
@@ -91,7 +108,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	/**
-	 * Hilfklasse zum speichern eines neuen Stacks
+	 * Hilfsmethode zum Speichern eines neuen Stacks
 	 * 
 	 * @param stack
 	 *            - object
@@ -115,7 +132,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	/**
-	 * Klasse die alle Stacks ausgibt
+	 * Methode, die alle Stacks ausgibt
 	 * 
 	 * @return Liste mit allen Stacks die zur Zeit in der DB vorhanden sind
 	 */
@@ -128,7 +145,7 @@ public class StackDaoImpl implements StackDao {
 	}
 
 	/**
-	 * Klasse die den Stack zu einer bestimmten ID ausgibt
+	 * Methode, die den Stack zu einer bestimmten ID ausgibt
 	 * 
 	 * @param stackId
 	 * @return stack - object welches gesucht wurde

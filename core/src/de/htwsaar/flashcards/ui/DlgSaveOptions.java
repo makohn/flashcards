@@ -19,10 +19,19 @@ import javax.swing.JTextField;
 
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.GameOptionService;
+import de.htwsaar.flashcards.service.GameOptionServiceImpl;
+import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 
+/**
+ * <code>DlgSaveOptions</code> - Kleiner Dialog zum Speichern von Spieloptionen
+ * in der Datenbank. Der Option kann hierbei ein Name sowie eine Beschreibung gegeben
+ * werden.
+ * 
+ * @author mkohn
+ * @see FrmGameOptions, DlgGameOptions
+ */
 public class DlgSaveOptions extends JDialog {
 	
 	private static final long serialVersionUID = 5825052235347813043L;
@@ -46,7 +55,7 @@ public class DlgSaveOptions extends JDialog {
 		super(owner, modal);
 		self = this;
 		this.option = option;
-		optionService = new GameOptionService();
+		optionService = new GameOptionServiceImpl();
 		initNameArea();
 		initDescArea();
 		initConfirmArea();
@@ -76,8 +85,8 @@ public class DlgSaveOptions extends JDialog {
 	private void initConfirmArea() {
 		pnlConfirm = new JPanel(new GridLayout(1, 2,10,10));
 		pnlConfirm.setOpaque(false);
-		btnOk = ButtonFactory.createColouredButton(Messages.getString("save"), ButtonFactory.BTN_GREEN);
-		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_RED);
+		btnOk = FlashCardButtonFactory.createColouredButton(Messages.getString("save"), FlashCardButtonFactory.BTN_GREEN);
+		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(30,50,30,50));

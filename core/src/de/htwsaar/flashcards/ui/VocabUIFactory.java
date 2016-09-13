@@ -18,10 +18,18 @@ import javax.swing.SwingConstants;
 
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
 import de.htwsaar.flashcards.util.Handler;
 
+/**
+ * <code>VocabUIFactory</code> - Konkrete Fabrikimplementierung des Interfaces 
+ * <code>StudyTypeUIFactory</code>. Erzeugt die Komponenten so, dass eine Evaluierung
+ * mittels ActionListener erfolgen kann. Statt TextAreas werden hier TextFields fuer die
+ * Darstellung der Frage/Antwort Bereiche gewaehlt.
+ * 
+ * @author mkohn, Marco Becker
+ */
 public class VocabUIFactory implements StudyTypeUIFactory {
 
 	private static final Insets[] INSETS_INFO = {new Insets(0, 10, 0, 60), new Insets(0, 15, 0, 0), 
@@ -64,7 +72,7 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 		
 		JPanel pnlShow = new JPanel(new CardLayout());
 		pnlShow.setOpaque(false);
-		btnShowAnswer = ButtonFactory.createColouredButton(Messages.getString("answer"), new Color(0, 163, 204));
+		btnShowAnswer = FlashCardButtonFactory.createColouredButton(Messages.getString("answer"), new Color(0, 163, 204));
 		pnlShow.add(btnShowAnswer);
 		txtShowAnswer = new JTextField();
 		txtShowAnswer.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -80,7 +88,7 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 	public JPanel createEvaluationPanel() {
 		JPanel pnlEval = new JPanel();
 		pnlEval.setOpaque(false);
-		btnNextQuestion = ButtonFactory.createColouredButton(Messages.getString("next"), new Color(0, 163, 204));
+		btnNextQuestion = FlashCardButtonFactory.createColouredButton(Messages.getString("next"), new Color(0, 163, 204));
 		btnNextQuestion.setEnabled(false);
 		pnlEval.add(btnNextQuestion);
 		return pnlEval;

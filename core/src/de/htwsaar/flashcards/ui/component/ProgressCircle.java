@@ -17,6 +17,12 @@ import javax.swing.Timer;
 
 import de.htwsaar.flashcards.properties.Messages;
 
+/**
+ * <code>JSwitchBox</code> - eine visuelle Darstellung eines Timers. Besteht aus einem
+ * sich fuellenden Kreis und einer textuellen Anzeige der verbleibenden Zeit.
+ * @author mkohn
+ *
+ */
 public class ProgressCircle extends JPanel {
    
 	private static final long serialVersionUID = 7588646195596150575L;
@@ -42,6 +48,9 @@ public class ProgressCircle extends JPanel {
           timer = new Timer(DELAY, new MyChangeListener());
     }
     
+    /*
+     * Zugriffsschnittstelle fuer Signale von aussen.
+     */
     public void setHandler(Callable<Void> handler) {
     	this.handler = handler;
     }
@@ -70,6 +79,9 @@ public class ProgressCircle extends JPanel {
     	timer.stop();
     }
 
+   /*
+    * Erzeugt die Animation.
+    */
    class MyChangeListener implements ActionListener {
        @Override
        public void actionPerformed(ActionEvent arg0) {

@@ -20,9 +20,10 @@ import javax.swing.JTextField;
 
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.service.StackService;
+import de.htwsaar.flashcards.service.StackServiceImpl;
+import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
-import de.htwsaar.flashcards.util.ButtonFactory;
+import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 
 public class DlgCreateStack extends JDialog {
 	
@@ -45,7 +46,7 @@ public class DlgCreateStack extends JDialog {
 	public DlgCreateStack(Frame owner, boolean modal) {
 		super(owner, modal);
 		self = this;
-		stackService = new StackService();
+		stackService = new StackServiceImpl();
 		initNameArea();
 		initConfirmArea();
 		initListeners();
@@ -93,8 +94,8 @@ public class DlgCreateStack extends JDialog {
 	private void initConfirmArea() {
 		pnlConfirm = new JPanel(new GridLayout(1, 2,10,10));
 		pnlConfirm.setOpaque(false);
-		btnOk = ButtonFactory.createColouredButton(Messages.getString("ok"), ButtonFactory.BTN_GREEN);
-		btnCancel = ButtonFactory.createColouredButton(Messages.getString("cancel"), ButtonFactory.BTN_RED);
+		btnOk = FlashCardButtonFactory.createColouredButton(Messages.getString("ok"), FlashCardButtonFactory.BTN_GREEN);
+		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
 		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(10,40,10,40));
