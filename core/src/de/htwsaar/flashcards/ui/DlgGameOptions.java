@@ -1,13 +1,11 @@
 package de.htwsaar.flashcards.ui;
 
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,6 +15,7 @@ import javax.swing.JPanel;
 
 import de.htwsaar.flashcards.model.GameOption;
 import de.htwsaar.flashcards.model.Stack;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.GameOptionServiceImpl;
 import de.htwsaar.flashcards.service.StudyServiceImpl;
@@ -74,7 +73,7 @@ public class DlgGameOptions extends JDialog {
 		btnGameOption[3][OPTION].addActionListener(new OptionButtonPressedListener(options[3]));
 
 		for (JButton[] button : btnGameOption) {
-			button[OPTION].setPreferredSize(new Dimension(280,65));
+			button[OPTION].setPreferredSize(Dimensions.getDimension("goptions.dim_button"));
 			button[EDIT] = FlashCardButtonFactory.createImageButton(ICN_EDIT);
 			button[EDIT].addActionListener(new ActionListener() {
 				@Override
@@ -104,10 +103,10 @@ public class DlgGameOptions extends JDialog {
 			gc.gridy++;
 		}
 		
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+		mainPanel.setBorder(Dimensions.getBorder("goptions.border_main"));
 		add(mainPanel);
 		setTitle(Messages.getString("options")); 
-		setSize(500, 400);
+		setSize(Dimensions.getDimension("goptions.dim_frame"));
 		setResizable(false);
 		setLocationRelativeTo(getOwner());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

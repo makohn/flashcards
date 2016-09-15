@@ -16,11 +16,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
 import de.htwsaar.flashcards.util.Handler;
-import de.htwsaar.flashcards.util.size.VocabUIFactorySizes;
 
 /**
  * <code>VocabUIFactory</code> - Konkrete Fabrikimplementierung des Interfaces 
@@ -47,10 +47,10 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 		pnlFlashcard.setOpaque(false);
 		pnlFlashcard.setBorder(FlashCardConstants.OUTER_CARD_BORDER);
 		txtVocab = new JTextField();
-		txtVocab.setFont(VocabUIFactorySizes.FONT_VOCAB);
+		txtVocab.setFont(Dimensions.getFont("vocab.font_vocab"));
 		txtVocab.setEditable(false);
 		txtVocab.setFocusable(false);
-		txtVocab.setPreferredSize(VocabUIFactorySizes.DIM_VOCAB_FIELD);
+		txtVocab.setPreferredSize(Dimensions.getDimension("vocab.dim_vocab_field"));
 		txtVocab.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlFlashcard.add(txtVocab);
 		return pnlFlashcard;
@@ -62,8 +62,8 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 		pnlAnswer.setOpaque(false);
 		pnlAnswer.setBorder(FlashCardConstants.OUTER_CARD_BORDER);
 		txtAnswer = new JTextField();
-		txtAnswer.setFont(VocabUIFactorySizes.FONT_VOCAB);
-		txtAnswer.setPreferredSize(VocabUIFactorySizes.DIM_VOCAB_FIELD);
+		txtAnswer.setFont(Dimensions.getFont("vocab.font_vocab"));
+		txtAnswer.setPreferredSize(Dimensions.getDimension("vocab.dim_vocab_field"));
 		txtAnswer.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlAnswer.add(txtAnswer);
 		
@@ -72,11 +72,11 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 		btnShowAnswer = FlashCardButtonFactory.createColouredButton(Messages.getString("answer"), new Color(0, 163, 204));
 		pnlShow.add(btnShowAnswer);
 		txtShowAnswer = new JTextField();
-		txtShowAnswer.setFont(VocabUIFactorySizes.FONT_VOCAB);
+		txtShowAnswer.setFont(Dimensions.getFont("vocab.font_vocab"));
 		txtShowAnswer.setHorizontalAlignment(SwingConstants.CENTER);
-		txtShowAnswer.setPreferredSize(VocabUIFactorySizes.DIM_VOCAB_FIELD);
+		txtShowAnswer.setPreferredSize(Dimensions.getDimension("vocab.dim_vocab_field"));
 		pnlShow.add(txtShowAnswer);
-		pnlAnswer.setMaximumSize(VocabUIFactorySizes.DIM_PNL_ANS_MAX);
+		pnlAnswer.setMaximumSize(Dimensions.getDimension("vocab.dim_answ_panel"));
 		pnlAnswer.add(pnlShow);
 		return pnlAnswer;
 	}
@@ -149,12 +149,15 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 	
 	@Override
 	public Dimension getFrameSize() {
-		return VocabUIFactorySizes.DIM_FRAME;
+		return Dimensions.getDimension("vocab.dim_frame");
 	}
 
 	@Override
 	public Insets[] getSpacing() {
-		return VocabUIFactorySizes.INSETS_INFO;
+		return new Insets[] { Dimensions.getInsets("vocab.insets_info_1"),
+							  Dimensions.getInsets("vocab.insets_info_2"),
+							  Dimensions.getInsets("vocab.insets_info_3")
+		};
 	}
 
 }

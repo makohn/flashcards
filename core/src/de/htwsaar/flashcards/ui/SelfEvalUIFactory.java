@@ -15,12 +15,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
 import de.htwsaar.flashcards.util.FlashCardUtils;
 import de.htwsaar.flashcards.util.Handler;
-import de.htwsaar.flashcards.util.size.SelfEvalUIFactorySizes;
 
 /**
  * <code>SelfEvalUIFactory</code> - Konkrete Fabrikimplementierung des Interfaces 
@@ -84,13 +84,13 @@ public class SelfEvalUIFactory implements StudyTypeUIFactory {
 		btnCorrect.setEnabled(false);
 		cos.gridx = 0;
 		cos.gridy = 2;
-		cos.insets = SelfEvalUIFactorySizes.INSETS_EVAL_PANEL_R;
+		cos.insets = new Insets(0, 0, 0, 100) ;
 		pnlEval.add(btnCorrect, cos);
 		btnInCorrect = FlashCardButtonFactory.createImageButton(ICN_INCORRECT);
 		btnInCorrect.setEnabled(false);
 		cos.gridx = 2;
 		cos.gridy = 2;
-		cos.insets = SelfEvalUIFactorySizes.INSETS_EVAL_PANEL_L;
+		cos.insets = new Insets(0, 100, 0, 0);
 		pnlEval.add(btnInCorrect, cos);
 		return pnlEval;
 	}
@@ -146,12 +146,14 @@ public class SelfEvalUIFactory implements StudyTypeUIFactory {
 
 	@Override
 	public Dimension getFrameSize() {
-		return SelfEvalUIFactorySizes.DIM_FRAME;
+		return Dimensions.getDimension("selfeval.dim_frame");
 	}
 
 	@Override
 	public Insets[] getSpacing() {
-		return SelfEvalUIFactorySizes.INSETS_INFO;
+		return new Insets[] {Dimensions.getInsets("selfeval.insets_info_1"),
+							 Dimensions.getInsets("selfeval.insets_info_2"),
+							 Dimensions.getInsets("selfeval.insets_info_3")};
 	}
 	
 

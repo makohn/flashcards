@@ -21,6 +21,8 @@ import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+import de.htwsaar.flashcards.properties.Dimensions;
+
 /**
  * <code>FlashCardButtonFactory</code> Fabrik fuer die Erzeugung von verschiedenen JButtons
  * im optischen Stil des <code>flashcards</code> Projektes. Enthaelt:
@@ -43,7 +45,7 @@ public class FlashCardButtonFactory {
 	public final static Color BTN_GREEN = new Color(0, 153, 0);
 	public final static Color BTN_PURPLE = new Color(153, 51, 153);
 	
-	public final static Font  DEFAULT_FONT = new Font("Tahoma", Font.BOLD, 14);
+	public final static Font  DEFAULT_FONT = Dimensions.getFont("default.font_button");
 	
 	private static void setColour(Color color, AbstractButton btn) {
 		btn.setFont(DEFAULT_FONT);

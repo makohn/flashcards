@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
-import de.htwsaar.flashcards.util.size.Sizes;
 
 /**
  * <code>JProgressCircle</code> - eine visuelle Darstellung eines Timers. Besteht aus einem
@@ -40,7 +40,7 @@ public class ProgressCircle extends JPanel {
     	  this.maxProgress = seconds*20;
     	  this.lblTime = new JLabel(seconds == 0 ? Messages.getString("infinity") : ""+seconds);
     	  lblTime.setHorizontalAlignment(SwingUtilities.CENTER);
-    	  lblTime.setFont(Sizes.FONT_COUNTER);
+    	  lblTime.setFont(Dimensions.getFont("circle.font_counter"));
     	  super.setLayout(new BorderLayout());
     	  super.setOpaque(false);
     	  super.add(lblTime);

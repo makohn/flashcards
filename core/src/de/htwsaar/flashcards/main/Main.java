@@ -2,7 +2,6 @@ package de.htwsaar.flashcards.main;
 
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 
@@ -13,6 +12,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.ui.FrmSelectStack;
 
  /** 
@@ -48,7 +48,7 @@ public class Main {
 		try {
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
 			UIManager.getLookAndFeelDefaults()
-	        .put("defaultFont", new Font("Tahoma", Font.PLAIN, 14));
+	        .put("defaultFont", Dimensions.getFont("default.font"));
 			 UIManager.getLookAndFeelDefaults()
 			 .put("nimbusOrange", (new Color(0, 163, 204)));
 			 UIManager.getLookAndFeelDefaults()

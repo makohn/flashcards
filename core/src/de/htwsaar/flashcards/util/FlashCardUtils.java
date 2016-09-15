@@ -6,7 +6,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 
-import de.htwsaar.flashcards.util.size.Sizes;
+import de.htwsaar.flashcards.properties.Dimensions;
 
 /**
  * Hilfsklasse fuer das <code>flashcards</code> Projekt.
@@ -33,7 +33,7 @@ public class FlashCardUtils {
         txtArea.setLineWrap(true);
         txtArea.setWrapStyleWord(true);
         txtArea.setEditable(editable);
-        txtArea.setFont(Sizes.FONT_CARD);
+        txtArea.setFont(Dimensions.getFont("default.font_card"));
         return txtArea;
 	}
 	

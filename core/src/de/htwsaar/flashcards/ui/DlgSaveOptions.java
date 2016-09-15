@@ -17,12 +17,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.htwsaar.flashcards.model.GameOption;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.GameOptionServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
-import de.htwsaar.flashcards.util.size.DlgSaveOptionsSizes;
 
 /**
  * <code>DlgSaveOptions</code> - Kleiner Dialog zum Speichern von Spieloptionen
@@ -68,7 +68,7 @@ public class DlgSaveOptions extends JDialog {
 		txtName = new JTextField(option.getName());
 		pnlName.add(txtName);
 		pnlName.setBorder(BorderFactory.createTitledBorder(Messages.getString("name")));
-		pnlName.setMaximumSize(DlgSaveOptionsSizes.DIM_NAME_AREA_MAX);
+		pnlName.setMaximumSize(Dimensions.getDimension("saveop.dim_name_area"));
 	}
 	
 	private void initDescArea() {
@@ -79,7 +79,7 @@ public class DlgSaveOptions extends JDialog {
 		txtDesc.setWrapStyleWord(true);
 		pnlDesc.add(txtDesc);
 		pnlDesc.setBorder(BorderFactory.createTitledBorder(Messages.getString("description")));
-		pnlDesc.setMaximumSize(DlgSaveOptionsSizes.DIM_DESC_AREA_MAX);
+		pnlDesc.setMaximumSize(Dimensions.getDimension("saveop.dim_desc_area"));
 	}
 	
 	private void initConfirmArea() {
@@ -89,8 +89,8 @@ public class DlgSaveOptions extends JDialog {
 		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
-		pnlConfirm.setBorder(DlgSaveOptionsSizes.BORDER_CONFIRM_AREA);
-		pnlConfirm.setMaximumSize(DlgSaveOptionsSizes.DIM_CONFIRM_AREA_MAX);
+		pnlConfirm.setBorder(Dimensions.getBorder("saveop.border_confirm"));
+		pnlConfirm.setMaximumSize(Dimensions.getDimension("saveop.dim_confirm"));
 		
 		btnOk.addActionListener(new ActionListener() {
 			@Override
@@ -115,17 +115,17 @@ public class DlgSaveOptions extends JDialog {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		JPanel pnlCaption = new JPanel();
 		pnlCaption.setOpaque(false);
-		pnlCaption.setMaximumSize(DlgSaveOptionsSizes.DIM_CAPTION_MAX);
+		pnlCaption.setMaximumSize(Dimensions.getDimension("saveop.dim_caption"));
 		JLabel lblCaption = new JLabel(Messages.getString("save_config"));
 		pnlCaption.add(lblCaption);
 		mainPanel.add(pnlCaption);
 		mainPanel.add(pnlName);
 		mainPanel.add(pnlDesc);
 		mainPanel.add(pnlConfirm);
-		mainPanel.setBorder(DlgSaveOptionsSizes.BORDER_MAIN);
+		mainPanel.setBorder(Dimensions.getBorder("saveop.border_main"));
 		add(mainPanel);
 		setTitle(Messages.getString("options")); 
-		setSize(430, 340);
+		setSize(Dimensions.getDimension("saveop.dim_frame"));
 		setResizable(false);
 		setLocationRelativeTo(getOwner());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

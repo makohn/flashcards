@@ -20,13 +20,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import de.htwsaar.flashcards.model.Stack;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.FlashCardServiceImpl;
 import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
-import de.htwsaar.flashcards.util.size.DlgSettingsSizes;
 
 /**
  * <code>DlgSettings</code> - Dialog fuer die Uebersicht und Abaenderung von
@@ -174,7 +174,7 @@ public class DlgSettings extends JDialog {
 		mainPanel.add(pnlReset);
 		add(mainPanel);
 		setTitle(Messages.getString("study"));
-		setSize(DlgSettingsSizes.DIM_FRAME);
+		setSize(Dimensions.getDimension("settings.dim_frame"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(getOwner());
 		setVisible(true);

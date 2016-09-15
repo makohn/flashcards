@@ -14,6 +14,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractButton;
 import javax.swing.DefaultButtonModel;
 
+import de.htwsaar.flashcards.properties.Dimensions;
+
 /**
  * <code>JSwitchBox</code> imitiert einen einfachen ON/OFF Switch in Java SWT.
  * ------------------------
@@ -36,7 +38,7 @@ public class JSwitchBox extends AbstractButton {
     private Color light = new Color(220,220,220,100);
     private Color red = new Color(179, 0, 0);
     private Color green = new Color(0, 153, 0);
-    private Font font = new Font("Tahoma", Font.BOLD, 14);
+    private Font font = Dimensions.getFont("default.font_button");
     private int gap = 5;
     private int globalWitdh = 0;
     private final String trueLabel;

@@ -23,12 +23,12 @@ import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.htwsaar.flashcards.model.FlashCard;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.interfaces.EditFlashCardService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardUtils;
-import de.htwsaar.flashcards.util.size.FrmEditStackSizes;
 
 /**
  * <code>FrmEditStack</code> - Dient der Bearbeitung von Karteikarten eines ausgewaehlten
@@ -105,7 +105,7 @@ public class FrmEditStack {
 		txtCardName = new JTextField();
 		txtCardName.setBorder(BorderFactory.createEmptyBorder());
 		txtCardName.setOpaque(false);
-		txtCardName.setPreferredSize(FrmEditStackSizes.DIM_TXT_CARD_NAME);
+		txtCardName.setPreferredSize(Dimensions.getDimension("edit.dim_card_name"));
 		txtCardName.setHorizontalAlignment(JTextField.CENTER);
 		btnCardForward = FlashCardButtonFactory.createImageButton(ICN_ARROW_RIGHT);
 		btnCardBackward = FlashCardButtonFactory.createImageButton(ICN_ARROW_LEFT);
@@ -115,18 +115,18 @@ public class FrmEditStack {
 		pnlNavigation.setOpaque(false);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = gc.gridy = 0;
-		gc.insets = FrmEditStackSizes.INSETS_NAVI_LEFT;
+		gc.insets = Dimensions.getInsets("edit.insets_navi_left");
 		pnlNavigation.add(btnCardBackward,gc);
 		gc.gridx++;
-		gc.insets = FrmEditStackSizes.INSETS_NAVI_CENTER;
+		gc.insets = Dimensions.getInsets("edit.insets_navi_center");
 		pnlNavigation.add(txtCardName,gc);
 		gc.gridx++;
-		gc.insets = FrmEditStackSizes.INSETS_NAVI_CENTER;
+		gc.insets = Dimensions.getInsets("edit.insets_navi_center");
 		pnlNavigation.add(btnCardForward,gc);
 		gc.gridx++;
-		gc.insets = FrmEditStackSizes.INSETS_NAVI_RIGHT;
+		gc.insets = Dimensions.getInsets("edit.insets_navi_right");
 		pnlNavigation.add(btnAddCard,gc);
-		pnlNavigation.setMaximumSize(FrmEditStackSizes.DIM_NAVI_MAX);
+		pnlNavigation.setMaximumSize(Dimensions.getDimension("edit.dim_navi_max"));
 	}
 	
 	private void initQuestionArea() {
@@ -186,8 +186,8 @@ public class FrmEditStack {
 		pnlSaveDelete.add(btnDeleteCurrentCard);
 		pnlSaveDelete.add(btnCancel);
 		
-		pnlSaveDelete.setBorder(FrmEditStackSizes.BORDER_SAVE_DELETE);
-		pnlSaveDelete.setMaximumSize(FrmEditStackSizes.DIM_SAVE_DELETE_MAX);
+		pnlSaveDelete.setBorder(Dimensions.getBorder("edit.border_save_delete"));
+		pnlSaveDelete.setMaximumSize(Dimensions.getDimension("edit.dim_save_delete"));
 	}
 	
 	private void initFrame() {
@@ -198,7 +198,7 @@ public class FrmEditStack {
 		mainPanel.add(pnlAnswer);
 		mainPanel.add(pnlSaveDelete);
 		editStackWindow.add(mainPanel);
-		editStackWindow.setMinimumSize(FrmEditStackSizes.DIM_FRAME);
+		editStackWindow.setMinimumSize(Dimensions.getDimension("edit.dim_frame"));
 		editStackWindow.setResizable(false);
 		editStackWindow.setTitle(FRAME_TITLE);
 		editStackWindow.setLocationRelativeTo(null);

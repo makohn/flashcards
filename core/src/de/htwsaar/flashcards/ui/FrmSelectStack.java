@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,7 @@ import javax.swing.UIManager;
 
 import de.htwsaar.flashcards.model.FlashCard;
 import de.htwsaar.flashcards.model.Stack;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.EditFlashCardServiceImpl;
 import de.htwsaar.flashcards.service.FlashCardServiceImpl;
@@ -36,7 +38,6 @@ import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.listeners.ExportFileListener;
 import de.htwsaar.flashcards.ui.tableModels.FlashCardsTableModel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
-import de.htwsaar.flashcards.util.size.FrmSelectStackSizes;
 
 /**
  * <code>FrmSelectStack</code> - Frame zum Auswaehlen eines Stacks. Zeigt eine
@@ -107,10 +108,10 @@ public class FrmSelectStack {
 		List<FlashCard> flashcards = cardService.getFlashCards(getSelectedStack().getStackId());
 		tableModel = new FlashCardsTableModel(flashcards);
 		tblStacksPreview.setModel(tableModel);
-		tblStacksPreview.setRowHeight(FrmSelectStackSizes.TABLE_ROW_HEIGHT);
+		tblStacksPreview.setRowHeight(Dimensions.getInteger("select.height_table_row"));
 		tblStacksPreview.setFillsViewportHeight(true);
 		scrlPreview = new JScrollPane(tblStacksPreview);
-		scrlPreview.setMinimumSize(FrmSelectStackSizes.DIM_PREVIEW_AREA_MIN);
+		scrlPreview.setMinimumSize(Dimensions.getDimension("select.dim_preview"));
 		scrlPreview.setBackground(new Color(230, 230, 230));
 	}
 	
@@ -129,7 +130,7 @@ public class FrmSelectStack {
 		pnlButtons.add(btnExport);
 		pnlButtons.add(btnDelete);
 		
-		pnlButtons.setBorder(FrmSelectStackSizes.BORDER_PNL_BUTTONS);
+		pnlButtons.setBorder(Dimensions.getBorder("select.border_button_panel"));
 	}
 
 	private void initFrame() {
@@ -142,19 +143,19 @@ public class FrmSelectStack {
 		//-------------------------------------
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = FrmSelectStackSizes.INSETS_MARGIN_TOPLEFT;
+		c.insets = Dimensions.getInsets("select.insets_margin_topleft");
 		mainPanel.add(new JLabel(Messages.getString("choose_a_stack")), c);
 		//-------------------------------------
-		c.insets = FrmSelectStackSizes.INSETS_RESET;
+		c.insets = new Insets(0,0,0,0);
 		c.gridx = 1;
 		mainPanel.add(pnlSelection, c);
 		//-------------------------------------
-		c.insets = FrmSelectStackSizes.INSETS_MARGIN_LEFT;
+		c.insets = Dimensions.getInsets("select.insets_margin_left");;
 		c.gridx = 0;
 		c.gridy = 1;
 		mainPanel.add(new JLabel(Messages.getString("preview")), c);
 		//-------------------------------------
-		c.insets = FrmSelectStackSizes.INSETS_RESET;
+		c.insets = new Insets(0,0,0,0);
 		c.gridx = 1;
 		c.gridy = 1;
 		mainPanel.add(scrlPreview,c);
@@ -165,7 +166,7 @@ public class FrmSelectStack {
 		//-------------------------------------
 		
 		selectStackFrame.add(mainPanel);
-		selectStackFrame.setMinimumSize(FrmSelectStackSizes.DIM_FRAME);
+		selectStackFrame.setMinimumSize(Dimensions.getDimension("select.dim_frame"));
 		selectStackFrame.setJMenuBar(MenuBar.createMenuBar(selectStackFrame, () -> update()));
 		selectStackFrame.setLocationRelativeTo(null);
 		selectStackFrame.setVisible(true);

@@ -18,12 +18,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.htwsaar.flashcards.model.Stack;
+import de.htwsaar.flashcards.properties.Dimensions;
 import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
-import de.htwsaar.flashcards.util.size.DlgCreateStackSizes;
 
 public class DlgCreateStack extends JDialog {
 	
@@ -57,7 +57,7 @@ public class DlgCreateStack extends JDialog {
 		mainPanel.add(pnlConfirm);
 		add(mainPanel);
 		setTitle(Messages.getString("edit_stack")); 
-		setSize(DlgCreateStackSizes.DIM_FRAME);
+		setSize(Dimensions.getDimension("create.dim_frame"));
 		setResizable(false);
 		setLocationRelativeTo(getOwner());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,14 +70,14 @@ public class DlgCreateStack extends JDialog {
 		pnlStackName.setOpaque(false);
 		
 		txtStackName = new JTextField();
-		txtStackName.setPreferredSize(DlgCreateStackSizes.DIM_STACK_NAME);
+		txtStackName.setPreferredSize(Dimensions.getDimension("create.dim_stack_name"));
 		cmbStackType = new JComboBox<String>(STACK_TYPE);
 		txtStackSubject = new JTextArea();
 		txtStackSubject.setLineWrap(true);
 		txtStackSubject.setWrapStyleWord(true);
-		txtStackSubject.setPreferredSize(DlgCreateStackSizes.DIM_STACK_SUBJECT);
+		txtStackSubject.setPreferredSize(Dimensions.getDimension("create.dim_stack_subject"));
 		JLabel lblName = new JLabel(Messages.getString("name"));
-		lblName.setPreferredSize(DlgCreateStackSizes.DIM_LBL_NAME);
+		lblName.setPreferredSize(Dimensions.getDimension("create.dim_label_name"));
 		pnlStackName.add(lblName);
 		pnlStackName.add(txtStackName);
 		JLabel lblSubject = new JLabel(Messages.getString("subject"));
@@ -98,8 +98,8 @@ public class DlgCreateStack extends JDialog {
 		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
-		pnlConfirm.setBorder(DlgCreateStackSizes.BORDER_CONIRM_AREA);
-		pnlConfirm.setMaximumSize(DlgCreateStackSizes.DIM_CONFIRM_AREA);
+		pnlConfirm.setBorder(Dimensions.getBorder("create.border_confirm"));
+		pnlConfirm.setMaximumSize(Dimensions.getDimension("create.dim_confirm"));
 	}
 	
 	private void initListeners() {
