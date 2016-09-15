@@ -20,6 +20,7 @@ import de.htwsaar.flashcards.dao.FlashCardDaoImpl;
 import de.htwsaar.flashcards.dao.interfaces.FlashCardDao;
 import de.htwsaar.flashcards.model.Stack;
 import de.htwsaar.flashcards.properties.Dimensions;
+import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.service.FlashCardServiceImpl;
 import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.FlashCardService;
@@ -74,7 +75,7 @@ public class DlgStatistic extends JDialog {
 		pnlStackSelect.setLayout(new BoxLayout(pnlStackSelect, BoxLayout.PAGE_AXIS));
 		pnlStackSelect.setOpaque(false);
 		cmbStackSelect = new JComboBox<Stack>(stackService.getStackArray());
-		pieChart = PieChartFactory.createPieChart(new String[] {"Richtig","Falsch"},
+		pieChart = PieChartFactory.createPieChart(new String[] {Messages.getString("right"), Messages.getString("false")},
 				new double[] {80, 20},
 				new Color[] {new Color(135, 180, 0),new Color(138, 30, 0)},
 				Dimensions.getInteger("stats.size_pie_chart"));
@@ -100,7 +101,7 @@ public class DlgStatistic extends JDialog {
 		pnlStack2Select.setLayout(new BoxLayout(pnlStack2Select, BoxLayout.PAGE_AXIS));
 		pnlStack2Select.setOpaque(false);
 		cmbStack2Select = new JComboBox<Stack>(stackService.getStackArray());
-		pieChart2 = PieChartFactory.createPieChart(new String[] {"Richtig","Falsch"},
+		pieChart2 = PieChartFactory.createPieChart(new String[] {Messages.getString("right"), Messages.getString("false")},
 				new double[] {80, 20},
 				new Color[] {new Color(135, 180, 0),new Color(138, 30, 0)},
 				Dimensions.getInteger("stats.size_pie_chart"));
@@ -150,17 +151,17 @@ public class DlgStatistic extends JDialog {
 	    c.insets = new Insets(0,0,0,0);
 	    c.gridx=0;
 	    c.gridy++;
-	    mainPanel.add(new JLabel("Karten in Box: "), c);
+	    mainPanel.add(new JLabel(Messages.getString("cardsInBox")), c);
 	    c.gridy++;
 	    c.gridwidth=2;
 	    mainPanel.add(barChart,c);
-	    mainPanel.setBorder(BorderFactory.createTitledBorder("Vergleiche Stacks"));
+	    mainPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("compare")));
 	    
 	    stackStatistic.add(mainPanel);
 	    stackStatistic.setMinimumSize(Dimensions.getDimension("stats.dim_frame"));
 	    stackStatistic.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	    stackStatistic.setLocationRelativeTo(getOwner());
-	    stackStatistic.setTitle("Statistik");
+	    stackStatistic.setTitle(Messages.getString("stats"));
 	    stackStatistic.setResizable(true);
 	    stackStatistic.setVisible(true);
 		stackStatistic.setResizable(false);

@@ -231,7 +231,7 @@ public class FrmSelectStack {
 		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int option = JOptionPane.showConfirmDialog(selectStackFrame, "Diesen Stack wirklich löschen ?");
+				int option = JOptionPane.showConfirmDialog(selectStackFrame, Messages.getString("confDeletion"));
 				if(option == JOptionPane.YES_OPTION) {
 					stackService.deleteStack((Stack)cmbStackSelector.getSelectedItem());
 					cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));

@@ -56,7 +56,10 @@ public class DlgSettings extends JDialog {
 	
 	private JComboBox<String> cmbColor;
 	private JComboBox<Stack> cmbStack;
-	private String[] colors = {"Blau", "Rot", "Gelb", "Grün"};
+	private String[] colors = {Messages.getString("blue"), 
+							   Messages.getString("red"),
+							   Messages.getString("yellow"),
+							   Messages.getString("green")};
 	
 	private JButton btnPreview;
 	private JButton btnReset;
@@ -94,14 +97,14 @@ public class DlgSettings extends JDialog {
 		grpLanguages.add(btnEnglish);
 		grpLanguages.add(btnSpanish);
 		btnGerman.setSelected(true);
-		pnlLanguage.add(new JLabel("Sprache: "));
+		pnlLanguage.add(new JLabel(Messages.getString("language")));
 		pnlLanguage.add(btnGerman);
 		pnlLanguage.add(new JLabel(ICN_GERMAN));
 		pnlLanguage.add(btnEnglish);
 		pnlLanguage.add(new JLabel(ICN_ENGLISH));
 		pnlLanguage.add(btnSpanish);
 		pnlLanguage.add(new JLabel(ICN_SPANISH));
-		pnlLanguage.setBorder(BorderFactory.createTitledBorder("Wähle eine Sprache: "));
+		pnlLanguage.setBorder(BorderFactory.createTitledBorder(Messages.getString("chooseStack")));
 		
 		btnGerman.addItemListener(new SetLanguageListener());
 		btnEnglish.addItemListener(new SetLanguageListener());
@@ -112,11 +115,11 @@ public class DlgSettings extends JDialog {
 		pnlbackgroundColor = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		pnlbackgroundColor.setOpaque(false);
 		cmbColor = new JComboBox<String>(colors);
-		pnlbackgroundColor.add(new JLabel("Hintergrund: "));
-		btnPreview = FlashCardButtonFactory.createColouredButton("Vorschau", BLUE[1]);
+		pnlbackgroundColor.add(new JLabel(Messages.getString("background")));
+		btnPreview = FlashCardButtonFactory.createColouredButton(Messages.getString("preview"), BLUE[1]);
 		pnlbackgroundColor.add(cmbColor);
 		pnlbackgroundColor.add(btnPreview);
-		pnlbackgroundColor.setBorder(BorderFactory.createTitledBorder("Wähle ein Farbschema: "));
+		pnlbackgroundColor.setBorder(BorderFactory.createTitledBorder(Messages.getString("chooseColor")));
 		
 		cmbColor.addActionListener(new ActionListener() {
 			@Override
@@ -150,12 +153,12 @@ public class DlgSettings extends JDialog {
 	private void initResetArea() {
 		pnlReset = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		pnlReset.setOpaque(false);
-		pnlReset.add(new JLabel("Stack: "));
+		pnlReset.add(new JLabel(Messages.getString("stackn")));
 		cmbStack = new JComboBox<Stack>(stackService.getStackArray());
-		btnReset = FlashCardButtonFactory.createColouredButton("Reset", FlashCardButtonFactory.BTN_RED);
+		btnReset = FlashCardButtonFactory.createColouredButton(Messages.getString("reset"), FlashCardButtonFactory.BTN_RED);
 		pnlReset.add(cmbStack);
 		pnlReset.add(btnReset);
-		pnlReset.setBorder(BorderFactory.createTitledBorder("Boxcounter zurücksetzen: "));
+		pnlReset.setBorder(BorderFactory.createTitledBorder(Messages.getString("resetLbl")));
 		
 		btnReset.addActionListener(new ActionListener() {
 			@Override
@@ -173,7 +176,7 @@ public class DlgSettings extends JDialog {
 		mainPanel.add(pnlbackgroundColor);
 		mainPanel.add(pnlReset);
 		add(mainPanel);
-		setTitle(Messages.getString("study"));
+		setTitle(Messages.getString("settings"));
 		setSize(Dimensions.getDimension("settings.dim_frame"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(getOwner());
