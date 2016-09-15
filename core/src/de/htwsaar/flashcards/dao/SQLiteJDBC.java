@@ -9,7 +9,7 @@ import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.Pragma;
 
 /**
- * Klasse zum herstellen der Verbindung zur Datenbank durch Unterst�tzung des
+ * Klasse zum herstellen der Verbindung zur Datenbank durch Unterstuetzung des
  * Springframeworks
  * 
  * @author Martin Feick

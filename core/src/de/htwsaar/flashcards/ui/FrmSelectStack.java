@@ -170,6 +170,7 @@ public class FrmSelectStack {
 		selectStackFrame.setJMenuBar(MenuBar.createMenuBar(selectStackFrame, () -> update()));
 		selectStackFrame.setLocationRelativeTo(null);
 		selectStackFrame.setVisible(true);
+		selectStackFrame.setResizable(false);
 		selectStackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	

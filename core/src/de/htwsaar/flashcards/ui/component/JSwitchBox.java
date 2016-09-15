@@ -38,7 +38,6 @@ public class JSwitchBox extends AbstractButton {
     private Color light = new Color(220,220,220,100);
     private Color red = new Color(179, 0, 0);
     private Color green = new Color(0, 153, 0);
-    private Font font = Dimensions.getFont("default.font_button");
     private int gap = 5;
     private int globalWitdh = 0;
     private final String trueLabel;
@@ -119,7 +118,7 @@ public class JSwitchBox extends AbstractButton {
 
     @Override
     public Font getFont() {
-        return font;
+        return Dimensions.getFont("default.font_button");
     }
     
     @Override

@@ -61,7 +61,6 @@ public class DlgStatistic extends JDialog {
 	public DlgStatistic(Frame owner, boolean modal){
 		super(owner, modal);
 		stackStatistic = new JFrame();
-		stackStatistic.setResizable(true);
 		stackService = new StackServiceImpl();
 		cardService = new FlashCardServiceImpl();
 		initPieChartArea();
@@ -164,5 +163,6 @@ public class DlgStatistic extends JDialog {
 	    stackStatistic.setTitle("Statistik");
 	    stackStatistic.setResizable(true);
 	    stackStatistic.setVisible(true);
+		stackStatistic.setResizable(false);
 	  }
 }

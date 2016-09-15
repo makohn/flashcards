@@ -2,7 +2,6 @@ package de.htwsaar.flashcards.util;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -45,10 +44,8 @@ public class FlashCardButtonFactory {
 	public final static Color BTN_GREEN = new Color(0, 153, 0);
 	public final static Color BTN_PURPLE = new Color(153, 51, 153);
 	
-	public final static Font  DEFAULT_FONT = Dimensions.getFont("default.font_button");
-	
 	private static void setColour(Color color, AbstractButton btn) {
-		btn.setFont(DEFAULT_FONT);
+		btn.setFont(Dimensions.getFont("default.font_button"));
 		btn.setBackground(color);
 		btn.setForeground(Color.white);
 		btn.setOpaque(true);
