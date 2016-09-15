@@ -16,6 +16,7 @@ import de.htwsaar.flashcards.service.interfaces.StudyService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.InfoPanel;
 import de.htwsaar.flashcards.util.FlashCardUtils;
+import de.htwsaar.flashcards.util.size.FrmStudySizes;
 
 /**
  * <code>FrmStudy</code> - Wrapper Frame fuer ein Spiel. Enthaelt die Basis-
@@ -114,7 +115,7 @@ public class FrmStudy {
     private void loadImage() {
         imagePath =  currentCard.getCardPicture();
         ImageIcon icon = this.imagePath != null ? new ImageIcon(this.imagePath) : ICN_QUEST_IMG;
-        lblQuestionImage.setIcon(FlashCardUtils.scale((ImageIcon)icon, 200, 200));
+        lblQuestionImage.setIcon(FlashCardUtils.scale((ImageIcon)icon, FrmStudySizes.DIM_IMAGE));
     }
     
     private FlashCard nextQuestion(boolean answer) {

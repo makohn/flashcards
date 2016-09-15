@@ -1,7 +1,6 @@
 package de.htwsaar.flashcards.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,6 +22,7 @@ import de.htwsaar.flashcards.service.GameOptionServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.GameOptionService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
+import de.htwsaar.flashcards.util.size.DlgSaveOptionsSizes;
 
 /**
  * <code>DlgSaveOptions</code> - Kleiner Dialog zum Speichern von Spieloptionen
@@ -68,7 +68,7 @@ public class DlgSaveOptions extends JDialog {
 		txtName = new JTextField(option.getName());
 		pnlName.add(txtName);
 		pnlName.setBorder(BorderFactory.createTitledBorder(Messages.getString("name")));
-		pnlName.setMaximumSize(new Dimension(350,70));
+		pnlName.setMaximumSize(DlgSaveOptionsSizes.DIM_NAME_AREA_MAX);
 	}
 	
 	private void initDescArea() {
@@ -79,7 +79,7 @@ public class DlgSaveOptions extends JDialog {
 		txtDesc.setWrapStyleWord(true);
 		pnlDesc.add(txtDesc);
 		pnlDesc.setBorder(BorderFactory.createTitledBorder(Messages.getString("description")));
-		pnlDesc.setMaximumSize(new Dimension(350,210));
+		pnlDesc.setMaximumSize(DlgSaveOptionsSizes.DIM_DESC_AREA_MAX);
 	}
 	
 	private void initConfirmArea() {
@@ -89,8 +89,8 @@ public class DlgSaveOptions extends JDialog {
 		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
-		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(30,50,30,50));
-		pnlConfirm.setMaximumSize(new Dimension(350,100));
+		pnlConfirm.setBorder(DlgSaveOptionsSizes.BORDER_CONFIRM_AREA);
+		pnlConfirm.setMaximumSize(DlgSaveOptionsSizes.DIM_CONFIRM_AREA_MAX);
 		
 		btnOk.addActionListener(new ActionListener() {
 			@Override
@@ -115,14 +115,14 @@ public class DlgSaveOptions extends JDialog {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		JPanel pnlCaption = new JPanel();
 		pnlCaption.setOpaque(false);
-		pnlCaption.setMaximumSize(new Dimension(350, 30));
+		pnlCaption.setMaximumSize(DlgSaveOptionsSizes.DIM_CAPTION_MAX);
 		JLabel lblCaption = new JLabel(Messages.getString("save_config"));
 		pnlCaption.add(lblCaption);
 		mainPanel.add(pnlCaption);
 		mainPanel.add(pnlName);
 		mainPanel.add(pnlDesc);
 		mainPanel.add(pnlConfirm);
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 0, 30));
+		mainPanel.setBorder(DlgSaveOptionsSizes.BORDER_MAIN);
 		add(mainPanel);
 		setTitle(Messages.getString("options")); 
 		setSize(430, 340);

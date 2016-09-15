@@ -1,11 +1,9 @@
 package de.htwsaar.flashcards.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,6 +28,7 @@ import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.component.JSwitchBox;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardUtils;
+import de.htwsaar.flashcards.util.size.FrmGameOptionsSizes;
 
 /**
  * <code>FrmGameOptions</code> - Frame zum Einstellen der Spieleoptionen:
@@ -108,10 +107,10 @@ public class FrmGameOptions  {
 		cmbSlotSelection = new JComboBox<GameOption>(optionService.getGameOptionArray());
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.anchor = GridBagConstraints.NORTHWEST;
-		gc.insets = new Insets(5, 5, 0, 80);
+		gc.insets = FrmGameOptionsSizes.INSETS_SELECT_SLOT_LABEL;
 		gc.gridx = gc.gridy = 0;
 		pnlSelectSlot.add(new JLabel(Messages.getString("overwrite")), gc);
-		gc.insets = new Insets(0, 20, 0, 120);
+		gc.insets = FrmGameOptionsSizes.INSETS_SELECT_SLOT_COMBO;
 		gc.gridx = 1;
 		pnlSelectSlot.add(cmbSlotSelection, gc);
 		pnlSelectSlot.setBorder(BorderFactory.createTitledBorder(Messages.getString("which_option")));
@@ -154,7 +153,7 @@ public class FrmGameOptions  {
 		pnlTime = new JPanel(new GridLayout(2,1,10,0));
 		pnlTime.setOpaque(false);
 		sldTime = new JSlider(10, 130, 10);
-		sldTime.setPreferredSize(new Dimension(205,50));
+		sldTime.setPreferredSize(FrmGameOptionsSizes.DIM_TIME_SLIDER);
 		sldTime.setMinorTickSpacing(10);
 		sldTime.setMajorTickSpacing(20);
 		sldTime.setPaintTicks(true);
@@ -178,7 +177,7 @@ public class FrmGameOptions  {
 		spnLimit = new JSpinner();
 		SpinnerNumberModel model = new SpinnerNumberModel(5, 1, 50, 1);
 		spnLimit.setModel(model);
-		spnLimit.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+		spnLimit.setBorder(FrmGameOptionsSizes.BORDER_LIMIT_AREA);
 		pnlLimit.add(spnLimit);
 		pnlLimit.add(chkUnlimitedCards);
 	}
@@ -208,7 +207,7 @@ public class FrmGameOptions  {
 		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED); 
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
-		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+		pnlConfirm.setBorder(FrmGameOptionsSizes.BORDER_CONFIRM_AREA);
 	}
 	
 	
@@ -222,58 +221,59 @@ public class FrmGameOptions  {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.gridx = gc.gridy = 0;
-		gc.insets = new Insets(5, 0, 0, 20);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_BOXES_LBL;
 		mainPanel.add(new JLabel(Messages.getString("which_box")), gc); 
 		gc.gridx = 1;
-		gc.insets = new Insets(0, 20, 20, 0);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_BOXES;
 		mainPanel.add(pnlSelectMode, gc);
 		gc.gridx = 0;
 		gc.gridy++;
-		gc.insets = new Insets(10, 0, 0, 20);
+		gc.insets = FrmGameOptionsSizes.INSETS_DEFAULT_MARGIN_LBL;
 		mainPanel.add(new JLabel(Messages.getString("which_order")), gc); 
 		gc.gridx = 1;
-		gc.insets = new Insets(10, 20, 20, 0);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_SORTED;
 		mainPanel.add(pnlSorted, gc);
 		gc.gridx = 0;
 		gc.gridy++;
-		gc.insets = new Insets(10, 0, 0, 20);
+		gc.insets = FrmGameOptionsSizes.INSETS_DEFAULT_MARGIN_LBL;
 		mainPanel.add(new JLabel(Messages.getString("how_much_time")), gc); 
 		gc.gridx = 1;
-		gc.insets = new Insets(5, 17, 10, 0);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_TIME;
 		mainPanel.add(pnlTime, gc);
 		gc.gridx = 0;
 		gc.gridy++;
-		gc.insets = new Insets(10, 0, 0, 20);
+		gc.insets = FrmGameOptionsSizes.INSETS_DEFAULT_MARGIN_LBL;
 		mainPanel.add(new JLabel(Messages.getString("number_cards")), gc); 
 		gc.gridx = 1;
-		gc.insets = new Insets(0, 10, 20, 0);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_LIMIT;
 		mainPanel.add(pnlLimit, gc);
 		gc.gridx = 0;
 		gc.gridy++;
-		gc.insets = new Insets(10, 0, 0, 20);
+		gc.insets = FrmGameOptionsSizes.INSETS_DEFAULT_MARGIN_LBL;
 		mainPanel.add(new JLabel(Messages.getString("consider_date")), gc); 
 		gc.gridx = 1;
-		gc.insets = new Insets(5, 10, 20, 0);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_DATE;
 		mainPanel.add(pnlDate, gc);
 		gc.gridx = 0;
 		gc.gridy++;
-		gc.insets = new Insets(15, 0, 0, 20);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_WRONG_ANS;
 		mainPanel.add(new JLabel(Messages.getString("wrong_answer")), gc); 
 		gc.gridx = 1;
-		gc.insets = new Insets(5, 7, 20, 0);
+		gc.insets = FrmGameOptionsSizes.INSETS_MARGIN_EVAL;
 		mainPanel.add(pnlEval, gc);
 		
 		mainPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("how_to_learn")));
 		containingPanel.add(pnlSelectSlot, BorderLayout.NORTH);
 		containingPanel.add(mainPanel, BorderLayout.CENTER);
 		containingPanel.add(pnlConfirm, BorderLayout.SOUTH);
-		containingPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		containingPanel.setBorder(FrmGameOptionsSizes.BORDER_MAIN);
 		frmGameOptions.add(containingPanel);
 		frmGameOptions.setTitle(Messages.getString("options")); 
-		frmGameOptions.setSize(550, 630);
+		frmGameOptions.setSize(FrmGameOptionsSizes.DIM_FRAME);
 		frmGameOptions.setResizable(false);
-		frmGameOptions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmGameOptions.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmGameOptions.setLocationRelativeTo(null);
+		frmGameOptions.toFront();
 		frmGameOptions.setVisible(true);
 	}
 	
@@ -308,7 +308,6 @@ public class FrmGameOptions  {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmGameOptions.dispose();
-				new FrmSelectStack();
 			}
 		});
 	}

@@ -41,6 +41,8 @@ public class PieChart2D extends JPanel {
 		super();
 		this.slices = slices;
 		this.size = size;
+		this.legend_height = 20 + slices.size() * 20;
+		this.legend_width = 130;
 		super.setOpaque(false);
 	}
 
@@ -117,8 +119,6 @@ public class PieChart2D extends JPanel {
 	private void drawLegend(Graphics2D g2) {
 		// background
 		Color color = new Color(193, 215, 215,90);
-		legend_height = 20 + slices.size() * 20;
-		legend_width = 130;
 		int start_x = LEGEND_MARGIN_X;
 		int start_y = size+LEGEND_MARGIN_Y;
 		g2.setColor(color);
@@ -174,7 +174,7 @@ public class PieChart2D extends JPanel {
 	@Override
 	public Dimension getPreferredSize() {
 		int x = (int)Math.round(size*1.35);
-		int y = (int)Math.round(size*2.2);
+		int y = (int)Math.round(size*1.8) + legend_height;
 		return new Dimension(x,y);
 	}
 	

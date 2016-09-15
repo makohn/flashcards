@@ -1,11 +1,9 @@
 package de.htwsaar.flashcards.ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +12,13 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -38,6 +36,7 @@ import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.ui.listeners.ExportFileListener;
 import de.htwsaar.flashcards.ui.tableModels.FlashCardsTableModel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
+import de.htwsaar.flashcards.util.size.FrmSelectStackSizes;
 
 /**
  * <code>FrmSelectStack</code> - Frame zum Auswaehlen eines Stacks. Zeigt eine
@@ -108,10 +107,10 @@ public class FrmSelectStack {
 		List<FlashCard> flashcards = cardService.getFlashCards(getSelectedStack().getStackId());
 		tableModel = new FlashCardsTableModel(flashcards);
 		tblStacksPreview.setModel(tableModel);
-		tblStacksPreview.setRowHeight(20);
+		tblStacksPreview.setRowHeight(FrmSelectStackSizes.TABLE_ROW_HEIGHT);
 		tblStacksPreview.setFillsViewportHeight(true);
 		scrlPreview = new JScrollPane(tblStacksPreview);
-		scrlPreview.setMinimumSize(new Dimension(570,300));
+		scrlPreview.setMinimumSize(FrmSelectStackSizes.DIM_PREVIEW_AREA_MIN);
 		scrlPreview.setBackground(new Color(230, 230, 230));
 	}
 	
@@ -130,7 +129,7 @@ public class FrmSelectStack {
 		pnlButtons.add(btnExport);
 		pnlButtons.add(btnDelete);
 		
-		pnlButtons.setBorder(BorderFactory.createEmptyBorder(10,0,10,10));
+		pnlButtons.setBorder(FrmSelectStackSizes.BORDER_PNL_BUTTONS);
 	}
 
 	private void initFrame() {
@@ -139,24 +138,23 @@ public class FrmSelectStack {
 		
 		mainPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		new Insets(0, 0, 0, 10);
 		c.anchor = GridBagConstraints.BASELINE_LEADING;
 		//-------------------------------------
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(15, 0, 0, 18);
+		c.insets = FrmSelectStackSizes.INSETS_MARGIN_TOPLEFT;
 		mainPanel.add(new JLabel(Messages.getString("choose_a_stack")), c);
 		//-------------------------------------
-		c.insets = new Insets(0,0,0,0);
+		c.insets = FrmSelectStackSizes.INSETS_RESET;
 		c.gridx = 1;
 		mainPanel.add(pnlSelection, c);
 		//-------------------------------------
-		c.insets = new Insets(0, 0, 0, 20);
+		c.insets = FrmSelectStackSizes.INSETS_MARGIN_LEFT;
 		c.gridx = 0;
 		c.gridy = 1;
 		mainPanel.add(new JLabel(Messages.getString("preview")), c);
 		//-------------------------------------
-		c.insets = new Insets(0,0,0,0);
+		c.insets = FrmSelectStackSizes.INSETS_RESET;
 		c.gridx = 1;
 		c.gridy = 1;
 		mainPanel.add(scrlPreview,c);
@@ -167,7 +165,7 @@ public class FrmSelectStack {
 		//-------------------------------------
 		
 		selectStackFrame.add(mainPanel);
-		selectStackFrame.setMinimumSize(new Dimension(730, 500));
+		selectStackFrame.setMinimumSize(FrmSelectStackSizes.DIM_FRAME);
 		selectStackFrame.setJMenuBar(MenuBar.createMenuBar(selectStackFrame, () -> update()));
 		selectStackFrame.setLocationRelativeTo(null);
 		selectStackFrame.setVisible(true);
@@ -198,7 +196,7 @@ public class FrmSelectStack {
 				List<FlashCard> cards = cardService.getFlashCards();	
 				if (cards == null) cards = new ArrayList<FlashCard>();
 				new FrmEditStack(new EditFlashCardServiceImpl(cards.listIterator(), getSelectedStack().getStackId()));
-				selectStackFrame.dispose();
+				selectStackFrame.toBack();
 			}
 		});
 		
@@ -231,14 +229,16 @@ public class FrmSelectStack {
 		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				stackService.deleteStack((Stack)cmbStackSelector.getSelectedItem());
-				cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));
-				updateTableView();
+				int option = JOptionPane.showConfirmDialog(selectStackFrame, "Diesen Stack wirklich löschen ?");
+				if(option == JOptionPane.YES_OPTION) {
+					stackService.deleteStack((Stack)cmbStackSelector.getSelectedItem());
+					cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));
+					updateTableView();
+				}
 			}
 		});
 		
-		btnExport.addActionListener(new ExportFileListener((Stack)cmbStackSelector.getSelectedItem(), 
-				selectStackFrame));
+		btnExport.addActionListener(new ExportFileListener(cmbStackSelector, selectStackFrame));
 	}
 	
 	private void updateTableView() {

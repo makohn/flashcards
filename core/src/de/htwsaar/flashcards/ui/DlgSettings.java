@@ -1,7 +1,6 @@
 package de.htwsaar.flashcards.ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -27,6 +26,7 @@ import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
+import de.htwsaar.flashcards.util.size.DlgSettingsSizes;
 
 /**
  * <code>DlgSettings</code> - Dialog fuer die Uebersicht und Abaenderung von
@@ -174,7 +174,7 @@ public class DlgSettings extends JDialog {
 		mainPanel.add(pnlReset);
 		add(mainPanel);
 		setTitle(Messages.getString("study"));
-		setSize(new Dimension(300,300));
+		setSize(DlgSettingsSizes.DIM_FRAME);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(getOwner());
 		setVisible(true);

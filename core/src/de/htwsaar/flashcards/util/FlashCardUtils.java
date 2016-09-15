@@ -1,10 +1,12 @@
 package de.htwsaar.flashcards.util;
 
-import java.awt.Font;
+import java.awt.Dimension;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
+
+import de.htwsaar.flashcards.util.size.Sizes;
 
 /**
  * Hilfsklasse fuer das <code>flashcards</code> Projekt.
@@ -13,14 +15,12 @@ import javax.swing.JTextArea;
  */
 public class FlashCardUtils {
 	
-	private static final Font FONT_CARD = new Font("Tahoma", Font.PLAIN, 20);
-	
 	/**
 	 * Skaliert einen Bild (ImageIcon) auf eine uebergebene Groesse
 	 */
-	public static ImageIcon scale(ImageIcon image, int width, int height) {
+	public static ImageIcon scale(ImageIcon image, Dimension dim) {
 		return new ImageIcon(image.getImage()
-				.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH));
+				.getScaledInstance(dim.width, dim.height, java.awt.Image.SCALE_SMOOTH));
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class FlashCardUtils {
         txtArea.setLineWrap(true);
         txtArea.setWrapStyleWord(true);
         txtArea.setEditable(editable);
-        txtArea.setFont(FONT_CARD);
+        txtArea.setFont(Sizes.FONT_CARD);
         return txtArea;
 	}
 	

@@ -1,7 +1,6 @@
 package de.htwsaar.flashcards.ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,6 +27,7 @@ import de.htwsaar.flashcards.ui.chart.BarChart2D;
 import de.htwsaar.flashcards.ui.chart.PieChart2D;
 import de.htwsaar.flashcards.ui.chart.PieChartFactory;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
+import de.htwsaar.flashcards.util.size.DlgStatisticSizes;
 
 /**
  * <code>DlgStatistic</code> - Dialog zum Anzeigen von Statistiken und
@@ -78,7 +78,7 @@ public class DlgStatistic extends JDialog {
 		pieChart = PieChartFactory.createPieChart(new String[] {"Richtig","Falsch"},
 				new double[] {80, 20},
 				new Color[] {new Color(135, 180, 0),new Color(138, 30, 0)},
-				100);
+				DlgStatisticSizes.SIZE_PIE_CHART);
 
 		pnlStackSelect.add(cmbStackSelect);
 	    pnlStackSelect.add(pieChart);
@@ -104,7 +104,7 @@ public class DlgStatistic extends JDialog {
 		pieChart2 = PieChartFactory.createPieChart(new String[] {"Richtig","Falsch"},
 				new double[] {80, 20},
 				new Color[] {new Color(135, 180, 0),new Color(138, 30, 0)},
-				100);
+				DlgStatisticSizes.SIZE_PIE_CHART);
 
 		pnlStack2Select.add(cmbStack2Select);
 	    pnlStack2Select.add(pieChart2);
@@ -124,8 +124,11 @@ public class DlgStatistic extends JDialog {
 	
 	private void initBarChartArea() {
 		int[] values1 = cardService.getCardsInBox((Stack)cmbStackSelect.getSelectedItem());
-		int[] values2 = new int[] {37,62,64,91,102};
-		barChart = new BarChart2D(values1, values2);
+		int[] values2 = cardService.getCardsInBox((Stack)cmbStack2Select.getSelectedItem());
+		barChart = new BarChart2D(values1,
+								  values2, 
+								  DlgStatisticSizes.SIZE_BAR_CHART, 
+								  DlgStatisticSizes.WIDTH_BAR);
 	}
 		
 	
@@ -140,10 +143,10 @@ public class DlgStatistic extends JDialog {
 	    //-------------------------------------
 	    c.gridx = 0;
 	    c.gridy = 0;
-	    c.insets = new Insets(0,70,0,0);
+	    c.insets = DlgStatisticSizes.INSETS_LEFT_PIE;
 	    mainPanel.add(pnlStackSelect,c);
 	    c.gridx=1;
-	    c.insets = new Insets(0,130,0,60);
+	    c.insets = DlgStatisticSizes.INSETS_RIGHT_PIE;
 	    mainPanel.add(pnlStack2Select,c);
 	    c.insets = new Insets(0,0,0,0);
 	    c.gridx=0;
@@ -155,11 +158,11 @@ public class DlgStatistic extends JDialog {
 	    mainPanel.setBorder(BorderFactory.createTitledBorder("Vergleiche Stacks"));
 	    
 	    stackStatistic.add(mainPanel);
-	    stackStatistic.setMinimumSize(new Dimension(600, 650));
+	    stackStatistic.setMinimumSize(DlgStatisticSizes.DIM_FRAME);
 	    stackStatistic.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	    stackStatistic.setLocationRelativeTo(getOwner());
 	    stackStatistic.setTitle("Statistik");
-	    stackStatistic.setResizable(false);
+	    stackStatistic.setResizable(true);
 	    stackStatistic.setVisible(true);
 	  }
 }

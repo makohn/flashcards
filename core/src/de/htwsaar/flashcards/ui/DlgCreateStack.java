@@ -1,6 +1,5 @@
 package de.htwsaar.flashcards.ui;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -24,6 +23,7 @@ import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.service.interfaces.StackService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
+import de.htwsaar.flashcards.util.size.DlgCreateStackSizes;
 
 public class DlgCreateStack extends JDialog {
 	
@@ -57,7 +57,7 @@ public class DlgCreateStack extends JDialog {
 		mainPanel.add(pnlConfirm);
 		add(mainPanel);
 		setTitle(Messages.getString("edit_stack")); 
-		setSize(340, 330);
+		setSize(DlgCreateStackSizes.DIM_FRAME);
 		setResizable(false);
 		setLocationRelativeTo(getOwner());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,14 +70,14 @@ public class DlgCreateStack extends JDialog {
 		pnlStackName.setOpaque(false);
 		
 		txtStackName = new JTextField();
-		txtStackName.setPreferredSize(new Dimension(230,30));
+		txtStackName.setPreferredSize(DlgCreateStackSizes.DIM_STACK_NAME);
 		cmbStackType = new JComboBox<String>(STACK_TYPE);
 		txtStackSubject = new JTextArea();
 		txtStackSubject.setLineWrap(true);
 		txtStackSubject.setWrapStyleWord(true);
-		txtStackSubject.setPreferredSize(new Dimension(230,130));
+		txtStackSubject.setPreferredSize(DlgCreateStackSizes.DIM_STACK_SUBJECT);
 		JLabel lblName = new JLabel(Messages.getString("name"));
-		lblName.setPreferredSize(new Dimension(60,25));
+		lblName.setPreferredSize(DlgCreateStackSizes.DIM_LBL_NAME);
 		pnlStackName.add(lblName);
 		pnlStackName.add(txtStackName);
 		JLabel lblSubject = new JLabel(Messages.getString("subject"));
@@ -98,8 +98,8 @@ public class DlgCreateStack extends JDialog {
 		btnCancel = FlashCardButtonFactory.createColouredButton(Messages.getString("cancel"), FlashCardButtonFactory.BTN_RED);
 		pnlConfirm.add(btnOk);
 		pnlConfirm.add(btnCancel);
-		pnlConfirm.setBorder(BorderFactory.createEmptyBorder(10,40,10,40));
-		pnlConfirm.setMaximumSize(new Dimension(340,160));
+		pnlConfirm.setBorder(DlgCreateStackSizes.BORDER_CONIRM_AREA);
+		pnlConfirm.setMaximumSize(DlgCreateStackSizes.DIM_CONFIRM_AREA);
 	}
 	
 	private void initListeners() {

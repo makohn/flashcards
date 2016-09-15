@@ -81,7 +81,7 @@ public class DlgGameOptions extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					new FrmGameOptions();
 					self.dispose();
-					self.getOwner().dispose();
+					self.getOwner().toBack();
 				}
 			});
 		}

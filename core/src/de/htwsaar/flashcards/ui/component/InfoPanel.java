@@ -1,7 +1,5 @@
 package de.htwsaar.flashcards.ui.component;
 
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.Border;
+
+import de.htwsaar.flashcards.util.size.InfoPanelSizes;
 
 /**
  * <code>InfoPanel</code> - Dient der Darstellung von Informationen ueber den
@@ -47,10 +47,10 @@ public class InfoPanel extends JPanel {
 	        this.setBorder(OUTER_CARD_BORDER);
 	        progressbar = new JProgressBar(0, nrOfCards);
 	        progresscircle = new ProgressCircle(time);
-	        progresscircle.setPreferredSize(new Dimension(50, 50));
-	        progresscircle.setMinimumSize(new Dimension(50, 50));
+	        progresscircle.setPreferredSize(InfoPanelSizes.DIM_CIRCLE);
+	        progresscircle.setMinimumSize(getPreferredSize());
 	        lblCardCounter = new JLabel();
-	        lblCardCounter.setFont(new Font("SansSerif", 1, 20));
+	        lblCardCounter.setFont(InfoPanelSizes.FONT_LBL_CARD_COUNTER);
 	        lblCardname = new JLabel();
 	        lblBoxCounter = new JLabel();
 	        GridBagConstraints gc = new GridBagConstraints();
@@ -77,7 +77,7 @@ public class InfoPanel extends JPanel {
 			gc.insets = insets[2];
 			//-------------------------------------
 			this.add(progresscircle,gc);
-			this.setMaximumSize(new Dimension(650,200));
+			this.setMaximumSize(InfoPanelSizes.DIM_MAXIMUM_SIZE);
 	}
 	
 	/*

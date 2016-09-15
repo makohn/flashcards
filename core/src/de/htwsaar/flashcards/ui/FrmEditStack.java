@@ -2,11 +2,9 @@ package de.htwsaar.flashcards.ui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,6 +28,7 @@ import de.htwsaar.flashcards.service.interfaces.EditFlashCardService;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardUtils;
+import de.htwsaar.flashcards.util.size.FrmEditStackSizes;
 
 /**
  * <code>FrmEditStack</code> - Dient der Bearbeitung von Karteikarten eines ausgewaehlten
@@ -106,7 +105,7 @@ public class FrmEditStack {
 		txtCardName = new JTextField();
 		txtCardName.setBorder(BorderFactory.createEmptyBorder());
 		txtCardName.setOpaque(false);
-		txtCardName.setPreferredSize(new Dimension(250,60));
+		txtCardName.setPreferredSize(FrmEditStackSizes.DIM_TXT_CARD_NAME);
 		txtCardName.setHorizontalAlignment(JTextField.CENTER);
 		btnCardForward = FlashCardButtonFactory.createImageButton(ICN_ARROW_RIGHT);
 		btnCardBackward = FlashCardButtonFactory.createImageButton(ICN_ARROW_LEFT);
@@ -116,18 +115,18 @@ public class FrmEditStack {
 		pnlNavigation.setOpaque(false);
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = gc.gridy = 0;
-		gc.insets = new Insets(0, 103, 0, 0);
+		gc.insets = FrmEditStackSizes.INSETS_NAVI_LEFT;
 		pnlNavigation.add(btnCardBackward,gc);
 		gc.gridx++;
-		gc.insets = new Insets(0, 10, 0, 0);
+		gc.insets = FrmEditStackSizes.INSETS_NAVI_CENTER;
 		pnlNavigation.add(txtCardName,gc);
 		gc.gridx++;
-		gc.insets = new Insets(0, 10, 0, 0);
+		gc.insets = FrmEditStackSizes.INSETS_NAVI_CENTER;
 		pnlNavigation.add(btnCardForward,gc);
 		gc.gridx++;
-		gc.insets = new Insets(0, 40, 0, 0);
+		gc.insets = FrmEditStackSizes.INSETS_NAVI_RIGHT;
 		pnlNavigation.add(btnAddCard,gc);
-		pnlNavigation.setMaximumSize(new Dimension(650,200));
+		pnlNavigation.setMaximumSize(FrmEditStackSizes.DIM_NAVI_MAX);
 	}
 	
 	private void initQuestionArea() {
@@ -187,8 +186,8 @@ public class FrmEditStack {
 		pnlSaveDelete.add(btnDeleteCurrentCard);
 		pnlSaveDelete.add(btnCancel);
 		
-		pnlSaveDelete.setBorder(BorderFactory.createEmptyBorder(40, 0, 40, 0));
-		pnlSaveDelete.setMaximumSize(new Dimension(400,200));
+		pnlSaveDelete.setBorder(FrmEditStackSizes.BORDER_SAVE_DELETE);
+		pnlSaveDelete.setMaximumSize(FrmEditStackSizes.DIM_SAVE_DELETE_MAX);
 	}
 	
 	private void initFrame() {
@@ -199,12 +198,12 @@ public class FrmEditStack {
 		mainPanel.add(pnlAnswer);
 		mainPanel.add(pnlSaveDelete);
 		editStackWindow.add(mainPanel);
-		editStackWindow.setMinimumSize(new Dimension(650, 780));
+		editStackWindow.setMinimumSize(FrmEditStackSizes.DIM_FRAME);
 		editStackWindow.setResizable(false);
 		editStackWindow.setTitle(FRAME_TITLE);
 		editStackWindow.setLocationRelativeTo(null);
 		editStackWindow.setVisible(true);
-		editStackWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		editStackWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	private void initListeners() {
@@ -270,7 +269,6 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				editStackWindow.dispose();
-				new FrmSelectStack();
 			}
 		});
 	}

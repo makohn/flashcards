@@ -3,7 +3,6 @@ package de.htwsaar.flashcards.ui;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -21,6 +20,7 @@ import de.htwsaar.flashcards.properties.Messages;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
 import de.htwsaar.flashcards.util.Handler;
+import de.htwsaar.flashcards.util.size.VocabUIFactorySizes;
 
 /**
  * <code>VocabUIFactory</code> - Konkrete Fabrikimplementierung des Interfaces 
@@ -31,9 +31,6 @@ import de.htwsaar.flashcards.util.Handler;
  * @author Marek Kohn, Marco Becker
  */
 public class VocabUIFactory implements StudyTypeUIFactory {
-
-	private static final Insets[] INSETS_INFO = {new Insets(0, 10, 0, 60), new Insets(0, 15, 0, 0), 
-				new Insets(5, 80, 0, 0)};
 	
 	private JTextField txtVocab;
 	private JTextField txtAnswer;
@@ -50,10 +47,10 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 		pnlFlashcard.setOpaque(false);
 		pnlFlashcard.setBorder(FlashCardConstants.OUTER_CARD_BORDER);
 		txtVocab = new JTextField();
-		txtVocab.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtVocab.setFont(VocabUIFactorySizes.FONT_VOCAB);
 		txtVocab.setEditable(false);
 		txtVocab.setFocusable(false);
-		txtVocab.setPreferredSize(new Dimension(400, 50));
+		txtVocab.setPreferredSize(VocabUIFactorySizes.DIM_VOCAB_FIELD);
 		txtVocab.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlFlashcard.add(txtVocab);
 		return pnlFlashcard;
@@ -65,8 +62,8 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 		pnlAnswer.setOpaque(false);
 		pnlAnswer.setBorder(FlashCardConstants.OUTER_CARD_BORDER);
 		txtAnswer = new JTextField();
-		txtAnswer.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtAnswer.setPreferredSize(new Dimension(400, 50));
+		txtAnswer.setFont(VocabUIFactorySizes.FONT_VOCAB);
+		txtAnswer.setPreferredSize(VocabUIFactorySizes.DIM_VOCAB_FIELD);
 		txtAnswer.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlAnswer.add(txtAnswer);
 		
@@ -75,11 +72,11 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 		btnShowAnswer = FlashCardButtonFactory.createColouredButton(Messages.getString("answer"), new Color(0, 163, 204));
 		pnlShow.add(btnShowAnswer);
 		txtShowAnswer = new JTextField();
-		txtShowAnswer.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtShowAnswer.setFont(VocabUIFactorySizes.FONT_VOCAB);
 		txtShowAnswer.setHorizontalAlignment(SwingConstants.CENTER);
-		txtShowAnswer.setPreferredSize(new Dimension(400, 50));
+		txtShowAnswer.setPreferredSize(VocabUIFactorySizes.DIM_VOCAB_FIELD);
 		pnlShow.add(txtShowAnswer);
-		pnlAnswer.setMaximumSize(new Dimension(420, 100));
+		pnlAnswer.setMaximumSize(VocabUIFactorySizes.DIM_PNL_ANS_MAX);
 		pnlAnswer.add(pnlShow);
 		return pnlAnswer;
 	}
@@ -152,12 +149,12 @@ public class VocabUIFactory implements StudyTypeUIFactory {
 	
 	@Override
 	public Dimension getFrameSize() {
-		return new Dimension(450, 580);
+		return VocabUIFactorySizes.DIM_FRAME;
 	}
 
 	@Override
 	public Insets[] getSpacing() {
-		return INSETS_INFO;
+		return VocabUIFactorySizes.INSETS_INFO;
 	}
 
 }
