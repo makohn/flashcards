@@ -16,5 +16,6 @@ public interface StackService {
 	public Stack[] getStackArray();
 	public Stack getStack(int stackId);
 	public void save(Stack stack);
+	public void update(Stack stack);
 	public void deleteStack(Stack stack);
 }

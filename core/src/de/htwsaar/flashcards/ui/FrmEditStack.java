@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -240,6 +241,9 @@ public class FrmEditStack {
 						txtQuestion.getText(),
 						txtAnswer.getText(),
 						imagePath);
+				int option = JOptionPane.showConfirmDialog(editStackWindow,  Messages.getString("continue"), 
+											  				null, JOptionPane.OK_CANCEL_OPTION);
+				if(option == JOptionPane.CANCEL_OPTION) editStackWindow.dispose();
 			}
 		});
 		
@@ -247,12 +251,13 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter(Messages.getString("image_files"), "jpg", "png");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(Messages.getString("image_file"), "jpg", "png");
 				chooser.setFileFilter(filter);
 				int returnVal = chooser.showOpenDialog(editStackWindow);
 				if(returnVal == JFileChooser.APPROVE_OPTION) {
 				      imagePath = chooser.getSelectedFile().getPath(); 
-				 }
+				      btnSaveStack.doClick();
+				}
 			}
 		});
 		
@@ -269,6 +274,18 @@ public class FrmEditStack {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				editStackWindow.dispose();
+			}
+		});
+		
+		btnDeleteCurrentCard.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int option = JOptionPane.showConfirmDialog(editStackWindow,  Messages.getString("is_sure"), 
+		  				null, JOptionPane.OK_CANCEL_OPTION);
+				if(option==JOptionPane.OK_OPTION) {
+					cardService.deleteCard();
+					update();
+				}
 			}
 		});
 	}

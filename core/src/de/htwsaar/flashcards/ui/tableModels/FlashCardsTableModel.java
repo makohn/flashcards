@@ -20,11 +20,7 @@ public class FlashCardsTableModel implements TableModel {
 	private List<TableModelListener> listeners;
 	
 	private static final int COLUMN_COUNT = 4;
-	private static final String COL_FLASHCARD_NAME = Messages.getString("label");
-	private static final String COL_BOX_COUNTER = Messages.getString("box");
-	private static final String COL_IMAGE = Messages.getString("image");
-	private static final String COL_LAST_TIME = Messages.getString("last_acc");
-	
+
 	public FlashCardsTableModel(List<FlashCard> flashCardList) {
 		this.flashcards = flashCardList;
 		listeners = new ArrayList<TableModelListener>();
@@ -43,10 +39,10 @@ public class FlashCardsTableModel implements TableModel {
 	@Override
 	public String getColumnName(int columnIndex) {
 		switch(columnIndex) {
-		case 0: return COL_FLASHCARD_NAME;
-		case 1: return COL_BOX_COUNTER;
-		case 2: return COL_LAST_TIME;
-		case 3: return COL_IMAGE;
+		case 0: return Messages.getString("label");
+		case 1: return Messages.getString("box");
+		case 2: return Messages.getString("last_acc");
+		case 3: return Messages.getString("image");
 		default: return null;
 		}
 	}

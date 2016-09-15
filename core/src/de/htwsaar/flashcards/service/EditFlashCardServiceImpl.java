@@ -57,6 +57,17 @@ public class EditFlashCardServiceImpl implements EditFlashCardService {
 	}
 	
 	/**
+	 * Loescht eine Karte aus der Datenbank
+	 */
+	@Override
+	public void deleteCard() {
+		cardDao.deleteCard(currentCard);
+		if(flashcardIterator.hasNext()) currentCard = flashcardIterator.next();
+		else if(flashcardIterator.hasNext()) currentCard = flashcardIterator.previous();
+		else addCard();
+	}
+	
+	/**
 	 * Speichert eine neu erstellte in der Datenbank.
 	 * @param cardName - Der Name der neuen Karte
 	 * @param cardQuestion - Die Frage der neuen Karte

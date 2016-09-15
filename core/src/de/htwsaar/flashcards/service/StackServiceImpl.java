@@ -58,6 +58,15 @@ public class StackServiceImpl implements StackService {
 	}
 	
 	/**
+	 * Aktualisiert einen Stack in der Datenbank.
+	 * @param stack - der zu aktualisierende Stack
+	 */
+	@Override
+	public void update(Stack stack) {
+		stackDao.updateStack(stack);
+	}
+	
+	/**
 	 * Loescht einen Stack aus der Datenbank.
 	 * @param stack - der zu loeschende Stack.
 	 */

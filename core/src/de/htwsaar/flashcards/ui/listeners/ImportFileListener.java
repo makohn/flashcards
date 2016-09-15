@@ -10,6 +10,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.htwsaar.flashcards.files.ImporterCSVImpl;
 import de.htwsaar.flashcards.files.interfaces.ImporterCSV;
+import de.htwsaar.flashcards.properties.Messages;
 
 public class ImportFileListener implements ActionListener {
 	private Frame caller;
@@ -28,7 +29,7 @@ public class ImportFileListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser(); 
 	    chooser.setCurrentDirectory(new java.io.File("."));
-	    chooser.setDialogTitle("Welche Datei importieren ?");
+	    chooser.setDialogTitle(Messages.getString("chooseafile"));
 	    chooser.setFileFilter(new FileNameExtensionFilter("CSV", "csv"));   
 	    if (chooser.showOpenDialog(caller) == JFileChooser.APPROVE_OPTION) {
 	    	 ImporterCSV importer = new ImporterCSVImpl();

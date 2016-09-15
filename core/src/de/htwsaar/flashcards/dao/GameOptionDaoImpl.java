@@ -16,6 +16,13 @@ import org.springframework.stereotype.Component;
 import de.htwsaar.flashcards.dao.interfaces.GameOptionDao;
 import de.htwsaar.flashcards.model.GameOption;
 
+/**
+ * Die GameOptionDaoImpl Klasse verwaltet und verarbeitet Datenbankzugriffe
+ * Hierfuer wurde das Spring Framework verwendet (Vermeidung SQLInjections usw.)
+ * 
+ * @author Martin Feick
+ * 
+ */
 @Component("GameOptionDaoImpl")
 public class GameOptionDaoImpl implements GameOptionDao {
 	

@@ -43,10 +43,13 @@ public class DlgCreateStack extends JDialog {
 	private JDialog self;
 	private StackService stackService;
 	
-	public DlgCreateStack(Frame owner, boolean modal) {
+	private Stack stack;
+	
+	public DlgCreateStack(Frame owner, boolean modal, Stack stack) { 
 		super(owner, modal);
 		self = this;
 		stackService = new StackServiceImpl();
+		this.stack = stack;
 		initNameArea();
 		initConfirmArea();
 		initListeners();
@@ -64,15 +67,20 @@ public class DlgCreateStack extends JDialog {
 		setVisible(true);
 	}
 	
+	public DlgCreateStack(Frame owner, boolean modal) {
+		this(owner, modal, new Stack());
+	}
+	
 	private void initNameArea() {
 		FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
 		pnlStackName = new JPanel(layout);
 		pnlStackName.setOpaque(false);
 		
-		txtStackName = new JTextField();
+		txtStackName = new JTextField(stack.getStackName() != null ? stack.getStackName(): "");
 		txtStackName.setPreferredSize(Dimensions.getDimension("create.dim_stack_name"));
 		cmbStackType = new JComboBox<String>(STACK_TYPE);
-		txtStackSubject = new JTextArea();
+		cmbStackType.setSelectedIndex(stack.getTyp() != 0 ? stack.getTyp() -1 : 0 );
+		txtStackSubject = new JTextArea(stack.getSubject() != null ? stack.getSubject(): "");
 		txtStackSubject.setLineWrap(true);
 		txtStackSubject.setWrapStyleWord(true);
 		txtStackSubject.setPreferredSize(Dimensions.getDimension("create.dim_stack_subject"));
@@ -107,9 +115,12 @@ public class DlgCreateStack extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String stackName = txtStackName.getText();
-				String stackSubject = txtStackSubject.getText();
+				String subject = txtStackSubject.getText();
 				int type = cmbStackType.getSelectedIndex() + 1;
-				stackService.save(new Stack(stackName, type, stackSubject));
+				stack.setStackName(stackName);
+				stack.setSubject(subject);
+				stack.setTyp(type);
+				stackService.update(stack);
 				self.dispose();
 			}
 		});

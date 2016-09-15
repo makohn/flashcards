@@ -29,4 +29,8 @@ public class Messages {
 	public static void setResource(String bundle) {
 		resource = ResourceBundle.getBundle(bundle);
 	}
+	
+	public static ResourceBundle getRessource() {
+		return resource;
+	}
 }

@@ -1,11 +1,15 @@
 package de.htwsaar.flashcards.util;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.net.URI;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 
+import de.htwsaar.flashcards.main.Main;
 import de.htwsaar.flashcards.properties.Dimensions;
 
 /**
@@ -49,5 +53,32 @@ public class FlashCardUtils {
 				return i+1;
 		}
 		return -1;
+	}
+	
+	/**
+	 * Oeffnet eine Internetseite ueber den Standardbrowser des Anwenders.
+	 * @param uri - Die URI der zu oeffnenden Seite
+	 */
+	public static void openWebpage(URI uri) {
+	    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+	    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+	        try {
+	            desktop.browse(uri);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
+	/**
+	 * Startet das Programm neu und schliesst den aufrufenden Frame. Dabei werden
+	 * alle Konfigurationen neu geladen, sodass es moeglich ist bestimmte Einstellungen
+	 * zu aendern.
+	 * @param owner - der aufrufende Frame der geschlossen wird
+	 */
+	public static void restart(Frame owner) {
+		owner.dispose();
+		try {Main.main(null);} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();}
 	}
 }

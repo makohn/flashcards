@@ -12,6 +12,7 @@ public interface EditFlashCardService {
 	public void nextCard();
 	public void previousCard();
 	public void addCard();
+	public void deleteCard();
 	public void saveCard(String cardName, String cardQuestion, String cardAnswer, String cardPicture);
 	public FlashCard getCurrentCard();
 }

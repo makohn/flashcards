@@ -228,6 +228,15 @@ public class FrmSelectStack {
 			}
 		});
 		
+		btnEditStack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Stack selection = (Stack)cmbStackSelector.getSelectedItem(); 
+				new DlgCreateStack(selectStackFrame, true, selection);
+				cmbStackSelector.setModel(new DefaultComboBoxModel<Stack>(stackService.getStackArray()));
+			}
+		});
+		
 		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

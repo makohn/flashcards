@@ -5,8 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -27,6 +26,7 @@ import de.htwsaar.flashcards.service.StackServiceImpl;
 import de.htwsaar.flashcards.ui.component.GradientPanel;
 import de.htwsaar.flashcards.util.FlashCardButtonFactory;
 import de.htwsaar.flashcards.util.FlashCardConstants;
+import de.htwsaar.flashcards.util.FlashCardUtils;
 
 /**
  * <code>DlgSettings</code> - Dialog fuer die Uebersicht und Abaenderung von
@@ -53,6 +53,7 @@ public class DlgSettings extends JDialog {
 	private JPanel pnlLanguage;
 	private JPanel pnlbackgroundColor;
 	private JPanel pnlReset;
+	private JPanel pnlConfirm;
 	
 	private JComboBox<String> cmbColor;
 	private JComboBox<Stack> cmbStack;
@@ -63,6 +64,7 @@ public class DlgSettings extends JDialog {
 	
 	private JButton btnPreview;
 	private JButton btnReset;
+	private JButton btnOk;
 	
 	private ButtonGroup grpLanguages;
 	private JRadioButton btnGerman;
@@ -83,6 +85,7 @@ public class DlgSettings extends JDialog {
 		initLanguageArea();
 		initColorArea();
 		initResetArea();
+		initConfirmArea();
 		initFrame();
 	}
 	
@@ -106,9 +109,15 @@ public class DlgSettings extends JDialog {
 		pnlLanguage.add(new JLabel(ICN_SPANISH));
 		pnlLanguage.setBorder(BorderFactory.createTitledBorder(Messages.getString("chooseStack")));
 		
-		btnGerman.addItemListener(new SetLanguageListener());
-		btnEnglish.addItemListener(new SetLanguageListener());
-		btnSpanish.addItemListener(new SetLanguageListener());
+		if(Messages.getRessource().equals(ResourceBundle.getBundle(Messages.BUNDLE_NAME_DE))) {
+			btnGerman.setSelected(true);
+		} 
+		else if(Messages.getRessource().equals(ResourceBundle.getBundle(Messages.BUNDLE_NAME_EN))) {
+			btnEnglish.setSelected(true);
+		} 
+		else if(Messages.getRessource().equals(ResourceBundle.getBundle(Messages.BUNDLE_NAME_ES))) {
+			btnSpanish.setSelected(true);
+		} 
 	}
 	
 	private void initColorArea() {
@@ -168,6 +177,14 @@ public class DlgSettings extends JDialog {
 		});
 	}
 	
+	private void initConfirmArea() {
+		pnlConfirm = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		pnlConfirm.setOpaque(false);
+		btnOk = FlashCardButtonFactory.createColouredButton(Messages.getString("ok"), FlashCardButtonFactory.BTN_GREEN);
+		pnlConfirm.add(btnOk);
+		btnOk.addActionListener(new UpdateSettingsListener());
+	}
+	
 	
 	private void initFrame() {
 		GradientPanel mainPanel = new GradientPanel();
@@ -175,6 +192,7 @@ public class DlgSettings extends JDialog {
 		mainPanel.add(pnlLanguage);
 		mainPanel.add(pnlbackgroundColor);
 		mainPanel.add(pnlReset);
+		mainPanel.add(pnlConfirm);
 		add(mainPanel);
 		setTitle(Messages.getString("settings"));
 		setSize(Dimensions.getDimension("settings.dim_frame"));
@@ -183,19 +201,19 @@ public class DlgSettings extends JDialog {
 		setVisible(true);
 	}
 	
-	private class SetLanguageListener implements ItemListener {
+	private class UpdateSettingsListener implements ActionListener {
 		@Override
-		public void itemStateChanged(ItemEvent e) {
-			JRadioButton source = (JRadioButton) e.getSource();
-			if(source.equals(btnGerman) && source.isSelected()) {
+		public void actionPerformed(ActionEvent e) {
+			if(btnGerman.isSelected() == true) {
 				Messages.setResource(Messages.BUNDLE_NAME_DE);
 			}
-			else if(source.equals(btnEnglish) && source.isSelected()) {
+			else if(btnEnglish.isSelected() == true) {
 				Messages.setResource(Messages.BUNDLE_NAME_EN);
 			}
-			else if(source.equals(btnSpanish) && source.isSelected()) {
+			else if(btnSpanish.isSelected() == true) {
 				Messages.setResource(Messages.BUNDLE_NAME_ES);
 			}
+			FlashCardUtils.restart((Frame) self.getOwner());
 		}
 	}
 }

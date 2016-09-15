@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import de.htwsaar.flashcards.files.ExporterCSVImpl;
 import de.htwsaar.flashcards.files.interfaces.ExporterCSV;
 import de.htwsaar.flashcards.model.Stack;
+import de.htwsaar.flashcards.properties.Messages;
 
 public class ExportFileListener implements ActionListener {
 	private JComboBox<Stack> cmbStack;
@@ -26,9 +27,9 @@ public class ExportFileListener implements ActionListener {
 		String filePath = "";
 		JFileChooser chooser = new JFileChooser(); 
 	    chooser.setCurrentDirectory(new java.io.File("."));
-	    chooser.setDialogTitle("Wähle einen Speicherort");
+	    chooser.setDialogTitle(Messages.getString("wheretosave"));
 	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	    chooser.setApproveButtonText("Speichern");
+	    chooser.setApproveButtonText(Messages.getString("save"));
 	    chooser.setAcceptAllFileFilterUsed(false);   
 	    if (chooser.showOpenDialog(caller) == JFileChooser.APPROVE_OPTION) {
 	    	 filePath += chooser.getSelectedFile() + File.separator + stack.getStackName();
